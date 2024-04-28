@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="latin1" collation="latin1_swedish_ci">cuentas2014</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="abonos" view="colnames">
+<left>18</left>
+<top>39</top>
+<width>122</width>
+<height>197</height>
+<sql_create_table>CREATE TABLE `abonos` (
+  `Id_cliente` int(11) NOT NULL,
+  `Id_Prod` char(10) NOT NULL,
+  `Fecha_venta` date DEFAULT NULL,
+  `Valor_Abono` double DEFAULT NULL,
+  `Saldo_Fecha` double DEFAULT NULL,
+  `Fecha_Abono` date DEFAULT NULL,
+  `recibo` char(15) DEFAULT NULL,
+  KEY `FK_abonos` (`Id_cliente`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="abonosproveedores" view="colnames">
+<left>825</left>
+<top>18</top>
+<width>137</width>
+<height>179</height>
+<sql_create_table>CREATE TABLE `abonosproveedores` (
+  `Id_PROVEEDOR` int(11) NOT NULL DEFAULT '0',
+  `Id_Prod` char(10) NOT NULL DEFAULT '',
+  `Fecha_venta` date DEFAULT NULL,
+  `Valor_Abono` double DEFAULT NULL,
+  `Saldo_Fecha` double DEFAULT NULL,
+  `Fecha_Abono` date DEFAULT NULL,
+  `recibo` char(15) DEFAULT NULL,
+  KEY `FK_abonos` (`Id_PROVEEDOR`),
+  CONSTRAINT `FK_abonosproveedores` FOREIGN KEY (`Id_PROVEEDOR`) REFERENCES `comprascreditos` (`Id_proveedor`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="clientes" view="colnames">
+<left>319</left>
+<top>91</top>
+<width>148</width>
+<height>182</height>
+<sql_create_table>CREATE TABLE `clientes` (
+  `ID_cliente` int(11) NOT NULL,
+  `Primer_Nombre` char(50) DEFAULT NULL,
+  `Segundo_Nombre` char(50) DEFAULT NULL,
+  `Primer_Apellido` char(50) DEFAULT NULL,
+  `Segundo_Apellido` char(50) DEFAULT NULL,
+  `Dir` char(150) DEFAULT NULL,
+  `TEL` char(20) DEFAULT NULL,
+  PRIMARY KEY (`ID_cliente`),
+  KEY `NewIndex1` (`ID_cliente`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="comprascreditos" view="colnames">
+<left>625</left>
+<top>176</top>
+<width>172</width>
+<height>216</height>
+<sql_create_table>CREATE TABLE `comprascreditos` (
+  `Id_proveedor` int(11) NOT NULL DEFAULT '0',
+  `Id_Prod` char(10) NOT NULL DEFAULT '',
+  `cantidad` int(11) DEFAULT NULL,
+  `Valor_Venta` double DEFAULT NULL,
+  `Fecha_Venta` date DEFAULT NULL,
+  `valor_cuota` double DEFAULT NULL,
+  `Saldo` double DEFAULT NULL,
+  `FACTURA` varchar(5) NOT NULL DEFAULT '',
+  `F_pago` char(10) DEFAULT NULL,
+  KEY `FK_creditos` (`Id_proveedor`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="creditos" view="colnames">
+<left>178</left>
+<top>94</top>
+<width>119</width>
+<height>216</height>
+<sql_create_table>CREATE TABLE `creditos` (
+  `Id_cliente` int(11) NOT NULL,
+  `Id_Prod` char(10) NOT NULL,
+  `cantidad` int(11) DEFAULT NULL,
+  `Valor_Venta` double DEFAULT NULL,
+  `Fecha_Venta` date DEFAULT NULL,
+  `valor_cuota` double DEFAULT NULL,
+  `Saldo` double DEFAULT NULL,
+  `FACTURA` varchar(5) NOT NULL,
+  `F_pago` char(10) DEFAULT NULL,
+  KEY `FK_creditos` (`Id_cliente`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="egresos" view="colnames">
+<left>633</left>
+<top>493</top>
+<width>108</width>
+<height>131</height>
+<sql_create_table>CREATE TABLE `egresos` (
+  `VALOR` double DEFAULT NULL,
+  `FECHA` date DEFAULT NULL,
+  `ID_GASTO` char(15) DEFAULT NULL,
+  `RECIBO` char(20) DEFAULT NULL,
+  KEY `FK_egresos` (`ID_GASTO`),
+  CONSTRAINT `FK_egresos` FOREIGN KEY (`ID_GASTO`) REFERENCES `gastos` (`ID_GASTO`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC</sql_create_table>
+</table>
+<table name="empleados" view="colnames">
+<left>810</left>
+<top>610</top>
+<width>129</width>
+<height>252</height>
+<sql_create_table>CREATE TABLE `empleados` (
+  `ID_EMPLEADO` char(15) NOT NULL,
+  `NOMBRE1` char(50) DEFAULT NULL,
+  `NOMBRE2` char(50) DEFAULT NULL,
+  `APELLIDO1` char(50) DEFAULT NULL,
+  `APELLIDO2` char(50) DEFAULT NULL,
+  `DIR` char(150) DEFAULT NULL,
+  `TEL` char(20) DEFAULT NULL,
+  `CARGO` char(150) DEFAULT NULL,
+  `SALARIO` double DEFAULT NULL,
+  `ACTIVO` char(2) DEFAULT NULL,
+  `ID_NEGOCIO` char(3) DEFAULT NULL,
+  PRIMARY KEY (`ID_EMPLEADO`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC</sql_create_table>
+</table>
+<table name="facturasc" view="colnames">
+<left>492</left>
+<top>33</top>
+<width>118</width>
+<height>146</height>
+<sql_create_table>CREATE TABLE `facturasc` (
+  `FACTURA` int(20) NOT NULL AUTO_INCREMENT,
+  `PROVEEDOR` char(150) DEFAULT NULL,
+  `FECHA` date DEFAULT NULL,
+  `TOTAL` double DEFAULT NULL,
+  PRIMARY KEY (`FACTURA`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="facturasv" view="colnames">
+<left>85</left>
+<top>330</top>
+<width>139</width>
+<height>146</height>
+<sql_create_table>CREATE TABLE `facturasv` (
+  `FACTURA` int(20) NOT NULL AUTO_INCREMENT,
+  `CLIENTE` char(150) DEFAULT NULL,
+  `FECHA` date DEFAULT NULL,
+  `TOTAL` double DEFAULT NULL,
+  PRIMARY KEY (`FACTURA`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="gastos" view="colnames">
+<left>818</left>
+<top>428</top>
+<width>108</width>
+<height>114</height>
+<sql_create_table>CREATE TABLE `gastos` (
+  `ID_GASTO` char(15) NOT NULL DEFAULT '',
+  `TIPO` char(150) DEFAULT NULL,
+  `ACTIVO` char(2) DEFAULT NULL,
+  PRIMARY KEY (`ID_GASTO`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC</sql_create_table>
+</table>
+<table name="inventario" view="colnames">
+<left>252</left>
+<top>333</top>
+<width>148</width>
+<height>269</height>
+<sql_create_table>CREATE TABLE `inventario` (
+  `ID` varchar(10) NOT NULL DEFAULT '',
+  `ARTICULO` varchar(600) DEFAULT NULL,
+  `REFERENCIA` varchar(150) DEFAULT NULL,
+  `PRECIO_COMPRA` double DEFAULT '0',
+  `PRECIO_VENTA` double DEFAULT '0',
+  `CANT_INICIAL` double DEFAULT '0',
+  `COMPRAS` double DEFAULT '0',
+  `VENTAS` double DEFAULT '0',
+  `DEVOLUCIONES` double DEFAULT '0',
+  `CANT_FINAL` double DEFAULT '0',
+  `CANTIDAD_MIN` double DEFAULT '0',
+  `NEGOCIO` char(3) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="movimientos" view="colnames">
+<left>456</left>
+<top>301</top>
+<width>157</width>
+<height>201</height>
+<sql_create_table>CREATE TABLE `movimientos` (
+  `ID` varchar(10) NOT NULL,
+  `CANTIDAD` double DEFAULT NULL,
+  `VALOR_UNITARIO` double DEFAULT NULL,
+  `VALOR_TOTAL` double DEFAULT NULL,
+  `GANANCIA` double DEFAULT NULL,
+  `TIPO_MOVIMIENTO` enum('Compra','Venta','Devolucion','Venta a Credito','Compra a Credito') DEFAULT NULL,
+  `FECHA` date DEFAULT NULL,
+  `FACTURA` varchar(5) NOT NULL,
+  KEY `FK_movimientos` (`ID`),
+  CONSTRAINT `FK_movimientos` FOREIGN KEY (`ID`) REFERENCES `inventario` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="negocio" view="colnames">
+<left>215</left>
+<top>625</top>
+<width>143</width>
+<height>218</height>
+<sql_create_table>CREATE TABLE `negocio` (
+  `ID` char(3) DEFAULT NULL,
+  `NOMBRE` char(150) DEFAULT NULL,
+  `NIT` char(20) DEFAULT NULL,
+  `DIRECCION` char(100) DEFAULT NULL,
+  `BARRIO` char(50) DEFAULT NULL,
+  `CIUDAD` char(50) DEFAULT NULL,
+  `TEL` char(25) DEFAULT NULL,
+  `PROPIETARIO` char(150) DEFAULT NULL,
+  `LOGO` char(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="pagos" view="colnames">
+<left>643</left>
+<top>673</top>
+<width>129</width>
+<height>146</height>
+<sql_create_table>CREATE TABLE `pagos` (
+  `ID_EMPLEADO` char(15) DEFAULT NULL,
+  `VALOR_PAGO` double DEFAULT NULL,
+  `FECHA_PAGO` date DEFAULT NULL,
+  `recibo` char(20) DEFAULT NULL,
+  KEY `FK_pagos` (`ID_EMPLEADO`),
+  CONSTRAINT `FK_pagos` FOREIGN KEY (`ID_EMPLEADO`) REFERENCES `empleados` (`ID_EMPLEADO`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC</sql_create_table>
+</table>
+<table name="proveedores" view="colnames">
+<left>455</left>
+<top>704</top>
+<width>148</width>
+<height>197</height>
+<sql_create_table>CREATE TABLE `proveedores` (
+  `ID_PROVEEDOR` int(11) NOT NULL DEFAULT '0',
+  `Primer_Nombre` char(50) DEFAULT NULL,
+  `Segundo_Nombre` char(50) DEFAULT NULL,
+  `Primer_Apellido` char(50) DEFAULT NULL,
+  `Segundo_Apellido` char(50) DEFAULT NULL,
+  `Dir` char(150) DEFAULT NULL,
+  `TEL` char(20) DEFAULT NULL,
+  PRIMARY KEY (`ID_PROVEEDOR`),
+  KEY `NewIndex1` (`ID_PROVEEDOR`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="user1" view="colnames">
+<left>39</left>
+<top>604</top>
+<width>125</width>
+<height>146</height>
+<sql_create_table>CREATE TABLE `user1` (
+  `Usuario` varchar(150) DEFAULT NULL,
+  `Password` varchar(45) DEFAULT NULL,
+  `Rol` enum('Admin','Usuario') DEFAULT NULL,
+  `NEGOCIO` char(3) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>

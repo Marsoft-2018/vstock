@@ -1,0 +1,25 @@
+SELECT SUM(valor_pago)AS 'Pagos Nomina' FROM pagos WHERE fecha_pago='2010-10-25';
+SELECT gastos.TIPO,SUM(egresos.VALOR) AS 'Total Pagado' FROM gastos,egresos WHERE egresos.FECHA='2010-10-26' AND gastos.ID_GASTO=egresos.ID_GASTO GROUP BY egresos.id_gasto ORDER BY gastos.TIPO;
+
+
+FORMULA PARA LA SEMANA DEL AÑO
+
+   
+      <?php
+
+      $fecha = new DateTime();
+
+      $semana = $fecha->format('W'); // semana del año
+
+      $dia = $fecha->format('w'); // dia del año  
+
+
+      $semana++;
+   
+      $dia++;
+ 
+      echo 'Semana: '.$semana; // semana del año
+
+      echo ' - Día: '.$dia; // dia del año  
+
+      ?>
