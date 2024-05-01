@@ -768,5 +768,6 @@
     <!-- CDN sweetalert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/jscript" src="js/Acciones.js"></script>
+    <script src="js/productos.js"></script>
   </body>
 </html>

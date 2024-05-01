@@ -1,16 +1,3 @@
-$( "#tabs" ).tabs();
-$("#inventario").click(cargarinventario);
-$("#ventas").click(cargarventas);
-$("#compras").click(cargarcompras);
-$("#abonosc").click(cargarAbonosc);
-$("#abonosp").click(cargarAbonosp);
-$("#devoluciones").click(cargardevoluciones);
-$("#mnuNegocio").click(cargarNegocio);
-$("#mnuCategorias").click(cargarCategorias);
-$("#empleados").click(cargarEmpleados);
-$("#proveedores").click(cargarProveedores);
-$("#clientes").click(cargarClientes);
-$("#gastos").click(cargarGastos); 
 
 function cargarinventario(){
     $("#parte1").load('inventario.php');					
@@ -21,7 +8,7 @@ function cargarinventario2(idNegocio){
     $('#parte1').html("");
     $.ajax({
         type: "POST",
-        url: "inventario.php",
+        url: "Vistas/productos/inventario.php",
         data: {"idNegocio":idNegocio},
         success: function(data){
             $('#parte1').html(data);
@@ -269,6 +256,122 @@ function modificar(acciones,tabla){
     }else if(tabla==2){
     }else if(tabla==3){
     }
+}
+
+
+function eliminarProducto(id,bussines_id){
+    accion='eliminar';
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: "btn btn-success",
+          cancelButton: "btn btn-danger"
+        },
+        buttonsStyling: false
+      });
+      swalWithBootstrapButtons.fire({
+        title: "Eliminar Articulo",
+        text: "¿Está seguro de eliminar este Articulo?\n"+
+        "\nPara eliminar los datos del registro preciona el botón SI, recuerde que al eliminar este producto del inventario se eliminaran los datos relacionados con los movientos de compra y venta que se hallan hecho del mismo.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Si",
+        cancelButtonText: "No",
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+        //   swalWithBootstrapButtons.fire({
+        //     title: "Deleted!",
+        //     text: "Your file has been deleted.",
+        //     icon: "success"
+        //   });
+        const data = {
+            "accion": accion,
+            "id": id,
+            "bussines_id": bussines_id
+        }
+            axios.post('Controlador/ctrlProductos.php', data)
+                .then(function(res) {
+                    //res = JSON.parse(res);
+                    console.log(res.data);
+                    //console.log('Mensaje: '+res.data["mensaje"]);
+                    // respuesta = respuesta.trim();
+                    // console.log(respuesta);
+                    if(res.status == 200) {
+                        let timerInterval;
+                        Swal.fire({
+                            title: res.data,
+                            icon: "success",
+                            timer: 1500,
+                            position: "bottom-end",
+                            showConfirmButton: false,
+                            timerProgressBar: false,
+                            didOpen: () => {
+                                const timer = Swal.getPopup().querySelector("b");
+                                timerInterval = setInterval(() => {
+                                timer.textContent = `${Swal.getTimerLeft()}`;
+                                }, 100);
+                            },
+                            willClose: () => {
+                                clearInterval(timerInterval);
+                            }
+                            }).then((result) => {
+                            /* Read more about handling dismissals below */
+                            if (result.dismiss === Swal.DismissReason.timer) {
+                                cargarinventario2(bussines_id);
+                            }
+                        });
+                    }
+                })
+                .catch(function(err) {
+                    Swal.fire({
+                        position: "left-end",
+                        icon: 'error',
+                        title: 'Error',
+                        text: err
+                    });
+                }
+            );
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire({
+            title: "Cancelled",
+            text: "Your imaginary file is safe :)",
+            icon: "error"
+          });
+        }
+    });
+    
+    // alertify.defaults.transition = "flipy";
+    // alertify.defaults.theme.ok = "btn btn-primary";
+    // alertify.defaults.theme.cancel = "btn btn-danger";
+    // alertify.defaults.theme.input = "form-control";
+    // alertify.confirm(
+    //     '<div class="panel-heading" style="background-color:#901025;color:#fff;"><i class="fa fa-trash"> Eliminar Articulo</i></div>', 
+    //     '¿Está seguro de eliminar este Articulo?\n'+
+    //     "\nPara eliminar los datos del registro preciona el botón SI, recuerde que al eliminar este producto del inventario se eliminaran los datos relacionados con los movientos de compra y venta que se hallan hecho del mismo.",
+    //     function()
+    //     { 
+    //         var idArticulo=id;    
+    //             var NegocioID=document.getElementById('negNum').value;
+    //             $("#capa").load("AplicarAcciones.php", {accion:accion,Edtabla:quien,idArticulo:idArticulo,NegocioID:NegocioID},
+    //                 function(){
+    //                     $("#parte1").load("inventario.php",
+    //                         function()
+    //                         {
+    //                             $('#capa').slideUp('slow');
+    //                             alertify.success('Se ha eliminado el articulo del inventario');
+    //                         }
+    //                     );
+    //                 }           
+    //             );
+    //     }, 
+    //     function()
+    //     { 
+    //         $('#capa').slideUp('fast');
+    //     }
+    //);
 }
 
 function ayudaMenu(mensaje,x){

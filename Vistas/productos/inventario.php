@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-    //session_start();
+    session_start();
     ///require("Conexiones/Conect.php");
     require("../../Modelo/Conect.php");
     require("../../Modelo/producto.php");
@@ -98,12 +98,14 @@
                                             }
                                         ?>
                                             <td class='celda1' style='text-align: center;'>
-                                                <img src='Tools/Iconos/editar1.png' id='<?php echo $producto['id']; ?>' width='15' height='15' title='Editar articulo <?php echo $producto['id']; ?>' class='iconosAcciones' onclick='acciones(this.id,1,1)'></img>
+                                                <button class="btn btn-outline-warning" id='<?php echo $producto['id']; ?>' title='Editar articulo <?php echo $producto['id']; ?>' onclick='acciones(this.id,1,1)'>
+                                                    <i class="fa fa-edit" ></i>
+                                                </button>
                                             </td>
                                             <td class='celda1' style='text-align: center;'>
-                                                <!--<a href='#' id='$producto['0']'  onclick='acciones(this.id,2,1)' ><i class='fa fa-trash' title='Eliminar articulo ".$producto['0']."' > -->
-                                                
-                                                <img src='Tools/Iconos/eliminar.png' id='<?php echo $producto['id']; ?>' width='15' height='15' title='Eliminar articulo <?php echo $producto['id']; ?>' class='iconosAcciones' onclick='acciones(this.id,2,1)'></img>
+                                                <button class="btn btn-outline-danger" id='<?php echo $producto['id']; ?>' title='Eliminar articulo <?php echo $producto['id']; ?>' onclick="eliminarProducto(this.id,'<?php echo $_SESSION['idNegocio']; ?>')">
+                                                    <i class="fa fa-trash" ></i>
+                                                </button>
                                             </td>   
                                         </tr>
                             <?php
@@ -158,7 +160,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>-->
-    <script src="js/productos.js"></script>
 </body>
 
 </html>

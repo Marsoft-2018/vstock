@@ -67,29 +67,30 @@
         }
         
                
-        public function modificar($campo,$clave,$valor){
+        public function modificar(){
             //Consulta para actualizar los datos del name seleccionado
-            $this->sqlAccion=mysql_query("UPDATE inventario SET `$campo`='$valor' WHERE `id`='$clave' ");
-            return $this->sqlAccion;
+            //$this->sql = "UPDATE inventario SET `$campo`='$valor' WHERE `id`='$clave' ";
+            return $this->sql;
         }
         
-        public function eliminar($idname,$bussines_id){        
+        public function eliminar(){        
             $this->sql="DELETE FROM inventario WHERE id=? AND bussines_id=?"; 
             try {
 				$stm = $this->Conexion->prepare($this->sql);
-				$stm->bindParam(1, $idname);
-				$stm->bindParam(2, $bussines_id);
-				$stm->execute();
-				$data = $stm->fetchAll(PDO::FETCH_ASSOC);
-				
-				return $data;
+				$stm->bindParam(1, $this->id);
+				$stm->bindParam(2, $this->bussines_id);
+				if($stm->execute()){
+					echo "Registro eliminado con éxito";
+				}else{
+					echo "No se pudo eliminar el registro";
+				}
 			} catch (Exception $e) {
-				echo "Ocurrió un Error al cargar los productos. ".$e;
+				echo "Ocurrió un Error al eliminar el registro. ".$e;
 			}
         }
         
-        public function agregar($id, $name, $reference, $purchase_price, $selling_price, $initial_quantity, $min_quantity, $bussines_id, $category_id, $measure){ 
-            $this->sql = "INSERT INTO inventario(id,name,reference,purchase_price,selling_price,initial_quantity,purchases,sales,stock_returns,stock,min_quantity,bussines_id,category_id,measure) VALUES('$id','$name','$reference',$purchase_price,$selling_price,$initial_quantity,0,0,0,$initial_quantity,$min_quantity,$bussines_id,$category_id,'$measure')";
+        public function agregar(){ 
+            $this->sql = "INSERT INTO inventario(id,`name`,reference,purchase_price,selling_price,initial_quantity,purchases,sales,stock_returns,stock,min_quantity,bussines_id,category_id,measure) VALUES('$id','$name','$reference',$purchase_price,$selling_price,$initial_quantity,0,0,0,$initial_quantity,$min_quantity,$bussines_id,$category_id,'$measure')";
             try {
 				$stm = $this->Conexion->prepare($this->sql);
 				$stm->bindParam(1, $this->bussines_id);
@@ -119,7 +120,7 @@
         
         public function nuevoPorCompra($id, $name, $reference, $purchase_price, $selling_price, $cantidadCompra, $min_quantity, $bussines_id, $category_id, $measure){
             $this->sql = "INSERT INTO inventario(id,name,reference,purchase_price,selling_price,initial_quantity,purchases,sales,stock_returns,stock,min_quantity,bussines_id,category_id,measure) VALUES('$id','$name','$reference',$purchase_price,$selling_price,0,$cantidadCompra,0,0,$cantidadCompra,$min_quantity,$bussines_id,$category_id,'$measure')";
-            return $this->sqlAccion;
+            return $this->sql;
         }
 
 		
