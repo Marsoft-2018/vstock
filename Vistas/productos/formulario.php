@@ -1,21 +1,59 @@
-<?php session_start(); ?>
-<form id="formProduct" method="post" onsubmit="return addProduct('<?php echo $_SESSION['idNegocio']; ?>')">
+<?php 
+  session_start(); 
+  $id = "";
+  $name = "";
+  $reference = "";
+  $purchase_price = "";
+  $selling_price = "";
+  $initial_quantity = "";
+  $purchases = "";
+  $sales = "";
+  $stock_returns = "";
+  $stock = "";
+  $min_quantity = "";
+  $bussines_id = "";
+  $category_id = "";
+  $measure_id = "";
+  $readonly =  "";
+  if($accion == "edit"){
+    $readonly = "readonly";
+  }
+if(isset($objProducto)){
+  foreach ($objProducto->cargar() as $producto) {
+    $id = $producto['id'];
+    $name = $producto['name'];
+    $reference = $producto['reference'];
+    $purchase_price = $producto['purchase_price'];
+    $selling_price = $producto['selling_price'];
+    $initial_quantity = $producto['initial_quantity'];
+    $stock = $producto['stock'];
+    $min_quantity = $producto['min_quantity'];
+    $bussines_id = $producto['bussines_id'];
+    $category_id = $producto['category_id'];
+    $measure_id = $producto['measure_id'];
+  }
+}
+?>
+<form id="formProduct" method="post" onsubmit="return prepareProduct('<?php echo $_SESSION['idNegocio']; ?>','<?php echo $accion; ?>')">
   <div class="row mb-3">
     <label for="id" class="col-sm-2 col-form-label">Código</label>
     <div class="col-sm-10">
-      <input type="text" name="id" class="form-control" id="id">
+      
+
+
+      <input type="text" value="<?php echo $id; ?>" name="id" class="form-control" id="id" <?php echo $readonly; ?> >
     </div>
   </div>
   <div class="row mb-3">
     <label for="name" class="col-sm-2 col-form-label">Nombre</label>
     <div class="col-sm-10">
-      <input type="text" name="name" class="form-control" id="name">
+      <input type="text" value="<?php echo $name; ?>" name="name" class="form-control" id="name">
     </div>
   </div>
   <div class="row mb-3">
     <label for="reference" class="col-sm-2 col-form-label">Referencia</label>
     <div class="col-sm-10">
-      <input type="text" name="reference" class="form-control" id="reference">
+      <input type="text" value="<?php echo $reference; ?>" name="reference" class="form-control" id="reference">
     </div>
   </div>
   <div class="row mb-3">
@@ -27,8 +65,12 @@
                 <option selected>Seleccione...</option>
                 <?php
                 foreach ($objCategoria->listar() as $categoria) {
+                  $selected = "";
+                  if($categoria['id'] == $category_id){
+                    $selected = "selected";
+                  }
                 ?>
-                    <option value="<?php echo $categoria['id'] ?>"><?php echo $categoria['name'] ?></option> 
+                    <option value="<?php echo $categoria['id'] ?>" <?php echo $selected ?>><?php echo $categoria['name'] ?></option> 
                 <?php
                 }
                 ?>
@@ -45,8 +87,12 @@
                 <option selected>Seleccione...</option>
                 <?php
                 foreach ($objMedida->listar() as $medida) {
+                  $selected = "";
+                  if($medida['id'] == $measure_id){
+                    $selected = "selected";
+                  }
                 ?>
-                    <option value="<?php echo $medida['id'] ?>"><?php echo $medida['name'] ?></option> 
+                    <option value="<?php echo $medida['id'] ?>" <?php echo $selected; ?>><?php echo $medida['name'] ?></option> 
                 <?php
                 }
                 ?>
@@ -58,31 +104,31 @@
   <div class="row mb-3">
     <label for="purchase_price" class="col-sm-2 col-form-label">Precio de compra</label>
     <div class="col-sm-10">
-      <input type="number"  step="any" name="purchase_price" class="form-control" id="purchase_price">
+      <input type="number"  step="any" value="<?php echo $purchase_price; ?>" name="purchase_price" class="form-control" id="purchase_price">
     </div>
   </div>
   <div class="row mb-3">
     <label for="selling_price" class="col-sm-2 col-form-label">Precio de venta</label>
     <div class="col-sm-10">
-      <input type="number"  step="any" name="selling_price" class="form-control" id="selling_price">
+      <input type="number"  step="any" value="<?php echo $selling_price; ?>" name="selling_price" class="form-control" id="selling_price">
     </div>
   </div>
   <div class="row mb-3">
     <label for="initial_quantity" class="col-sm-2 col-form-label">Cant. Inicial</label>
     <div class="col-sm-10">
-      <input type="number"  step="any" name="initial_quantity" class="form-control" id="initial_quantity">
+      <input type="number"  step="any" value="<?php echo $initial_quantity; ?>" name="initial_quantity" class="form-control" id="initial_quantity">
     </div>
   </div>
   <div class="row mb-3">
     <label for="stock" class="col-sm-2 col-form-label">Existencias</label>
     <div class="col-sm-10">
-      <input type="number"  step="any" name="stock" class="form-control" id="stock">
+      <input type="number"  step="any" value="<?php echo $stock; ?>" name="stock" class="form-control" id="stock">
     </div>
   </div>
   <div class="row mb-3">
     <label for="min_quantity" class="col-sm-2 col-form-label">Cant. Mínima</label>
     <div class="col-sm-10">
-      <input type="number"  step="any" name="min_quantity" class="form-control" id="min_quantity">
+      <input type="number"  step="any" value="<?php echo $min_quantity; ?>" name="min_quantity" class="form-control" id="min_quantity">
     </div>
   </div>
   <div class="row mb-3">

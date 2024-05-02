@@ -21,7 +21,7 @@ function cargarinventario2(idNegocio){
     });				
 }	
 
-function nuevoProducto(bussines_id){
+function newProduct(bussines_id){
     var seccion_modulo =document.querySelector('#modalBody');
     const seccion_titulo = document.querySelector('#exampleModalCenterTitle').innerHTML = "Nuevo Producto";
     const data = {
@@ -45,7 +45,17 @@ function nuevoProducto(bussines_id){
         }
     );    
 }
-
+function prepareProduct(bussines_id,accion){
+    switch (accion) {
+        case 'new':
+            addProduct(bussines_id);
+            break;
+        case 'edit':
+            updateProduct(bussines_id);
+            break;
+    }
+    return false;
+}
 function addProduct(bussines_id){
     var formulario =document.querySelector('#formProduct');
     var data = new FormData(formulario); 
@@ -74,84 +84,62 @@ function addProduct(bussines_id){
 
 
 
-function editarProducto(){
-    var id=document.getElementById('cbo_producto').value;
-    if(id!=""){
-        acciones(id,1,2);
+function editProduct(id,bussines_id){
+    var seccion_modulo =document.querySelector('#modalBody');
+    const seccion_titulo = document.querySelector('#exampleModalCenterTitle').innerHTML = "Editar Producto";
+    var data = {
+        'accion': 'edit',
+        'bussines_id': bussines_id,
+        'id': id
     }
+
+    axios.post('Controlador/ctrlProductos.php', data)
+        .then(function(res) {
+           //console.log(res.data);
+            if(res.status == 200) {
+                seccion_modulo.innerHTML = res.data;                
+            }
+        })
+        .catch(function(err) {
+            Swal.fire({
+                position: "left-end",
+                icon: 'error',
+                title: 'Error',
+                text: err
+            });
+        }
+    );    
 }
 
 	
-function modificarProducto(acciones,tabla){
-    if (acciones==1) {
-        acciones='modificar';
-    }else if (acciones==2) {
-        acciones='agregar';
-    }
-
-    if (tabla==1){
-
-        //var idArticulo=document.getElementById('ide').value;
-        var idArticulo=document.getElementById('articuloID').value;
-        var NombreArticulo=document.getElementById('articuloED').value;			
-        var Referencia=document.getElementById('referenciaED').value;
-        var catId=document.getElementById('categoriaNuevoArticulo').value;
-        var precioCompra=document.getElementById('preciodecompraED').value;	
-        var precioVenta=document.getElementById('preciodeventaED').value;
-        var cantInicial=document.getElementById('cantinicialED').value;
-        var compras=document.getElementById('comprasED').value;
-        var ventas=document.getElementById('ventasED').value;
-        var devoluciones=document.getElementById('devolucionesED').value;
-        var cantFinal=document.getElementById('cantfinalED').value;
-        var cantMinima=document.getElementById('cantminimaED').value;
-        var NegocioID=document.getElementById('ideNeg').value;
-        var medida = $("#medida").val();
-        //console.log('test: '+medida);
-        //alertify.alert('La variable tabla: '+tabla+"Accion: "+acciones+"\n : "+idArticulo+"\n Nombre Articulo: "+NombreArticulo+"\n Referencia: "+Referencia+"\n catId: "+catId+"\n precioCompra: "+precioCompra+"\n precioVenta: "+precioVenta+"\n cantInicial: "+cantInicial+"\n compras: "+compras+"\n ventas: "+ventas+"\n devoluciones: "+devoluciones+"\n cantFinal: "+cantFinal+"\n cantMinima: "+cantMinima+"\n NegocioID: "+NegocioID);
-        $("#aplicarAcciones").load("AplicarAcciones.php", {
-                Edtabla:tabla,
-                accion:acciones,
-                idArticulo:idArticulo,
-                NombreArticulo:NombreArticulo,
-                Referencia:Referencia,
-                precioCompra:precioCompra,
-                precioVenta:precioVenta,
-                cantInicial:cantInicial,
-                compras:compras,
-                ventas:ventas,
-                devoluciones:devoluciones,
-                cantFinal:cantFinal,
-                cantMinima:cantMinima,
-                NegocioID:NegocioID,
-                catId:catId,
-                medida:medida
-            },
-            function(){
-                // $("#parte1").load("inventario.php",
-                //     function(){
-                //         document.getElementById('articuloID').value='';
-                //         document.getElementById('articuloED').value='';			
-                //         document.getElementById('referenciaED').value='';
-                //         document.getElementById('categoriaNuevoArticulo').value='';
-                //         document.getElementById('preciodecompraED').value='';	
-                //         document.getElementById('preciodeventaED').value='';
-                //         document.getElementById('cantinicialED').value='';
-                //         document.getElementById('comprasED').value='';
-                //         document.getElementById('ventasED').value='';
-                //         document.getElementById('devolucionesED').value='';
-                //         document.getElementById('cantfinalED').value='';
-                //         document.getElementById('cantminimaED').value='';
-                //         document.getElementById('ideNeg').value='';
-                //     });
-            }			
-        );
-    }else if(tabla==2){
-    }else if(tabla==3){
-    }
+function updateProduct(bussines_id){
+    var formulario =document.querySelector('#formProduct');
+    var data = new FormData(formulario); 
+    data.append('accion', 'update');
+    data.append('bussines_id', bussines_id);
+    
+    axios.post('Controlador/ctrlProductos.php', data)
+        .then(function(res) {
+            console.log(res.data);
+            if(res.status == 200) {                
+                Swal.fire(res.data, "", "success");
+                cargarinventario2(bussines_id);            
+            }
+        })
+        .catch(function(err) {
+            Swal.fire({
+                position: "left-end",
+                icon: 'error',
+                title: 'Error',
+                text: err
+            });
+        }
+    );  
+    return false;  
 }
 
 
-function eliminarProducto(id,bussines_id){
+function deleteProduct(id,bussines_id){
     Swal.fire({
         title: "¿Está seguro de eliminar este Articulo?",
         text: "\nPara eliminar los datos del registro preciona el botón SI, recuerde que al eliminar este producto del inventario se eliminaran los datos relacionados con los movientos de compra y venta que se hallan hecho del mismo.",

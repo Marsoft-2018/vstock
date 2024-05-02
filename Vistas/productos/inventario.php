@@ -64,7 +64,7 @@
                                 <th style="text-align: center;">Ventas</th>
                                 <th style="text-align: center;">Cant Mín</th>
                                 <th style="text-align: center;">Devo</th>
-                                <th style="text-align: center;">Cant Final</th>
+                                <th style="text-align: center;">Existencias</th>
                                 <th style="text-align: center;"></th>
                                 <th style="text-align: center;"></th>
                             </tr>
@@ -98,12 +98,12 @@
                                             }
                                         ?>
                                             <td class='celda1' style='text-align: center;'>
-                                                <button class="btn btn-outline-warning" id='<?php echo $producto['id']; ?>' title='Editar articulo <?php echo $producto['id']; ?>'   onclick="editProduct(this.id,'<?php echo $_SESSION['idNegocio']; ?>')">
+                                                <button class="btn btn-outline-warning" id='<?php echo $producto['id']; ?>' title='Editar articulo <?php echo $producto['id']; ?>'  data-bs-toggle="modal" data-bs-target=".exampleModalCenter"  onclick="editProduct(this.id,'<?php echo $_SESSION['idNegocio']; ?>')">
                                                     <i class="fa fa-edit" ></i>
                                                 </button>
                                             </td>
                                             <td class='celda1' style='text-align: center;'>
-                                                <button class="btn btn-outline-danger" id='<?php echo $producto['id']; ?>' title='Eliminar articulo <?php echo $producto['id']; ?>' onclick="eliminarProducto(this.id,'<?php echo $_SESSION['idNegocio']; ?>')">
+                                                <button class="btn btn-outline-danger" id='<?php echo $producto['id']; ?>' title='Eliminar articulo <?php echo $producto['id']; ?>' onclick="deleteProduct(this.id,'<?php echo $_SESSION['idNegocio']; ?>')">
                                                     <i class="fa fa-trash" ></i>
                                                 </button>
                                             </td>   
@@ -123,7 +123,7 @@
                                     <td style='text-align: right;border: 1px solid #fff;'><?php echo $total['stock_returns']; ?></td>
                                     <td style='text-align: right;border: 1px solid #fff;'><?php echo $total['stock']; ?></td>
                                     <td class='celda1' style='text-align: center;border: 1px solid #fff;' colspan='2'>
-                                        <a class="nav-link btn btn-primary" aria-current="page" href="#" data-bs-toggle="modal" data-bs-target=".exampleModalCenter"  onclick="nuevoProducto('<?php echo $_SESSION['idNegocio']; ?>')">
+                                        <a class="nav-link btn btn-primary" aria-current="page" href="#" data-bs-toggle="modal" data-bs-target=".exampleModalCenter"  onclick="newProduct('<?php echo $_SESSION['idNegocio']; ?>')">
                                             <i class="fa fa-plus-circle"></i> Agregar
                                         </a><!--
                                         <button class='btn btn-primary' id='nuevo' title='Agregar un nuevo articulo'><i class='fa fa-plus-circle'> Agregar</i> </button>  -->                                                          

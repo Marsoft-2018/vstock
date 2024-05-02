@@ -37,11 +37,11 @@
 
         }
         
-        public function cargar($id){
+        public function cargar(){
             $this->sql="SELECT * FROM inventario WHERE `id`=? AND bussines_id  = ?";  
             try {
 				$stm = $this->Conexion->prepare($this->sql);
-				$stm->bindParam(1, $id);
+				$stm->bindParam(1, $this->id);
 				$stm->bindParam(2, $this->bussines_id);
 				$stm->execute();
 				$data = $stm->fetchAll(PDO::FETCH_ASSOC);
@@ -65,30 +65,7 @@
 				echo "Ocurrió un Error al cargar los productos. ".$e;
 			}
         }
-        
-               
-        public function modificar(){
-            //Consulta para actualizar los datos del name seleccionado
-            //$this->sql = "UPDATE inventario SET `$campo`='$valor' WHERE `id`='$clave' ";
-            return $this->sql;
-        }
-        
-        public function eliminar(){        
-            //$this->sql="DELETE FROM inventario WHERE id=? AND bussines_id=?"; 
-            try {
-				$stm = $this->Conexion->prepare($this->sql);
-				$stm->bindParam(1, $this->id);
-				$stm->bindParam(2, $this->bussines_id);
-				if($stm->execute()){
-					echo "Registro eliminado con éxito";
-				}else{
-					echo "No se pudo eliminar el registro";
-				}
-			} catch (Exception $e) {
-				echo "Ocurrió un Error al eliminar el registro. ".$e;
-			}
-        }
-        
+      
         public function agregar(){ 
             $this->sql = "INSERT INTO inventario(id,`name`,reference,purchase_price,selling_price,initial_quantity,stock,min_quantity,bussines_id,category_id,measure_id) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
             try {
@@ -110,10 +87,49 @@
 				
 			} catch (Exception $e) {
 				echo "Ocurrió un Error al guardar el producto. ".$e;
-			}    /* 
-			echo "agregando el producto";
-            */
+			}   
+        }        
+               
+        public function modificar(){
+            $this->sql = "UPDATE inventario SET `name` = ?,reference = ?,purchase_price = ?,selling_price = ?,initial_quantity = ?,stock = ?,min_quantity = ?,category_id = ?,measure_id = ? WHERE id = ? AND bussines_id = ?";
+            try {
+				$stm = $this->Conexion->prepare($this->sql);
+				$stm->bindParam(1, $this->name);
+				$stm->bindParam(2, $this->reference);
+				$stm->bindParam(3, $this->purchase_price);
+				$stm->bindParam(4, $this->selling_price);
+				$stm->bindParam(5, $this->initial_quantity);
+				$stm->bindParam(6, $this->stock);
+				$stm->bindParam(7, $this->min_quantity);
+				$stm->bindParam(8, $this->category_id);
+				$stm->bindParam(9, $this->measure_id);
+				$stm->bindParam(10, $this->id);
+				$stm->bindParam(11, $this->bussines_id);
+				if($stm->execute()){
+				    echo "Registro guardado con éxito";
+				}
+				
+			} catch (Exception $e) {
+				echo "Ocurrió un Error al guardar el producto. ".$e;
+			}
         }
+        
+        public function eliminar(){        
+            //$this->sql="DELETE FROM inventario WHERE id=? AND bussines_id=?"; 
+            try {
+				$stm = $this->Conexion->prepare($this->sql);
+				$stm->bindParam(1, $this->id);
+				$stm->bindParam(2, $this->bussines_id);
+				if($stm->execute()){
+					echo "Registro eliminado con éxito";
+				}else{
+					echo "No se pudo eliminar el registro";
+				}
+			} catch (Exception $e) {
+				echo "Ocurrió un Error al eliminar el registro. ".$e;
+			}
+        }
+  
         
         public function agotados(){
             $this->sql="SELECT inv.id FROM inventario inv WHERE inv.`stock`<=inv.`min_quantity` AND bussines_id = ?"; 
