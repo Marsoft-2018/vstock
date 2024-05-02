@@ -1,4 +1,4 @@
-$( "#tabs" ).tabs();
+
 $("#inventario").click(cargarinventario);
 $("#ventas").click(cargarventas);
 $("#compras").click(cargarcompras);

@@ -56,7 +56,7 @@
                                 <th style="text-align: center;">Nombre del Articulo</th>
                                 <th style="text-align: center;">Refrencia</th>
                                 <th style="text-align: center;">Categoria</th>
-                                <!-- <th  style="text-align: center;">Medida</th> -->
+                                <th  style="text-align: center;">Medida</th><!--  -->
                                 <th style="text-align: center;">Pecio de Compra</th>
                                 <th style="text-align: center;">Precio de venta</th>
                                 <th style="text-align: center;">Cant Inicial</th>
@@ -79,7 +79,7 @@
                                         <td title='Nombre del Articulo'><?php echo $producto['name']; ?></td>
                                         <td title='Referencia'><?php echo $producto['reference']; ?></td>
                                         <td title='Categoria'><?php echo $producto['Categorias']; ?></td>
-                                        <!--<td title='Medida'>$producto['12']</td>-->
+                                        <td title='Medida'><?php echo $producto['measure']; ?></td><!---->
                                         <td style='text-align: right;' title='Precio de Compra'>$ <?php echo number_format( $producto['purchase_price'], 0, ',', '.'); ?></td>
                                         <td style='text-align: right;' title='Precio de Venta'>$ <?php echo number_format( $producto['selling_price'], 0, ',', '.'); ?></td>
                                         <td style='text-align: right;' title='Cantidad Inicial'><?php echo $producto['initial_quantity']; ?></td>
@@ -98,7 +98,7 @@
                                             }
                                         ?>
                                             <td class='celda1' style='text-align: center;'>
-                                                <button class="btn btn-outline-warning" id='<?php echo $producto['id']; ?>' title='Editar articulo <?php echo $producto['id']; ?>' onclick='acciones(this.id,1,1)'>
+                                                <button class="btn btn-outline-warning" id='<?php echo $producto['id']; ?>' title='Editar articulo <?php echo $producto['id']; ?>'   onclick="editProduct(this.id,'<?php echo $_SESSION['idNegocio']; ?>')">
                                                     <i class="fa fa-edit" ></i>
                                                 </button>
                                             </td>
@@ -115,7 +115,7 @@
                         <tfoot>
                             <tr style="font-size:12px;text-align: left;background-color: rgba(49, 80, 119,0.5);color:#000;">
                                 <?php foreach($objInventario->totales() as $total){ ?>
-                                    <td style='text-align: left;border: 1px solid #fff;' colspan='6'>CANTIDADES TOTALES DE PRODUCTOS</td>
+                                    <td style='text-align: left;border: 1px solid #fff;' colspan='7'>CANTIDADES TOTALES DE PRODUCTOS</td>
                                     <td style='text-align: right;border: 1px solid #fff;'><?php echo $total['initial_quantity']; ?></td>
                                     <td style='text-align: right;border: 1px solid #fff;'><?php echo $total['purchases']; ?></td>
                                     <td style='text-align: right;border: 1px solid #fff;'><?php echo $total['sales']; ?></td>
@@ -123,7 +123,7 @@
                                     <td style='text-align: right;border: 1px solid #fff;'><?php echo $total['stock_returns']; ?></td>
                                     <td style='text-align: right;border: 1px solid #fff;'><?php echo $total['stock']; ?></td>
                                     <td class='celda1' style='text-align: center;border: 1px solid #fff;' colspan='2'>
-                                        <a class="nav-link btn btn-primary" aria-current="page" href="#" data-bs-toggle="modal" data-bs-target=".exampleModalCenter"  onclick='acciones(this.id,3,1)'>
+                                        <a class="nav-link btn btn-primary" aria-current="page" href="#" data-bs-toggle="modal" data-bs-target=".exampleModalCenter"  onclick="nuevoProducto('<?php echo $_SESSION['idNegocio']; ?>')">
                                             <i class="fa fa-plus-circle"></i> Agregar
                                         </a><!--
                                         <button class='btn btn-primary' id='nuevo' title='Agregar un nuevo articulo'><i class='fa fa-plus-circle'> Agregar</i> </button>  -->                                                          
@@ -143,18 +143,17 @@
                          
     <div class="modal fade exampleModalCenter" id="exampleModalCenter2" tabindex="-1" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered  modal-lg">
-          <div class="modal-content">
+        <div class="modal-content">
             <div class="modal-header">
-              <h2 class="modal-title" id="exampleModalCenterTitle">Productos</h2>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h2 class="modal-title" id="exampleModalCenterTitle"></h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-              
+            <div class="modal-body" id="modalBody">
+            
             </div>
-          </div>
         </div>
-      </div>
-
+        </div>
+    </div>
     <div class="row"></div>
    <!-- Option 1: Bootstrap Bundle with Popper
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

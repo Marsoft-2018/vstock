@@ -14,14 +14,14 @@
         public $min_quantity;
         public $bussines_id;
         public $category_id;
-        public $measure;
+        public $measure_id;
 		private $sql;
         
         public function listar(){
-            $this->sql="SELECT inv.id, inv.name, inv.reference, inv.purchase_price, inv.selling_price, inv.initial_quantity, inv.purchases, inv.sales, inv.stock_returns, inv.stock, inv.min_quantity, inv.bussines_id, inv.category_id, inv.measure, cat.`Categorias`
+            $this->sql="SELECT inv.id, inv.name, inv.reference, inv.purchase_price, inv.selling_price, inv.initial_quantity, inv.purchases, inv.sales, inv.stock_returns, inv.stock, inv.min_quantity, inv.bussines_id, inv.category_id, med.short_name as measure, cat.`name` as Categorias
             FROM inventario inv
-            INNER JOIN categorias cat
-            ON inv.category_id = cat.`Id_categoria`
+            INNER JOIN categorias cat ON inv.category_id = cat.`id`
+			INNER JOIN medidas med ON inv.measure_id = med.`id`
             WHERE inv.bussines_id = ?
             ORDER BY inv.`name` ASC";
 			try {
@@ -74,7 +74,7 @@
         }
         
         public function eliminar(){        
-            $this->sql="DELETE FROM inventario WHERE id=? AND bussines_id=?"; 
+            //$this->sql="DELETE FROM inventario WHERE id=? AND bussines_id=?"; 
             try {
 				$stm = $this->Conexion->prepare($this->sql);
 				$stm->bindParam(1, $this->id);
@@ -90,18 +90,29 @@
         }
         
         public function agregar(){ 
-            $this->sql = "INSERT INTO inventario(id,`name`,reference,purchase_price,selling_price,initial_quantity,purchases,sales,stock_returns,stock,min_quantity,bussines_id,category_id,measure) VALUES('$id','$name','$reference',$purchase_price,$selling_price,$initial_quantity,0,0,0,$initial_quantity,$min_quantity,$bussines_id,$category_id,'$measure')";
+            $this->sql = "INSERT INTO inventario(id,`name`,reference,purchase_price,selling_price,initial_quantity,stock,min_quantity,bussines_id,category_id,measure_id) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
             try {
 				$stm = $this->Conexion->prepare($this->sql);
-				$stm->bindParam(1, $this->bussines_id);
+				$stm->bindParam(1, $this->id);
+				$stm->bindParam(2, $this->name);
+				$stm->bindParam(3, $this->reference);
+				$stm->bindParam(4, $this->purchase_price);
+				$stm->bindParam(5, $this->selling_price);
+				$stm->bindParam(6, $this->initial_quantity);
+				$stm->bindParam(7, $this->stock);
+				$stm->bindParam(8, $this->min_quantity);
+				$stm->bindParam(9, $this->bussines_id);
+				$stm->bindParam(10, $this->category_id);
+				$stm->bindParam(11, $this->measure_id);
 				if($stm->execute()){
-				    return "Registro guardado con éxito";
+				    echo "Registro guardado con éxito";
 				}
 				
 			} catch (Exception $e) {
 				echo "Ocurrió un Error al guardar el producto. ".$e;
-			}     
-            
+			}    /* 
+			echo "agregando el producto";
+            */
         }
         
         public function agotados(){
