@@ -121,30 +121,41 @@
 
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="#" class="menu-link" id='inventario2' title='Revisar el Inventario' onclick="cargarinventario2('<?php echo $_SESSION['idNegocio'] ?>')">
+                  <a href="#" class="menu-link" id='inventario2' title='Revisar el Inventario' onclick="cargarInventario('<?php echo $_SESSION['idNegocio'] ?>')">
                     <i class="fa fa-fw fa-table"></i> Inventario
                   </a>
                 </li>
                 <li class="menu-item">
-                    <a href="#" id='ventas' title='Ingresar al modulo de Ventas' class="menu-link"  onclick="cargarventas('<?php echo $_SESSION['idNegocio'] ?>')">
+                    <a href="#" id='ventas' title='Ingresar al modulo de Ventas' class="menu-link"  onclick="cargarVentas('<?php echo $_SESSION['idNegocio'] ?>')">
                         <i class="fa fa-barcode"></i>
                         Ventas
                     </a>                 
                 </li>
                 <li class="menu-item">
-                  <a href="layouts-container.html" class="menu-link">
-                    <div data-i18n="Container">Container</div>
+                <a href="#" class="menu-link"  title='Ir al módulo de compras' onclick="cargarCompras('<?php echo $_SESSION['idNegocio'] ?>')">
+                    <i class="fa fa-shopping-basket"></i> Compras
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="layouts-fluid.html" class="menu-link">
-                    <div data-i18n="Fluid">Fluid</div>
-                  </a>
+                    <a href="#" title='Ingresar al modulo de devoluciones' class="menu-link"  onclick="cargarDevoluciones('<?php echo $_SESSION['idNegocio'] ?>')">
+                        <i class="fa fa-retweet"> </i>
+                        Devoluciones
+                    </a>
                 </li>
                 <li class="menu-item">
-                  <a href="layouts-blank.html" class="menu-link">
-                    <div data-i18n="Blank">Blank</div>
-                  </a>
+                    <a href="#" title='Ingresar al modulo de devoluciones' class="menu-link"  onclick="cargarAbonosClientes('<?php echo $_SESSION['idNegocio'] ?>')">
+                        <i  class="fa fa-fw fa-edit"> </i> Abonos a Clientes
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" title='Ingresar al modulo de devoluciones' class="menu-link"  onclick="cargarAbonosProveedores('<?php echo $_SESSION['idNegocio'] ?>')">
+                        <i class="fa fa-briefcase" aria-hidden="true"></i> Abonos a Proveedores
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" title='Ingresar al modulo de devoluciones' class="menu-link"  onclick="cargarGastos('<?php echo $_SESSION['idNegocio'] ?>')">
+                        <i class="fa fa-plug" aria-hidden="true"></i> Gastos y/o Servicios
+                    </a>
                 </li>
               </ul>
             </li>
@@ -767,7 +778,11 @@
 
     <!-- CDN sweetalert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    
+    <!-- CUSTOM CODE -->
     <script type="text/jscript" src="js/Acciones.js"></script>
-    <script src="js/productos.js"></script>
+    <script src="js/products.js"></script>
+    <script src="js/sales.js"></script>
   </body>
 </html>

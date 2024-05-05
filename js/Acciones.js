@@ -1,7 +1,4 @@
 
-$("#inventario").click(cargarinventario);
-$("#ventas").click(cargarventas);
-$("#compras").click(cargarcompras);
 $("#abonosc").click(cargarAbonosc);
 $("#abonosp").click(cargarAbonosp);
 $("#devoluciones").click(cargardevoluciones);
@@ -12,35 +9,7 @@ $("#proveedores").click(cargarProveedores);
 $("#clientes").click(cargarClientes);
 $("#gastos").click(cargarGastos); 
 
-function cargarinventario(){
-    $("#parte1").load('inventario.php');					
-}
 
-function cargarinventario2(idNegocio){
-    $("#bloquear").fadeIn();
-    $('#parte1').html("");
-    $.ajax({
-        type: "POST",
-        url: "Vistas/productos/inventario.php",
-        data: {"idNegocio":idNegocio},
-        success: function(data){
-            $('#parte1').html(data);
-            $("#bloquear").fadeOut();
-        },
-        error: function(err){
-            console.log("Error: "+err);
-            $("#bloquear").fadeOut();
-        }
-    });				
-}	
-
-function cargarventas(idNegocio){
-    $("#parte1").load('Movimientos.php',{modulo:'VENTA'},function(){
-        $("#factSig").load('Controlador/ctrlFactura.php',{modulo:'VENTA',accion:'facturaSiguiente'});
-        $("#contFactura").load('Controlador/ctrlFactura.php',{modulo:'VENTA', accion:'facturaRealSig'});
-    });
-    
-}	
 
 function cargarcompras(){
     $("#parte1").load('Movimientos.php',{modulo:'COMPRA'},function(){

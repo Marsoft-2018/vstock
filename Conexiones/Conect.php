@@ -17,66 +17,6 @@
     if ($_POST['Edparte']==1){
 		$ParteED='Inventario';
 	}
-    class Inventario extends Conectar{
-        private $sqlArticulo;
-        private $sqlTotales;
-        private $sqlAccion;
-        
-        public function Productos($idNegocio){
-            $this->sqlArticulo=mysql_query("SELECT inv.id_prod,inv.`ARTICULO`,inv.`REFERENCIA`,inv.`PRECIO_COMPRA`,inv.`PRECIO_VENTA`,inv.CANT_INICIAL, inv.COMPRAS, inv.VENTAS, inv.DEVOLUCIONES, inv.CANT_FINAL, inv.CANTIDAD_MIN, cat.`Categorias`, inv.medida
-            FROM inventario inv
-            INNER JOIN categorias cat
-            ON inv.`id_categoria`=cat.`Id_categoria`
-            where inv.IdNegocio = '".$idNegocio."'
-            ORDER BY inv.`ARTICULO` ASC;")  or die ("NO TRAJO PRODUCTOS");
-            return $this->sqlArticulo;
-        }
-        
-        public function editarArticulo($id){
-            $this->sqlArticulo=mysql_query("SELECT * FROM inventario WHERE `ID_Prod`=".$id.";");  
-            return $this->sqlArticulo;
-        }
-        
-        public function Totales(){
-            $this->Totales=mysql_query("select SUM(CANT_INICIAL),SUM(COMPRAS),SUM(VENTAS ),SUM(DEVOLUCIONES),SUM(CANT_FINAL) from inventario;") 
-            or die ("NO TRAJO LOS TOTALES DE LOS PRODUCTOS");
-            return $this->Totales;
-        }
-        
-               
-        public function modificar($campo,$clave,$valor){
-            //Consulta para actualizar los datos del articulo seleccionado
-            $this->sqlAccion=mysql_query("UPDATE inventario SET `$campo`='$valor' WHERE `ID_Prod`='$clave' ");
-            return $this->sqlAccion;
-        }
-        
-        public function Eliminar($idArticulo,$idNegocio){        
-            $this->sqlAccion=mysql_query("DELETE FROM inventario WHERE ID_Prod='$idArticulo' AND idNegocio=$idNegocio");
-            return $this->sqlAccion;
-        }
-        
-        public function Agregar($id_prod, $ARTICULO, $REFERENCIA, $PRECIO_COMPRA, $PRECIO_VENTA, $CANT_INICIAL, $CANTIDAD_MIN, $idNegocio, $id_categoria, $medida){ 
-            
-            try {
-               $this->sqlAccion = mysql_query("INSERT INTO inventario(ID_Prod,ARTICULO,REFERENCIA,PRECIO_COMPRA,PRECIO_VENTA,CANT_INICIAL,COMPRAS,VENTAS,DEVOLUCIONES,CANT_FINAL,CANTIDAD_MIN,IdNegocio,id_categoria,medida) VALUES('$id_prod','$ARTICULO','$REFERENCIA',$PRECIO_COMPRA,$PRECIO_VENTA,$CANT_INICIAL,0,0,0,$CANT_INICIAL,$CANTIDAD_MIN,$idNegocio,$id_categoria,'$medida')")or die("<div class='alert alert-danger alert-dismissable'>Error en la consulta: ".mysql_error()."</div>");    
-               //echo var_dump($_REQUEST);
-               echo "<div class='alert alert-success alert-dismissable'>";
-               echo    "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"; 
-               echo "Registro guardado con éxito";
-                echo "</div>";
-            } catch (Exception $e) {
-                echo "Error al tratar de guardar el registro: ".$e;
-                   
-            }       
-            
-        }
-        
-        public function nuevoPorCompra($id_prod, $ARTICULO, $REFERENCIA, $PRECIO_COMPRA, $PRECIO_VENTA, $cantidadCompra, $CANTIDAD_MIN, $idNegocio, $id_categoria, $medida){
-            $this->sqlAccion = mysql_query("INSERT INTO inventario(ID_Prod,ARTICULO,REFERENCIA,PRECIO_COMPRA,PRECIO_VENTA,CANT_INICIAL,COMPRAS,VENTAS,DEVOLUCIONES,CANT_FINAL,CANTIDAD_MIN,IdNegocio,id_categoria,medida) VALUES('$id_prod','$ARTICULO','$REFERENCIA',$PRECIO_COMPRA,$PRECIO_VENTA,0,$cantidadCompra,0,0,$cantidadCompra,$CANTIDAD_MIN,$idNegocio,$id_categoria,'$medida')");
-            return $this->sqlAccion;
-        }
-
-    }
     
     class verificaExistencias extends conectar{//con esta clase se verifica la cantidad de existencias en el inventario
         private $cantidadFinal;

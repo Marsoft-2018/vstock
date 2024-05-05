@@ -115,7 +115,7 @@
         }
         
         public function eliminar(){        
-            //$this->sql="DELETE FROM inventario WHERE id=? AND bussines_id=?"; 
+            $this->sql="DELETE FROM inventario WHERE id=? AND bussines_id=?"; 
             try {
 				$stm = $this->Conexion->prepare($this->sql);
 				$stm->bindParam(1, $this->id);

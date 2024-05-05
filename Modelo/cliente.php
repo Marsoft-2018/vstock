@@ -1,6 +1,6 @@
 <?php
 	require('../Conexiones/Conect.php');
-	class manejoCliente extends conectar{
+	class Cliente extends conectar{
 		/*
 			CREATE TABLE `clientes` (
 			  `idCliente` char(50) NOT NULL DEFAULT '0',

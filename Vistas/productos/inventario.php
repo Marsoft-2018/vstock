@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <?php
     session_start();
-    ///require("Conexiones/Conect.php");
-    require("../../Modelo/Conect.php");
-    require("../../Modelo/producto.php");
 ?>
 <html>
 
@@ -72,7 +69,7 @@
                         <tbody>
                             <?php
                                 $objInventario = new Producto();
-                                $objInventario->bussines_id = $_POST['idNegocio'];
+                                $objInventario->bussines_id = $bussines_id;
                                 foreach($objInventario->listar() as $producto){ ?>
                                     <tr style='font-size:10px;text-align: left;'>
                                         <td title='Código: <?php echo $producto['id']; ?>' ><?php echo $producto['id']; ?></td>

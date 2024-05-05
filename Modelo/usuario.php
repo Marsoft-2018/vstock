@@ -17,7 +17,7 @@
 		public function login() {
 			$con = 0;
 			$datos = array();
-			$this->sql = "SELECT us.*,CONCAT(us.`primerNombre`,' ',us.`segundoNombre`,' ',us.`primerApellido`,' ',us.`segundoApellido`) AS userFullName,ng.`NOMBRE` AS nombreNegocio,ng.`LOGO` AS logoNegocio FROM user1 us
+			$this->sql = "SELECT us.*,CONCAT(us.`primerNombre`,' ',us.`segundoNombre`,' ',us.`primerApellido`,' ',us.`segundoApellido`) AS userFullName,ng.`NOMBRE` AS nombreNegocio,ng.`LOGO` AS logoNegocio FROM users us
 				INNER JOIN negocio ng ON ng.`IdNegocio` = us.`IdNegocio` Where us.Usuario= ? AND us.Password= ? AND us.estado='Activo'";
 			try {
 				$stm = $this->Conexion->prepare($this->sql);
@@ -59,7 +59,7 @@
 		}
 
 		public function agregar(){
-			$this->sql ="INSERT INTO user1(`Usuario`,`Password`,`Rol`,`IdNegocio`,`primerNombre`,`segundoNombre`,`primerApellido`,`segundoApellido`,`email`,`estado`) VALUES(?,?,?,?,?,?,?,?,?,?)";
+			$this->sql ="INSERT INTO users(`Usuario`,`Password`,`Rol`,`IdNegocio`,`primerNombre`,`segundoNombre`,`primerApellido`,`segundoApellido`,`email`,`estado`) VALUES(?,?,?,?,?,?,?,?,?,?)";
 			try {
 				$stm = $this->Conexion->prepare($this->sql);
 				$stm->bindParam(1,$this->Usuario);
@@ -83,7 +83,7 @@
 		}
 
 		public function desactivar(){
-			$this->sql ="UPDATE user1 SET estado = 2 WHERE Usuario = ? ";
+			$this->sql ="UPDATE users SET estado = 2 WHERE Usuario = ? ";
 			try {
 				$stm = $this->Conexion->prepare($this->sql);
 				$stm->bindParam(1,$this->Usuario);
@@ -94,7 +94,7 @@
 		}
 
 		public function eliminar(){
-			$this->sql ="DELETE FROM user1 WHERE idUsuario= ?";
+			$this->sql ="DELETE FROM users WHERE idUsuario= ?";
 			try {
 				$stm = $this->Conexion->prepare($this->sql);
 				$stm->bindParam(1,$this->idUsuario);
