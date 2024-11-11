@@ -1,0 +1,41 @@
+/* Estilos para pcultar y mostrar la factura a imprimir*/
+
+.facturaImp {
+    display: none;
+}
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+    #capaPagina {
+        visibility: hidden
+    }
+
+    #facturaImprimir * {
+        visibility: visible;
+    }
+
+    #facturaImprimir {
+        position: absolute;
+        top: 10px;
+        left: 0px;
+        height: auto;
+        width: 90%;
+    }
+
+    .facturaImp {
+        display: block;
+        visibility: visible;
+    }
+}
+
+.btn-acciones{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 1;
+
+}
