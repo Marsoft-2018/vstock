@@ -15,7 +15,7 @@
 		private $sql;
         
         public function add(){ 
-            $this->sql = "INSERT INTO sales_invoices(`id`,`customer_id`,date_at,amount,`type`,form_pay,`status`) VALUES(?,?,?,?,?,?)";
+            $this->sql = "INSERT INTO sales_invoices(`id`,`customer_id`,date_at,amount,`type`,form_pay,`status`) VALUES(?,?,?,?,?,?,?)";
             try {
 				$stm = $this->Conexion->prepare($this->sql);
 				$stm->bindParam(1, $this->id);

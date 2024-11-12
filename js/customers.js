@@ -70,6 +70,7 @@ function newCustomer(bussines_id) {
       });
     });
 }
+
 function prepareCustomer(bussines_id, accion) {
   switch (accion) {
     case "new":
@@ -81,6 +82,7 @@ function prepareCustomer(bussines_id, accion) {
   }
   return false;
 }
+
 function addCustomer(bussines_id) {
   var formulario = document.querySelector("#formCustomer");
   var data = new FormData(formulario);

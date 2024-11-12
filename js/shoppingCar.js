@@ -1,5 +1,5 @@
 let cart = [];
-
+let totalPrice = 0;
 // Función para cargar los productos en el select desde la base de datos
 async function loadProducts() {
     try {
@@ -82,7 +82,7 @@ function displayCart() {
     console.log(cart);
     const cartBody = document.getElementById("cartBody");
     cartBody.innerHTML = ""; // Limpiar contenido previo
-    let totalPrice = 0;
+    totalPrice = 0;
     cart.forEach((item, index) => {
         const subtotal = item[0].selling_price * item.quantity;
         totalPrice += subtotal;
@@ -103,12 +103,24 @@ function displayCart() {
 
 // Función para eliminar un producto del carrito por su índice
 function removeFromCart(index) {
-cart.splice(index, 1); // Elimina el producto del array usando su índice
-displayCart(); // Actualiza la vista del carrito
+    cart.splice(index, 1); // Elimina el producto del array usando su índice
+    displayCart(); // Actualiza la vista del carrito
 }
 
+function prepareInvoice(bussines_id, accion) {
+  switch (accion) {
+    case "new":
+      addSale(bussines_id);
+      break;
+    case "edit":
+      //updateSale(bussines_id);
+      break;
+  }
+  return false;
+}
 // Finaliza la compra y envía los datos del carrito a la base de datos
-async function finalizarCompra() {
+async function addSale(bussines_id) {
+  /*
     try {
         const response = await fetch('guardarFactura.php', {
             method: 'POST',
@@ -126,6 +138,77 @@ async function finalizarCompra() {
     } catch (error) {
         console.error("Error al finalizar compra:", error);
     }
+  */
+
+  //Datos para reemplazar con los datos de la factura
+  var formulario = document.querySelector("#formInvoice");
+  var data = new FormData(formulario);
+  data.append("accion", "add");
+  data.append("bussines_id", bussines_id);
+  data.append("objCar",JSON.stringify(cart));
+  data.append("objCar-2",cart);//Prueba de objeto
+  data.append("amount",totalPrice);
+
+
+  // axios
+  //   .post("Controlador/ctrlSales.php", data)
+  //   .then(function (res) {
+  //     console.log(res.data);
+  //     if (res.status == 200) {
+  //       Swal.fire({
+  //         position: "bottom-end",
+  //         icon: "success",
+  //         title: res.data,
+  //         showConfirmButton: false,
+  //         timer: 1500,
+  //       });
+  //       cart = []; // Vaciar carrito
+  //       displayCart();
+  //     }
+  //   })
+  //   .catch(function (err) {
+  //     Swal.fire({
+  //       position: "left-end",
+  //       icon: "error",
+  //       title: "Error",
+  //       text: err,
+  //     });
+  //   });
+
+  // Obtener el formulario y capturar sus datos
+  const form = document.getElementById("formInvoice");
+  const formData = new FormData(form); // Captura el contenido del formulario
+  const formObject = Object.fromEntries(formData.entries()); // Convierte a un objeto
+
+  // Combina los datos del carrito y el formulario en un solo objeto
+  const payload = {
+      cart: cart,
+      invoiceDetails: formObject // Agrega los detalles de facturación del formulario
+  };
+
+  try {
+      const response = await axios.post('Controlador/ctrlSales.php', payload, {
+          headers: { 'Content-Type': 'application/json' }
+      });
+
+      if (response.data.success) {
+        Swal.fire({
+          position: "bottom-end",
+          icon: "success",
+          title: res.data,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        cart = []; // Vaciar carrito
+        displayCart();
+        form.reset(); // Opcional: Resetear el formulario tras la compra
+      } else {
+          alert("Error al procesar la compra");
+      }
+  } catch (error) {
+      console.error("Error al finalizar compra:", error);
+  }
+  return false;
 }
 
 // Cargar productos al inicio

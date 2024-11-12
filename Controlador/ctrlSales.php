@@ -10,26 +10,39 @@
         case 'add':
             $objInvoice = new SaleInvoice();
             $objCustomer = new Customer();
-            $objCustomer->id = $_POST['customer_id'];
-            if(count($objCustomer->load()) == 0){
-				$objCustomer->name = $_POST['name'];
-				$objCustomer->address = $_POST['address'];
-				$objCustomer->phone = $_POST['phone'];
-				$objCustomer->city = $_POST['city'];
-				$objCustomer->email = $_POST['email'];
-                $objCustomer->add();
-            }
+                /*$objCustomer->id = $_POST['customer_id'];
+                if(count($objCustomer->load()) == 0){
+                    $objCustomer->name = $_POST['name'];
+                    $objCustomer->address = $_POST['address'];
+                    $objCustomer->phone = $_POST['phone'];
+                    $objCustomer->city = $_POST['city'];
+                    $objCustomer->email = $_POST['email'];
+                    $objCustomer->add();
+                }
 
-            $objInvoice->id = $_POST['id'];      
-            $objInvoice->customer_id = $_POST['customer_id'];
-            $objInvoice->date_at = $_POST['date_at'];
-            $objInvoice->amount = $_POST['amount'];
-            $objInvoice->type = $_POST['type']; //contado o a crédito
-            $objInvoice->form_pay = $_POST['form_pay'];
-            $objInvoice->status = $_POST['status'];
-            $objInvoice->reg_date = $_POST['reg_date'];
-            $objInvoice->objProduct = $_POST['objProduct'];
-            $objInvoice->add();
+                $objInvoice->id = $_POST['id'];      
+                $objInvoice->customer_id = $_POST['customer_id'];
+                $objInvoice->date_at = $_POST['date_at'];
+                $objInvoice->amount = $_POST['amount'];
+                $objInvoice->type = $_POST['type']; //contado o a crédito
+                $objInvoice->form_pay = $_POST['form_pay'];
+                $invoiceStatus = 'pagada';
+                if($_POST['type'] != 'contado'){
+                    $invoiceStatus = 'por pagar';
+                }
+                $objInvoice->status = $invoiceStatus;
+                $objCar = json_decode($_POST['objCar']);
+            */
+            echo "Carrito del primer tipo ---";
+            var_dump($data['cart']);
+            // $objInvoice->objProduct = $_POST['objCar'];
+            // foreach ($objCar as $product) {
+            //     echo "Codigo: - ".$product['id'];
+            //     echo "Nombre: - ".$product['name'];
+            //     //echo "----------------- ".$product['subTotalAmount'];
+            //     # code...
+            // }
+            //$objInvoice->add();
 
             
             
