@@ -82,7 +82,7 @@
                                         <td title='Código: <?php echo $product['id']; ?>' ><?php echo $product['id']; ?></td>
                                         <td title='Nombre del Articulo'><?php echo $product['name']; ?></td>
                                         <td title='Referencia'><?php echo $product['reference']; ?></td>
-                                        <td title='Categoria'><?php echo $product['Categorias']; ?></td>
+                                        <td title='Categoria'><?php echo $product['category']; ?></td>
                                         <td title='Medida'><?php echo $product['measure']; ?></td><!---->
                                         <td style='text-align: right;' title='Precio de Compra'>$ <?php echo number_format( $product['purchase_price'], 0, ',', '.'); ?></td>
                                         <td style='text-align: right;' title='Precio de Venta'>$ <?php echo number_format( $product['selling_price'], 0, ',', '.'); ?></td>

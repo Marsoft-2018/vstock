@@ -26,28 +26,6 @@ async function addSelectedProduct() {
     try {
     const response = await fetch(`Controlador/ctrlProducts.php?id=${productId}&bussines_id=1&accion=load`);
     const product = await response.json();
-       /* var data = {
-            accion: "load",
-            bussines_id: 1,
-            id: productId,
-          };
-        
-          const product = "";
-          axios.post("Controlador/ctrlProducts.php", data).then(function (res) {
-              //console.log(res.data);
-              if (res.status == 200) {
-                product = res.data;
-              }
-            })
-            .catch(function (err) {
-              Swal.fire({
-                position: "left-end",
-                icon: "error",
-                title: "Error",
-                text: err,
-              });
-            });
-*/
         // Añadir el producto al carrito con la cantidad especificada
         const existingProduct = cart.find(item => item[0].id === product[0].id);
         if (existingProduct) {
@@ -60,22 +38,6 @@ async function addSelectedProduct() {
         console.error("Error al agregar producto al carrito:", error);
     }
 }
-
-// Muestra los productos en el carrito y calcula el total
-// function displayCart() {
-//     console.log(cart);
-    
-//     const cartDiv = document.getElementById("cart");
-//     cartDiv.innerHTML = "";
-//     let totalPrice = 0;
-//     cart.forEach(item => {
-//         totalPrice += item[0].price * item.quantity;
-//         const itemDiv = document.createElement("<tr>");
-//         itemDiv.appendChild = `<td>${item[0].id} </td><td>${item[0].name} </td><td> ${item.quantity} </td><td> $${item[0].selling_price}</td><td> $${(item[0].selling_price * item.quantity).toFixed(2)}</td>`;
-//         cartDiv.appendChild(itemDiv);
-//     });
-//     document.getElementById("total-price").innerText = `Total: $${totalPrice.toFixed(2)}`;
-// }
 
 // Muestra los productos en el carrito en el tbody y calcula el total
 function displayCart() {
@@ -118,97 +80,48 @@ function prepareInvoice(bussines_id, accion) {
   }
   return false;
 }
+
 // Finaliza la compra y envía los datos del carrito a la base de datos
-async function addSale(bussines_id) {
-  /*
+async function addSale(bussines_id) {    
+    // Obtener el formulario y capturar sus datos
+    const form = document.getElementById("formInvoice");
+    const formData = new FormData(form); // Captura el contenido del formulario
+    const formObject = Object.fromEntries(formData.entries()); // Convierte a un objeto
+
+  // Combina los datos del carrito y el formulario en un solo objeto
+    const payload = {
+        accion: "add",
+        bussines_id: bussines_id,
+        amount: totalPrice,
+        cart: cart,
+        invoiceDetails: formObject // Agrega los detalles de facturación del formulario
+    };
+
     try {
-        const response = await fetch('guardarFactura.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(cart),
+        const response = await axios.post('Controlador/ctrlSales.php', payload, {
+            headers: { 'Content-Type': 'application/json' }
         });
-        const result = await response.json();
-        if (result.success) {
-            alert("Compra realizada exitosamente");
+        console.log(response.data.success);
+        console.log(response.data.message);
+        
+        if(response.data.success) {
+            Swal.fire({
+                position: "bottom-end",
+                icon: "success",
+                title: response.data.message,
+                showConfirmButton: false,
+                timer: 1500,
+            });
             cart = []; // Vaciar carrito
             displayCart();
+            form.reset(); // Opcional: Resetear el formulario tras la compra
         } else {
             alert("Error al procesar la compra");
         }
     } catch (error) {
         console.error("Error al finalizar compra:", error);
     }
-  */
-
-  //Datos para reemplazar con los datos de la factura
-  var formulario = document.querySelector("#formInvoice");
-  var data = new FormData(formulario);
-  data.append("accion", "add");
-  data.append("bussines_id", bussines_id);
-  data.append("objCar",JSON.stringify(cart));
-  data.append("objCar-2",cart);//Prueba de objeto
-  data.append("amount",totalPrice);
-
-
-  // axios
-  //   .post("Controlador/ctrlSales.php", data)
-  //   .then(function (res) {
-  //     console.log(res.data);
-  //     if (res.status == 200) {
-  //       Swal.fire({
-  //         position: "bottom-end",
-  //         icon: "success",
-  //         title: res.data,
-  //         showConfirmButton: false,
-  //         timer: 1500,
-  //       });
-  //       cart = []; // Vaciar carrito
-  //       displayCart();
-  //     }
-  //   })
-  //   .catch(function (err) {
-  //     Swal.fire({
-  //       position: "left-end",
-  //       icon: "error",
-  //       title: "Error",
-  //       text: err,
-  //     });
-  //   });
-
-  // Obtener el formulario y capturar sus datos
-  const form = document.getElementById("formInvoice");
-  const formData = new FormData(form); // Captura el contenido del formulario
-  const formObject = Object.fromEntries(formData.entries()); // Convierte a un objeto
-
-  // Combina los datos del carrito y el formulario en un solo objeto
-  const payload = {
-      cart: cart,
-      invoiceDetails: formObject // Agrega los detalles de facturación del formulario
-  };
-
-  try {
-      const response = await axios.post('Controlador/ctrlSales.php', payload, {
-          headers: { 'Content-Type': 'application/json' }
-      });
-
-      if (response.data.success) {
-        Swal.fire({
-          position: "bottom-end",
-          icon: "success",
-          title: res.data,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        cart = []; // Vaciar carrito
-        displayCart();
-        form.reset(); // Opcional: Resetear el formulario tras la compra
-      } else {
-          alert("Error al procesar la compra");
-      }
-  } catch (error) {
-      console.error("Error al finalizar compra:", error);
-  }
-  return false;
+    return false;
 }
 
 // Cargar productos al inicio

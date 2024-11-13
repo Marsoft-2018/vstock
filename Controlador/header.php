@@ -3,8 +3,8 @@
     //var_dump($_REQUEST);
     $data = json_decode(file_get_contents("php://input"), true);
     $accion = "";
-    if(isset($data->accion)){
-        $accion = $data->accion;
+    if(isset($data['accion'])){
+        $accion = $data['accion'];
     }
     if(isset($_REQUEST['accion'])){
         $accion=$_REQUEST['accion'];

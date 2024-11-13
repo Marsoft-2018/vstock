@@ -10,13 +10,11 @@
         public $form_pay;
         public $status;
         public $reg_date;
-		public $objCustomer;
-		public $objProduct;
+		public $dataInvoice;
+		public $cart; //datos del carrito
 		private $sql;
         
-        public function add(){ 
-            $this->sql = "INSERT INTO sales_invoices(`id`,`customer_id`,date_at,amount,`type`,form_pay,`status`) VALUES(?,?,?,?,?,?,?)";
-            try {
+        public function add(){   /*try {
 				$stm = $this->Conexion->prepare($this->sql);
 				$stm->bindParam(1, $this->id);
 				$stm->bindParam(2, $this->customer_id);
@@ -30,7 +28,49 @@
 				}				
 			} catch (Exception $e) {
 				echo "Ocurrió un Error al guardar el product. ".$e;
-			}   
+			}   */
+
+            $this->sql = "INSERT INTO sales_invoices(`id`,`customer_id`,date_at,amount,`type`,form_pay,`status`) VALUES(?,?,?,?,?,?,?)";
+          
+			try {		
+				// Iniciar una transacción
+				$this->Conexion->beginTransaction();
+		
+				// Insertar los datos de la factura
+				$stmt = $this->Conexion->prepare($this->sql);
+				$stmt->execute(
+					[$this->dataInvoice['id'],
+					$this->dataInvoice['customer_id'],
+					$this->dataInvoice['date_at'],
+					$this->amount,
+					$this->dataInvoice['type'],
+					$this->dataInvoice['form_pay'],
+					$this->status
+				]);
+		
+				// Obtener el ID de la factura recién creada
+				$invoiceId = $this->Conexion->lastInsertId();
+		
+				// Insertar cada producto del carrito en la tabla de detalles de la factura
+				 $stmt = $this->Conexion->prepare("INSERT INTO sale_invoice_details(`invoice_id`,product_id,`quantity`,unit_value,`subtotal_amount`) VALUES(?,?,?,?,?)");
+		
+				foreach ($this->cart as $item) {
+					$subtotal_amount = $item['quantity'] * $item['0']['selling_price'];
+					$stmt->execute([$invoiceId, $item['0']['id'], $item['quantity'], $item['0']['selling_price'],$subtotal_amount]);
+				}
+				/**/
+				// Confirmar la transacción
+				$this->Conexion->commit();
+		
+				// Respuesta de éxito
+				echo json_encode(['success' => true, 'message' => 'Factura guardada exitosamente']);
+		
+			} catch (Exception $e) {
+				// Si hay un error, deshacer la transacción
+				$this->Conexion->rollBack();
+				echo json_encode(['success' => false, 'message' => 'Error al guardar la factura', 'error' => $e->getMessage()]);
+			}
+
         }  
 
 		public function addDetail(){ 

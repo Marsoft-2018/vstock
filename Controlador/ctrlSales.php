@@ -8,62 +8,53 @@
 
     switch ($accion) {
         case 'add':
-            $objInvoice = new SaleInvoice();
+
+            $dataInvoice = $data['invoiceDetails'];//datos relacionados con la factura como numero, cliente, tipo y forma de pago.
+            $cart = $data['cart'];// datos relacionados con los productos agregados a la factura.
+
             $objCustomer = new Customer();
-                /*$objCustomer->id = $_POST['customer_id'];
-                if(count($objCustomer->load()) == 0){
-                    $objCustomer->name = $_POST['name'];
-                    $objCustomer->address = $_POST['address'];
-                    $objCustomer->phone = $_POST['phone'];
-                    $objCustomer->city = $_POST['city'];
-                    $objCustomer->email = $_POST['email'];
-                    $objCustomer->add();
-                }
+            $objCustomer->id = $dataInvoice['customer_id'];
+            if(count($objCustomer->load()) == 0){
+                $objCustomer->name = $dataInvoice['name'];
+                $objCustomer->address = $dataInvoice['address'];
+                $objCustomer->phone = $dataInvoice['phone'];
+                $objCustomer->city = $dataInvoice['city'];
+                $objCustomer->email = $dataInvoice['email'];
+                $objCustomer->add();
+            }
 
-                $objInvoice->id = $_POST['id'];      
-                $objInvoice->customer_id = $_POST['customer_id'];
-                $objInvoice->date_at = $_POST['date_at'];
-                $objInvoice->amount = $_POST['amount'];
-                $objInvoice->type = $_POST['type']; //contado o a crédito
-                $objInvoice->form_pay = $_POST['form_pay'];
-                $invoiceStatus = 'pagada';
-                if($_POST['type'] != 'contado'){
-                    $invoiceStatus = 'por pagar';
-                }
-                $objInvoice->status = $invoiceStatus;
-                $objCar = json_decode($_POST['objCar']);
-            */
-            echo "Carrito del primer tipo ---";
-            var_dump($data['cart']);
-            // $objInvoice->objProduct = $_POST['objCar'];
-            // foreach ($objCar as $product) {
-            //     echo "Codigo: - ".$product['id'];
-            //     echo "Nombre: - ".$product['name'];
-            //     //echo "----------------- ".$product['subTotalAmount'];
-            //     # code...
-            // }
-            //$objInvoice->add();
+            $invoiceStatus = 'pagada';
+            if($dataInvoice['type'] != 'contado'){
+                $invoiceStatus = 'por pagar';
+            }
 
-            
-            
-           
-            break;
+            $objInvoice = new SaleInvoice();
+            $objInvoice->dataInvoice = $dataInvoice;  
+            $objInvoice->cart = $cart;  
+            $objInvoice->amount = $data['amount'];  
+            $objInvoice->status = $invoiceStatus;
+            $objInvoice->add();           
+        break;
+
         case 'edit':
                         
-            break;
+        break;
+
         case 'update':
             
-            break;
+        break;
+
         case 'delete':
                   
-            break;
+        break;
+
         case 'new':
-            $bussines_id = $data->bussines_id;
+            $bussines_id = $data['bussines_id'];
             $objCustomer = new Customer();
             $objCustomer->bussines_id = $bussines_id;
             $objInvoice = new SaleInvoice();
             include("../Vistas/movimientos/sales/formulario.php");     
-            break;
+        break;
     }
 
 

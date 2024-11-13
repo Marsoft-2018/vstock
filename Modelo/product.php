@@ -18,9 +18,9 @@
 		private $sql;
         
         public function listar(){
-            $this->sql="SELECT prod.id, prod.name, prod.reference, prod.purchase_price, prod.selling_price, prod.initial_quantity, prod.purchases, prod.sales, prod.stock_returns, prod.stock, prod.min_quantity, prod.bussines_id, prod.category_id, med.short_name as measure, cat.`name` as Categorias
+            $this->sql="SELECT prod.id, prod.name, prod.reference, prod.purchase_price, prod.selling_price, prod.initial_quantity, prod.purchases, prod.sales, prod.stock_returns, prod.stock, prod.min_quantity, prod.bussines_id, prod.category_id, med.short_name as measure, cat.`name` as category
             FROM products prod
-            INNER JOIN categorias cat ON prod.category_id = cat.`id`
+            INNER JOIN categories cat ON prod.category_id = cat.`id`
 			INNER JOIN medidas med ON prod.measure_id = med.`id`
             WHERE prod.bussines_id = ?
             ORDER BY prod.`name` ASC";

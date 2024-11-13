@@ -16,12 +16,12 @@
             break;
         case 'edit':
             $objProduct = new Product();
-            $objProduct->bussines_id = $data->bussines_id;
-            $objProduct->id = $data->id;
+            $objProduct->bussines_id = $data['bussines_id'];
+            $objProduct->id = $data['id'];
             $objCategory = new Category();
-            $objCategory->bussines_id = $data->bussines_id;
+            $objCategory->bussines_id = $data['bussines_id'];
             $objMedida = new Medida();
-            $objMedida->bussines_id = $data->bussines_id;
+            $objMedida->bussines_id = $data['bussines_id'];
             include("../Vistas/products/formulario.php");  
             
             break;
@@ -30,29 +30,29 @@
             break;
         case 'delete':
             $objProduct = new Product();
-            $objProduct->id = $data->id;
-            $objProduct->bussines_id = $data->bussines_id;
+            $objProduct->id = $data['id'];
+            $objProduct->bussines_id = $data['bussines_id'];
             $objProduct->delete();         
             break;
         case 'new':
             $objCategory = new Category();
-            $objCategory->bussines_id = $data->bussines_id;
+            $objCategory->bussines_id = $data['bussines_id'];
             $objMedida = new Medida();
-            $objMedida->bussines_id = $data->bussines_id;
+            $objMedida->bussines_id = $data['bussines_id'];
             include("../Vistas/products/formulario.php");     
             break;
         case 'index':
             // $objCategory = new Category();
-            // $objCategory->bussines_id = $data->bussines_id;
+            // $objCategory->bussines_id = $data['bussines_id'];
             // $objMedida = new Medida();
-            // $objMedida->bussines_id = $data->bussines_id;
-            $bussines_id = $data->bussines_id;
+            // $objMedida->bussines_id = $data['bussines_id'];
+            $bussines_id = $data['bussines_id'];
             include("../Vistas/products/index.php");     
             break;
         case 'quantity_stock':
             $objProduct = new Product();
-            $objProduct->id = $data->product_id;
-            $objProduct->bussines_id = $data->bussines_id;
+            $objProduct->id = $data['product_id'];
+            $objProduct->bussines_id = $data['bussines_id'];
             ;   
             foreach($objProduct->load() as $product){
                 if($product['stock'] <= $product['min_quantity']){
