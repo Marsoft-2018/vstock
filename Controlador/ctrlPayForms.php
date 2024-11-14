@@ -5,7 +5,7 @@
     switch ($accion) {
         case 'load':
             $objPayForm = new PayForm();
-            $objPayForm->id =  $data->id;
+            $objPayForm->id =  $data['id'];
             echo json_encode($objPayForm->load());        
             break;
         case 'listAll':
@@ -14,7 +14,7 @@
             break;
         case 'listFilter':
             $objPayForm = new PayForm();
-            $objPayForm->type_sale = $data->type_sale;
+            $objPayForm->type_sale = $data['type_sale'];
             echo json_encode($objPayForm->listFilter());        
             break;
         case 'add':
@@ -22,7 +22,7 @@
             break;
         case 'edit':
             $objPayForm = new PayForm();
-            $objPayForm->id = $data->id;
+            $objPayForm->id = $data['id'];
             include("../Vistas/PayForms/formulario.php");  
             
             break;
@@ -31,7 +31,7 @@
             break;
         case 'delete':
             $objPayForm = new PayForm();
-            $objPayForm->id = $data->id;
+            $objPayForm->id = $data['id'];
             $objPayForm->delete();         
             break;
         case 'new':

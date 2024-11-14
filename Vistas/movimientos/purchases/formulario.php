@@ -11,20 +11,20 @@
     //     $readonly = "readonly";
     // }
 
-    // if(isset($objCustomer)){
-    //     foreach ($objCustomer->load() as $customer) {
-    //         $id = $customer['id'];
-    //         $name = $customer['name'];
-    //         $address = $customer['address'];
-    //         $phone = $customer['phone'];
-    //         $city = $customer['city'];
-    //         $email = $customer['email'];
+    // if(isset($objsupplier)){
+    //     foreach ($objsupplier->load() as $supplier) {
+    //         $id = $supplier['id'];
+    //         $name = $supplier['name'];
+    //         $address = $supplier['address'];
+    //         $phone = $supplier['phone'];
+    //         $city = $supplier['city'];
+    //         $email = $supplier['email'];
     //     }
     // }
 ?>
-<h2>MODULO DE VENTAS</h2>
+<h2>MODULO DE COMPRAS</h2>
 <hr>
-<form id="formInvoice" method="post" onsubmit="return prepareInvoice('<?php echo $_SESSION['idNegocio']; ?>','<?php echo $accion; ?>')">
+<form id="formPurchaseInvoice" method="post" onsubmit="return preparePurchaseInvoice('<?php echo $_SESSION['idNegocio']; ?>','<?php echo $accion; ?>')">
     <div id='Contenedor' class='container'>       
             <div class="panel panel-">
                 <div class="panel-heading "><h4>Datos Iniciales de la Factura</h4></div>
@@ -32,23 +32,23 @@
                     <div class="row">
                         <div class="col-md-4">
                             <label>Factura No.</label>
-                            <input type="text" class='form-control' name="id" id="id" value="<?php echo $objInvoice->maxId(); ?>" readonly>
+                            <input type="text" class='form-control' name="id" id="id" value="<?php echo $objInvoice->maxId(); ?>">
                         </div>
                         <div class="col-md-3">
                         <label>Fecha:</label>
                         <input type='date' class='form-control' value='<?php echo date("Y-m-d") ?>' name='date_at' id='date_at'/>
                         </div>
                         <div class="col-md-5">
-                            <label>Elija el cliente</label>
+                            <label>Elija el proveedor</label>
                             <div class="input-group mb-3">
-                                <input type='text' value='' name='customerSelect' id='customerSelect' class='col-md-2 form-control' list='customersList' ondblclick='limpiar(this.id)' onchange="loadCustomerData()">
-                                <button class="btn btn-outline-secondary" type="button" id="button-addon2"  data-bs-toggle="modal" data-bs-target=".exampleModalCenter" onclick="loadCustomerData()"><i class="fa fa-search"></i></button>
+                                <input type='text' value='' name='supplierSelect' id='supplierSelect' class='col-md-2 form-control' list='suppliersList' ondblclick='limpiar(this.id)' onchange="loadSupplierData()">
+                                <button class="btn btn-outline-secondary" type="button" id="button-addon2"  data-bs-toggle="modal" data-bs-target=".exampleModalCenter" onclick="loadSupplierData()"><i class="fa fa-search"></i></button>
                             
-                                <datalist id='customersList' style="width: 100%">
+                                <datalist id='suppliersList' style="width: 100%">
                                     <?php
-                                        foreach ($objCustomer->list() as $customer) {
+                                        foreach ($objSupplier->list() as $supplier) {
                                     ?>
-                                        <option value="<?php echo $customer['id'] ?>"> <?php echo $customer['name'] ?>
+                                        <option value="<?php echo $supplier['id'] ?>"> <?php echo $supplier['name'] ?>
                                     <?php
                                         }
                                     ?>
@@ -59,11 +59,11 @@
                 </div>
             </div>
             <div class="mt-4">
-                <h4>Datos Básicos del cliente </h4>
+                <h4>Datos Básicos del Proveedor </h4>
                 <div class="row mb-3">
                     <div class="col-sm-3">
                         <label for="id" class="col-form-label">No. Documento</label>
-                        <input type="text" value="1" name="customer_id" class="form-control" id="customer_id" onFocus='limpiar(this.id)'>
+                        <input type="text" value="1" name="supplier_id" class="form-control" id="supplier_id" onFocus='limpiar(this.id)'>
                     </div>
                     <div class="col-sm-3">
                         <label for="name" class="col-form-label">Nombre</label>
@@ -205,7 +205,7 @@
 </form>
 <script>
     $(document).ready(function() {
-        $('#customer_id').select2();
+        $('#supplier_id').select2();
     });
 </script>
 

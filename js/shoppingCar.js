@@ -1,5 +1,30 @@
 let cart = [];
 let totalPrice = 0;
+
+function indexSales(bussines_id) {
+    cart = [];
+    totalPrice = 0;
+    var seccion_modulo = document.querySelector("#parte1");
+    var data = {
+        accion: "new",
+        bussines_id: bussines_id,
+    };
+
+    axios.post("Controlador/ctrlSales.php", data).then(function (res) {
+    //console.log(res.data);
+    if (res.status == 200) {
+        seccion_modulo.innerHTML = res.data;
+    }
+    })
+    .catch(function (err) {
+    Swal.fire({
+        position: "left-end",
+        icon: "error",
+        title: "Error",
+        text: err,
+    });
+    });
+}
 // Función para cargar los productos en el select desde la base de datos
 async function loadProducts() {
     try {
@@ -41,7 +66,7 @@ async function addSelectedProduct() {
 
 // Muestra los productos en el carrito en el tbody y calcula el total
 function displayCart() {
-    console.log(cart);
+    
     const cartBody = document.getElementById("cartBody");
     cartBody.innerHTML = ""; // Limpiar contenido previo
     totalPrice = 0;
@@ -101,9 +126,7 @@ async function addSale(bussines_id) {
         const response = await axios.post('Controlador/ctrlSales.php', payload, {
             headers: { 'Content-Type': 'application/json' }
         });
-        console.log(response.data.success);
-        console.log(response.data.message);
-        
+
         if(response.data.success) {
             Swal.fire({
                 position: "bottom-end",
@@ -115,6 +138,8 @@ async function addSale(bussines_id) {
             cart = []; // Vaciar carrito
             displayCart();
             form.reset(); // Opcional: Resetear el formulario tras la compra
+            loadMaxId();
+           
         } else {
             alert("Error al procesar la compra");
         }
@@ -122,6 +147,23 @@ async function addSale(bussines_id) {
         console.error("Error al finalizar compra:", error);
     }
     return false;
+}
+
+async function loadMaxId(){
+    const data = {
+        accion: "loadMaxId"
+    };
+
+    try {
+        const response = await axios.post('Controlador/ctrlSales.php', data, {
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (response.status == 200) {
+            document.getElementById("id").value =  response.data;
+        }
+    } catch (error) {
+        console.error("Error al cargar proxima factura:", error);
+    }
 }
 
 // Cargar productos al inicio

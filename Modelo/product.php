@@ -17,7 +17,7 @@
         public $measure_id;
 		private $sql;
         
-        public function listar(){
+        public function list(){
             $this->sql="SELECT prod.id, prod.name, prod.reference, prod.purchase_price, prod.selling_price, prod.initial_quantity, prod.purchases, prod.sales, prod.stock_returns, prod.stock, prod.min_quantity, prod.bussines_id, prod.category_id, med.short_name as measure, cat.`name` as category
             FROM products prod
             INNER JOIN categories cat ON prod.category_id = cat.`id`

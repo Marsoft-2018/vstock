@@ -6,7 +6,7 @@
         
         case 'load':
             $objCustomer = new Customer();
-            $objCustomer->id = $data->id;
+            $objCustomer->id = $data['id'];
             echo json_encode($objCustomer->load());    
         break;
 
@@ -16,8 +16,8 @@
 
         case 'edit':
             $objCustomer = new Customer();
-            //$objCustomer->bussines_id = $data->bussines_id;
-            $objCustomer->id = $data->id;
+            //$objCustomer->bussines_id = $data['bussines_id'];
+            $objCustomer->id = $data['id'];
             include("../Vistas/customers/formulario.php");             
         break;
 
@@ -26,8 +26,8 @@
         break;
         case 'delete':
             $objCustomer = new Customer();
-            $objCustomer->id = $data->id;
-            $objCustomer->bussines_id = $data->bussines_id;
+            $objCustomer->id = $data['id'];
+            $objCustomer->bussines_id = $data['bussines_id'];
             $objCustomer->delete();         
         break;
         case 'new':

@@ -9,15 +9,15 @@
 
         case 'index':  
             $objPersonCredit = new PersonCredit();
-            $objPersonCredit->person = $data->person;
+            $objPersonCredit->person = $data['person'];
             include("../Vistas/credits/index.php"); 
         break;
 
         case 'new':
-            $person = $data->person;
-            $pay_type = $data->pay_type;
-            $invoice_id = $data->invoice_id;
-            $person_id = $data->person_id;
+            $person = $data['person'];
+            $pay_type = $data['pay_type'];
+            $invoice_id = $data['invoice_id'];
+            $person_id = $data['person_id'];
             include("../Vistas/credits/formulario.php");     
         break;
 
@@ -27,9 +27,9 @@
             
         case 'edit':
             $objPersonCredit = new PersonCredit();
-            $objPersonCredit->id = $data->id;
-            $invoice_id = $data->invoice_id;
-            $person_id = $data->person_id;
+            $objPersonCredit->id = $data['id'];
+            $invoice_id = $data['invoice_id'];
+            $person_id = $data['person_id'];
             include("../Vistas/credits/formulario.php");              
         break;
 
@@ -39,17 +39,17 @@
 
         case 'delete':
             $objPersonCredit = new PersonCredit();
-            $objPersonCredit->id = $data->id;
-            $objPersonCredit->bussines_id = $data->bussines_id;
-            $objPersonCredit->person_id = $data->person_id;
+            $objPersonCredit->id = $data['id'];
+            $objPersonCredit->bussines_id = $data['bussines_id'];
+            $objPersonCredit->person_id = $data['person_id'];
             $objPersonCredit->delete();         
         break;
         case 'list':  
             $objPersonCredit = new PersonCredit();
-            $objPersonCredit->person = $data->person;
-            $objPersonCredit->person_id = $data->person_id;
-            $objPersonCredit->invoice_id = $data->invoice_id;
-            $amount = $data->amount;
+            $objPersonCredit->person = $data['person'];
+            $objPersonCredit->person_id = $data['person_id'];
+            $objPersonCredit->invoice_id = $data['invoice_id'];
+            $amount = $data['amount'];
             $objNumeroEnLetra = new NumberLetterService();
             $valorEnLetras = $objNumeroEnLetra->convert($amount);  
             include("../Vistas/credits/lista.php"); 

@@ -239,7 +239,7 @@ function loadCustomerData(){
         customers = res.data
         if (customers.length > 0) {
           customers.forEach(customer => {
-            document.querySelector("#id").value = customer.id;
+            document.querySelector("#customer_id").value = customer.id;
             document.querySelector("#name").value = customer.name;
             document.querySelector("#phone").value = customer.phone;
             document.querySelector("#email").value = customer.email;          
@@ -247,12 +247,12 @@ function loadCustomerData(){
             document.querySelector("#city").value = customer.city;
           });          
         }else{
-          document.querySelector("#id").value = id;
-            document.querySelector("#name").value = "";
-            document.querySelector("#phone").value = "";
-            document.querySelector("#email").value = "";          
-            document.querySelector("#address").value = "";
-            document.querySelector("#city").value = "";
+          document.querySelector("#customer_id").value = id;
+          document.querySelector("#name").value = "";
+          document.querySelector("#phone").value = "";
+          document.querySelector("#email").value = "";          
+          document.querySelector("#address").value = "";
+          document.querySelector("#city").value = "";
         }
       }
     })

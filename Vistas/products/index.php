@@ -77,7 +77,7 @@
                             <?php
                                 $objInventario = new Product();
                                 $objInventario->bussines_id = $bussines_id;
-                                foreach($objInventario->listar() as $product){ ?>
+                                foreach($objInventario->list() as $product){ ?>
                                     <tr style='font-size:10px;text-align: left; text-transform: uppercase; padding:2px;'>
                                         <td title='Código: <?php echo $product['id']; ?>' ><?php echo $product['id']; ?></td>
                                         <td title='Nombre del Articulo'><?php echo $product['name']; ?></td>

@@ -222,3 +222,45 @@ function deleteSupplier(id, bussines_id) {
   });
 }
 
+function loadSupplierData(){
+  var id = document.querySelector("#supplierSelect").value;
+  const data = {
+    accion: "load",
+    id: id
+  };
+  axios
+    .post("Controlador/ctrlSuppliers.php", data)
+    .then(function (res) {
+      //console.log(res.data);
+      if (res.status == 200) {
+        console.log(res.data);
+        suppliers = res.data
+        if (suppliers.length > 0) {
+          suppliers.forEach(supplier => {
+            document.querySelector("#supplier_id").value = supplier.id;
+            document.querySelector("#name").value = supplier.name;
+            document.querySelector("#phone").value = supplier.phone;
+            document.querySelector("#email").value = supplier.email;          
+            document.querySelector("#address").value = supplier.address;
+            document.querySelector("#city").value = supplier.city;
+          });          
+        }else{
+          document.querySelector("#supplier_id").value = id;
+          document.querySelector("#name").value = "";
+          document.querySelector("#phone").value = "";
+          document.querySelector("#email").value = "";          
+          document.querySelector("#address").value = "";
+          document.querySelector("#city").value = "";
+        }
+      }
+    })
+    .catch(function (err) {
+      Swal.fire({
+        position: "left-end",
+        icon: "error",
+        title: "Error",
+        text: err,
+      });
+    });
+}
+

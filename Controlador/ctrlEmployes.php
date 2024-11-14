@@ -9,8 +9,8 @@
             break;
         case 'edit':
             $objEmploye = new Employe();
-            //$objEmploye->bussines_id = $data->bussines_id;
-            $objEmploye->id = $data->id;
+            //$objEmploye->bussines_id = $data['bussines_id'];
+            $objEmploye->id = $data['id'];
             include("../Vistas/employes/formulario.php");  
             
             break;
@@ -19,15 +19,15 @@
             break;
         case 'delete':
             $objEmploye = new Employe();
-            $objEmploye->id = $data->id;
-            $objEmploye->bussines_id = $data->bussines_id;
+            $objEmploye->id = $data['id'];
+            $objEmploye->bussines_id = $data['bussines_id'];
             $objEmploye->delete();         
             break;
         case 'new':
             include("../Vistas/employes/formulario.php");     
             break;
         case 'index':              
-            $bussines_id = $data->bussines_id;       
+            $bussines_id = $data['bussines_id'];       
             include("../Vistas/employes/index.php");     
             break;
     }

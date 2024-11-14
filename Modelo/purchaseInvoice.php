@@ -1,9 +1,9 @@
 <?php
 	//require_once ("Conect.php");
-	class SaleInvoice extends ConectarPDO{
+	class PurchaseInvoice extends ConectarPDO{
 		public $id;      
 		public $bussines_id;      
-        public $customer_id;
+        public $supplier_id;
         public $date_at;
         public $amount;
         public $type;
@@ -15,7 +15,7 @@
 		private $sql;
         
         public function add(){  
-            $this->sql = "INSERT INTO sales_invoices(`id`,`customer_id`,date_at,amount,`type`,form_pay,`status`) VALUES(?,?,?,?,?,?,?)";
+            $this->sql = "INSERT INTO purchase_invoices(`id`,`supplier_id`,date_at,amount,`type`,form_pay,`status`) VALUES(?,?,?,?,?,?,?)";
           
 			try {		
 				// Iniciar una transacción
@@ -25,7 +25,7 @@
 				$stmt = $this->Conexion->prepare($this->sql);
 				$stmt->execute(
 					[$this->dataInvoice['id'],
-					$this->dataInvoice['customer_id'],
+					$this->dataInvoice['supplier_id'],
 					$this->dataInvoice['date_at'],
 					$this->amount,
 					$this->dataInvoice['type'],
@@ -37,17 +37,17 @@
 				$invoiceId = $this->Conexion->lastInsertId();
 		
 				// Insertar cada producto del carrito en la tabla de detalles de la factura
-				 $stmt = $this->Conexion->prepare("INSERT INTO sale_invoice_details(`invoice_id`,product_id,`quantity`,unit_value,`subtotal_amount`) VALUES(?,?,?,?,?)");
+				 $stmt = $this->Conexion->prepare("INSERT INTO purchase_invoice_details(`invoice_id`,product_id,`quantity`,unit_value,`subtotal_amount`) VALUES(?,?,?,?,?)");
 		
 				foreach ($this->cart as $item) {
-					$cantVendida = 0;
-					$cantRestante = 0;
-					$subtotal_amount = $item['quantity'] * $item['0']['selling_price'];
-					$stmt->execute([$invoiceId, $item['0']['id'], $item['quantity'], $item['0']['selling_price'],$subtotal_amount]);
-					$cantVendida= $item['0']['sales'] + $item['quantity'];
-                    $cantRestante= $item['0']['stock'] - $item['quantity'];
-					$stm2 = $this->Conexion->prepare("UPDATE products set sales = ?, stock = ? WHERE id= ?");
-					$stm2->execute([$cantVendida, $cantRestante,$item['0']['id']]);		
+					$cantComprada = 0;
+					$stock = 0;
+					$subtotal_amount = $item['quantity'] * $item['0']['purchase_price'];
+					$stmt->execute([$invoiceId, $item['0']['id'], $item['quantity'], $item['0']['purchase_price'],$subtotal_amount]);
+					$cantComprada= $item['0']['purchases'] + $item['quantity'];
+                    $stock= $item['0']['stock'] + $item['quantity'];
+					$stm2 = $this->Conexion->prepare("UPDATE products set purchases = ?, stock = ? WHERE id= ?");
+					$stm2->execute([$cantComprada, $stock,$item['0']['id']]);		
 				}
 				/**/
 				// Confirmar la transacción
@@ -81,26 +81,11 @@
         }  
 
         public function list(){
-            $this->sql="SELECT inv.id, inv.name, inv.reference, inv.purchase_price, inv.selling_price, inv.initial_quantity, inv.purchases, inv.sales, inv.stock_returns, inv.stock, inv.min_quantity, inv.bussines_id, inv.category_id, med.short_name as measure, cat.`name` as Categorias
-            FROM sales_invoices inv
-            INNER JOIN categorias cat ON inv.category_id = cat.`id`
-			INNER JOIN medidas med ON inv.measure_id = med.`id`
-            WHERE inv.bussines_id = ?
-            ORDER BY inv.`name` ASC";
-			try {
-				$stm = $this->Conexion->prepare($this->sql);
-				$stm->execute();
-				$data = $stm->fetchAll(PDO::FETCH_ASSOC);
-				
-				return $data;
-			} catch (Exception $e) {
-				echo "Ocurrió un Error al cargar los products. ".$e;
-			}
-
+           
         }
         
         public function load(){
-            $this->sql="SELECT * FROM sales_invoices WHERE `id`=? AND bussines_id  = ?";  
+            $this->sql="SELECT * FROM purchase_invoices WHERE `id`=? AND bussines_id  = ?";  
             try {
 				$stm = $this->Conexion->prepare($this->sql);
 				$stm->bindParam(1, $this->id);
@@ -116,7 +101,7 @@
 
 		public function maxId(){
 			$max = 0;
-            $this->sql="SELECT MAX(id) AS id FROM sales_invoices";
+            $this->sql="SELECT MAX(id) AS id FROM purchase_invoices";
 			try {
 				$stm = $this->Conexion->prepare($this->sql);
 				$stm->execute();
@@ -136,7 +121,7 @@
         }
          
         public function totales(){
-            $this->sql="SELECT SUM(initial_quantity) as initial_quantity, SUM(purchases) as purchases, SUM(sales) as sales, SUM(stock_returns) as stock_returns, SUM(stock) as stock  FROM sales_invoices WHERE bussines_id = ?"; 
+            $this->sql="SELECT SUM(initial_quantity) as initial_quantity, SUM(purchases) as purchases, SUM(sales) as sales, SUM(stock_returns) as stock_returns, SUM(stock) as stock  FROM purchase_invoices WHERE bussines_id = ?"; 
             try {
 				$stm = $this->Conexion->prepare($this->sql);
 				$stm->bindParam(1, $this->bussines_id);
@@ -155,7 +140,7 @@
         }
         
         public function eliminar(){        
-            $this->sql="DELETE FROM sales_invoices WHERE id=? AND bussines_id=?"; 
+            $this->sql="DELETE FROM purchase_invoices WHERE id=? AND bussines_id=?"; 
             try {
 				$stm = $this->Conexion->prepare($this->sql);
 				$stm->bindParam(1, $this->id);

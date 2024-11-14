@@ -17,8 +17,8 @@
             break;
         case 'edit':
             $objCategory = new Category();
-            $objCategory->bussines_id = $data->bussines_id;
-            $objCategory->id = $data->id;
+            $objCategory->bussines_id = $data['bussines_id'];
+            $objCategory->id = $data['id'];
             include("../Vistas/categories/formulario.php");  
             
             break;
@@ -27,7 +27,7 @@
             break;
         case 'delete':
             $objCategory = new Category();
-            $objCategory->id = $data->id;
+            $objCategory->id = $data['id'];
             $objCategory->delete();         
             break;
         case 'new':
@@ -35,13 +35,13 @@
             break;
         case 'load':
             $objCategory = new Category();
-            $objCategory->bussines_id = $data->bussines_id;
-            $objCategory->id = $data->id;
+            $objCategory->bussines_id = $data['bussines_id'];
+            $objCategory->id = $data['id'];
             include("../Vistas/categories/index.php");     
             break;
         case 'list':
             $objCategory = new Category();
-            $objCategory->bussines_id = $data->bussines_id;
+            $objCategory->bussines_id = $data['bussines_id'];
             include("../Vistas/categories/index.php");     
             break;
     }

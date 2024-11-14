@@ -10,25 +10,33 @@
             $objSupplier = new Supplier();
             //$objSupplier->bussines_id = $data->bussines_id;
             $objSupplier->id = $data->id;
-            include("../Vistas/suppliers/formulario.php");  
-            
-            break;
+            include("../Vistas/suppliers/formulario.php");              
+        break;
+        
+        case 'load':
+            $objSupplier = new Supplier();
+            $objSupplier->id = $data['id'];
+            echo json_encode($objSupplier->load());    
+        break;
+
         case 'update':
             add_or_set_Supplier($accion);        
-            break;
+        break;
+        
         case 'delete':
             $objSupplier = new Supplier();
             $objSupplier->id = $data->id;
             $objSupplier->bussines_id = $data->bussines_id;
             $objSupplier->delete();         
-            break;
+        break;
+
         case 'new':
             include("../Vistas/suppliers/formulario.php");     
-            break;
-        case 'index':  
-                   
+        break;
+
+        case 'index':                     
             include("../Vistas/suppliers/index.php");     
-            break;
+        break;
     }
 
     function add_or_set_Supplier($tipo){

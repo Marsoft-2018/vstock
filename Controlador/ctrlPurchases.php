@@ -3,8 +3,8 @@
     require('../Modelo/category.php');
     require('../Modelo/medida.php');
     require('../Modelo/product.php');
-    require('../Modelo/customer.php');
-    require('../Modelo/saleInvoice.php');
+    require('../Modelo/supplier.php');
+    require('../Modelo/purchaseInvoice.php');
 
     switch ($accion) {
         case 'add':
@@ -12,15 +12,15 @@
             $dataInvoice = $data['invoiceDetails'];//datos relacionados con la factura como numero, cliente, tipo y forma de pago.
             $cart = $data['cart'];// datos relacionados con los productos agregados a la factura.
 
-            $objCustomer = new Customer();
-            $objCustomer->id = $dataInvoice['customer_id'];
-            if(count($objCustomer->load()) == 0){
-                $objCustomer->name = $dataInvoice['name'];
-                $objCustomer->address = $dataInvoice['address'];
-                $objCustomer->phone = $dataInvoice['phone'];
-                $objCustomer->city = $dataInvoice['city'];
-                $objCustomer->email = $dataInvoice['email'];
-                $objCustomer->add();
+            $objSupplier = new Supplier();
+            $objSupplier->id = $dataInvoice['Supplier_id'];
+            if(count($objSupplier->load()) == 0){
+                $objSupplier->name = $dataInvoice['name'];
+                $objSupplier->address = $dataInvoice['address'];
+                $objSupplier->phone = $dataInvoice['phone'];
+                $objSupplier->city = $dataInvoice['city'];
+                $objSupplier->email = $dataInvoice['email'];
+                $objSupplier->add();
             }
 
             $invoiceStatus = 'pagada';
@@ -28,7 +28,7 @@
                 $invoiceStatus = 'por pagar';
             }
 
-            $objInvoice = new SaleInvoice();
+            $objInvoice = new PurchaseInvoice();
             $objInvoice->dataInvoice = $dataInvoice;  
             $objInvoice->cart = $cart;  
             $objInvoice->amount = $data['amount'];  
@@ -49,18 +49,18 @@
         break;
 
         case 'loadMaxId':
-            $objInvoice = new SaleInvoice();
+            $objInvoice = new PurchaseInvoice();
             echo $objInvoice->maxId();                          
         break;
 
         case 'new':
             $bussines_id = $data['bussines_id'];
-            $objCustomer = new Customer();
-            $objCustomer->bussines_id = $bussines_id;
+            $objSupplier = new Supplier();
+            $objSupplier->bussines_id = $bussines_id;
             $objProduct = new Product();
             $objProduct->bussines_id = $bussines_id;
-            $objInvoice = new SaleInvoice();
-            include("../Vistas/movimientos/sales/formulario.php");     
+            $objInvoice = new PurchaseInvoice();
+            include("../Vistas/movimientos/purchases/formulario.php");     
         break;
     }
 
