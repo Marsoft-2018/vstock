@@ -10,7 +10,7 @@
         private $data;
 
         function listar(){
-            $this->sql = "SELECT * FROM medidas WHERE bussines_id = ?";
+            $this->sql = "SELECT * FROM measurements WHERE bussines_id = ?";
             try {
 				$stm = $this->Conexion->prepare($this->sql);
 				$stm->bindParam(1, $this->bussines_id);
@@ -25,7 +25,7 @@
         } 
 
         function cargar(){
-            $this->sql = "SELECT * FROM medidas WHERE bussines_id = ? AND id= ? ";
+            $this->sql = "SELECT * FROM measurements WHERE bussines_id = ? AND id= ? ";
             try {
 				$stm = $this->Conexion->prepare($this->sql);
 				$stm->bindParam(1, $this->bussines_id);

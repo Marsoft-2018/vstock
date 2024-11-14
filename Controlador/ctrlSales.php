@@ -1,7 +1,7 @@
 <?php
     include("header.php");
     require('../Modelo/category.php');
-    require('../Modelo/medida.php');
+    require('../Modelo/measurement.php');
     require('../Modelo/product.php');
     require('../Modelo/customer.php');
     require('../Modelo/saleInvoice.php');
