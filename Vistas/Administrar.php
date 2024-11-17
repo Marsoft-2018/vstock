@@ -92,12 +92,14 @@
         <!-- Menu -->
 
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+          <img src='assets/img/illustrations/logo-p.png' style='width:100%;margin:0px;'>
           <div class="app-brand demo">
             <a href="index.html" class="app-brand-link">
               <span class="app-brand-logo demo">
               <img src='img/<?php echo $logo; ?>' style='width:80px;margin:5px;'>
               </span>
-              <span class="app-brand-text demo menu-text fw-bolder ms-2">Vstock</span>
+              <!-- <span class="app-brand-text demo menu-text fw-bolder ms-2">Vstock</span> -->
+               
             </a>
 
             <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -126,7 +128,7 @@
               <ul class="menu-sub">
                 <li class="menu-item">
                   <a href="#" class="menu-link" id='inventario2' title='Revisar el Inventario' onclick="cargarInventario('<?php echo $_SESSION['idNegocio'] ?>')">
-                    <i class="fa fa-fw fa-table">&nbsp;</i> Inventario
+                    <i class="fa fa-boxes">&nbsp;</i> Inventario
                   </a>
                 </li>
                 <li class="menu-item">
@@ -267,7 +269,41 @@
                 </li> -->
               </ul>
             </li>
-
+            
+            <!-- Reportes -->
+            <li class="menu-item">
+              <a href="javascript:void(0)" class="menu-link menu-toggle">
+                <i class="menu-icon fa fa-chart-bar"></i>
+                <div data-i18n="Extended UI">Reportes</div>
+              </a>
+              <ul class="menu-sub">
+                <!-- <li class="menu-item">
+                  <a href="#" title='Mostrar datos del negocio' class="menu-link"  onclick="loadBussines('<?php echo $_SESSION['idNegocio'] ?>')">
+                      <i class="fa fa-home" aria-hidden="true">&nbsp;</i> Datos del Negocio
+                  </a>
+                </li> -->
+                <li class="menu-item">
+                  <a href="#" title='Mostrar categorias' class="menu-link"  onclick="loadSalesRegister('<?php echo $_SESSION['idNegocio'] ?>')">
+                  <i class="far fa-money-bill-alt"></i>&nbsp;</i> De ventas
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="#" title='Mostrar datos del negocio' class="menu-link"  onclick="loadPurchaseRegister('<?php echo $_SESSION['idNegocio'] ?>')">
+                      <i class="fa fa-suitcase" aria-hidden="true">&nbsp;</i> De Compras
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="#" title='Mostrar datos del negocio' class="menu-link"  onclick="loadSoldOutRegister('<?php echo $_SESSION['idNegocio'] ?>')">
+                      <i class="fa fa-box-open" aria-hidden="true">&nbsp;</i> Productos Agotados
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="#" title='Mostrar datos del negocio' class="menu-link"  onclick="indexSuppliers('<?php echo $_SESSION['idNegocio'] ?>')">
+                  <i class="fa fa-chart-line" aria-hidden="true"></i>&nbsp;</i> Resultados
+                  </a>
+                </li>
+              </ul>
+            </li>
             <!-- <li class="menu-item">
               <a href="icons-boxicons.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-crown"></i>
@@ -518,38 +554,7 @@
             </div>
             <!-- / Content -->
 
-            <!-- Footer -->
-            <footer class="content-footer footer bg-footer-theme">
-              <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
-                <!-- <div class="mb-2 mb-md-0">
-                  ©
-                  <script>
-                    document.write(new Date().getFullYear());
-                  </script>
-                  , made with ❤️ by
-                  <a href="https://themeselection.com" target="_blank" class="footer-link fw-bolder">ThemeSelection</a>
-                </div>
-                <div>
-                  <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
-                  <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More Themes</a>
-
-                  <a
-                    href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/"
-                    target="_blank"
-                    class="footer-link me-4"
-                    >Documentation</a
-                  >
-
-                  <a
-                    href="https://github.com/themeselection/sneat-html-admin-template-free/issues"
-                    target="_blank"
-                    class="footer-link me-4"
-                    >Support</a
-                  >
-                </div> -->
-              </div>
-            </footer>
-            <!-- / Footer -->
+            
 
             <div class="content-backdrop fade"></div>
           </div>
@@ -608,11 +613,11 @@
     <script src="js/suppliers.js"></script>
     <script src="js/employes.js"></script>
     <script src="js/employePayments.js"></script>
-    <script src="js/sales.js"></script>
      <script src="js/app.js"></script>
     <script src="js/shoppingCar.js"></script>
     <script src="js/purchaseCar.js"></script>
     <script src="js/payForms.js"></script>
+    <script src="js/reports.js"></script>
     <script type="text/jscript" src="js/Acciones.js"></script>
     
     <script src="DataTables/datatables.js"></script>

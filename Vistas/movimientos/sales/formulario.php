@@ -108,9 +108,9 @@
                                 <option value='otra'>Otra...</option>
                             </select>				
                     </div>
-                    <div class="col-md-2">	
+                    <div class="col-md-3">	
                         <div class="row">
-                            <label for="cbo_product">Buscar product</label>
+                            <label for="cbo_product">Buscar producto</label>
                             <input type='text' value='' name='productSelect' id='productSelect' class='col-md-2 form-control' list='listadeProducts' onchange='quantityStock(<?php echo $bussines_id; ?>)' ondblclick='limpiar(this.id)' onkeypress='pasarAcantidad(event)'>
                             <datalist id='listadeProducts'>
                                 <?php
@@ -123,12 +123,12 @@
                             </datalist>
                         </div>    
                     </div>
-                    <div class="col-md-1" style="margin: 0px;">
+                    <!-- <div class="col-md-1" style="margin: 0px;">
                         <label for="">Editar</label>
                         <span id='btnEditar'>
                             <button class='btn btn-primary' type='button' onclick='editarArticuloEnMovimiento()'><i class='fa fa-edit'></i></button>
                         </span>
-                    </div>
+                    </div> -->
                     <div class="col-md-2">
                         <div><label>Cantidad:</label>
                         <input id="productQuantity" name="productQuantity" type="number" value="1" class="col-md-2 form-control" placeholder="Ingrese cantidad" autocomplete="off" ondblclick='limpiar(this.id)'/>

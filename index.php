@@ -32,7 +32,7 @@
                     <i class="fas fa-lock"></i>
                 </div>
                 <div style="display: flex; justify-content: center; padding-bottom: 20px;">
-                    <h2>¡Bienvenido a VStock!</h2>
+                    <h2>¡Login!</h2>
                 </div>
 
                 <div class="form-group">

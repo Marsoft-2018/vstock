@@ -61,7 +61,7 @@ input[type="submit"]:hover {
 .info-container {
     flex: 1;
     max-width: 50%;
-    background-image: url("../assets/img/illustrations/login.png");
+    background-image: url("../assets/img/illustrations/login-2.png");
     background-size: cover;
     background-color: #3498db;
     color: #fff;

@@ -1,3 +1,28 @@
+<!-- <style type="text/css">
+     #encabezado {            
+            display: none;
+    }
+    @media print
+    {
+        body * { visibility: hidden; }
+        #capaPagina{ visibility: hidden;}
+        #contenidoImprimir * { visibility: visible; }
+        #contenidoImprimir { position: absolute; top: 10px; left: 0px;height: auto; width: 95%;}
+        
+        .clearfix:after {
+          content: "";
+          
+        }
+
+        #encabezado {            
+            display: block;
+            visibility: visible;
+            height: 80px;
+            width: 100%;
+          clear: both;
+        }       
+    }
+</style> -->
 <style type="text/css">
     @media print
     {
@@ -20,7 +45,6 @@
         }); 
 </script>
 <?php
-$modulo=$_POST['modulo'];
 
 echo "<input type='hidden' value='$modulo' id='moduloRep'/>";
 ?>
@@ -54,7 +78,7 @@ echo "<input type='hidden' value='$modulo' id='moduloRep'/>";
                     </div>
                     <div class="col-md-2">
                        <br>
-                        <button class="btn btn-success fa fa-eyes" onclick="cargarReportes()" value="Ver Resultado"><i class="fa fa-eye"></i>Ver Reporte</button>
+                        <button class="btn btn-success fa fa-eyes" onclick="loadReports('<?php echo $modulo; ?>')" value="Ver Resultado"><i class="fa fa-eye"></i>Ver Reporte</button>
                     </div>
                     <div class="col-md-2">
                        <br>

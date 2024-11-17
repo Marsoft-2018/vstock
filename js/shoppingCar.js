@@ -121,7 +121,16 @@ async function addSale(bussines_id) {
         cart: cart,
         invoiceDetails: formObject // Agrega los detalles de facturación del formulario
     };
-
+    if (!cart.length > 0) {
+        Swal.fire({
+            position: "top-end",
+            icon: "info",
+            title: "No existen productos en la factura, por favor agregalos para poder continuar",
+            showConfirmButton: false,
+            timer: 5000,
+        });
+        return false;
+    }
     try {
         const response = await axios.post('Controlador/ctrlSales.php', payload, {
             headers: { 'Content-Type': 'application/json' }
@@ -141,9 +150,22 @@ async function addSale(bussines_id) {
             loadMaxId();
            
         } else {
-            alert("Error al procesar la compra");
+            Swal.fire({
+                position: "bottom-end",
+                icon: "error",
+                title: "Error al procesar la compra",
+                showConfirmButton: false,
+                timer: 1500,
+            });
         }
     } catch (error) {
+        Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: error,
+            showConfirmButton: false,
+            timer: 1500,
+        });
         console.error("Error al finalizar compra:", error);
     }
     return false;
@@ -166,5 +188,21 @@ async function loadMaxId(){
     }
 }
 
-// Cargar productos al inicio
-//loadProducts();
+function cambiarPrecio(id, precio) {
+    var accion = "CambiarPrecio";
+    var factura = document.getElementById("txtFact").value;
+    if (id == "") {
+      alertify.alert("No se tiene Id del product");
+    } else {
+      $("#subTotal" + id).load(
+        "listaProd.php",
+        { accion: accion, idProd: id, Nfact: factura, precio: precio },
+        function () {
+          $("#totalFactura").load("listaProd.php", {
+            accion: "TotalFactura",
+            Nfact: factura,
+          });
+        }
+      );
+    }
+  }

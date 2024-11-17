@@ -137,16 +137,6 @@ function cambiarPrecio(id,precio){
     
 }
 
-function buscarProd(){
-    var prodSelect = document.getElementById('cbo_product').value;
-    var modulo=document.getElementById('Modulo').value;
-    if (prodSelect!=0 || prodSelect!=""){
-        $('#verificacionArticulo').fadeIn();
-        $('#verificacionArticulo').load("verificacionStock.php",{accion:"mensaje",modulo:modulo,IDprod:prodSelect});
-        $('#resultadoVerificacion').load("verificacionStock.php",{accion:"valor",modulo:modulo,IDprod:prodSelect});
-    }      
-}
-
     
 function editarPerfil(usuario){
     //alert("Funcion editar perfil: "+usuario);
@@ -162,71 +152,7 @@ function agregarCategoriaDirecta(){
         $("#registrarCategorias").load('Controlador/ctrlCategorias.php',{accion:'AgregarCategoriaArticuloNuevo',idneg:negNum,nombreCategoria:nombreCategoria},function(){
             //alertify.success("Se encuentra el la funcion agregar categoria, variables: Negocio"+negNum+" categoria: "+nombreCategoria);
         });
-    }    
-    
-}
-
-function cargarRegistroDeventas(){
-    $("#parte1").load('Vistas/registroDeVentas.php',{modulo:'VENTA'});					
-}
-
-function cargarRegistroDeCompras(){
-    $("#parte1").load('Vistas/registroDeVentas.php',{modulo:'COMPRA'});					
-}
-
-function cargarRegistroDeAgotados(){
-    $("#parte1").load('Controlador/ctrlReportes.php',{modulo:'AGOTADOS'});					
-}
-
-function cargarReporteInventario(){
-    $("#parte1").load('Controlador/ctrlReportes.php',{modulo:'INVENTARIO'});                    
-}
-
-
-function cargarReportes(){
-        var dia = document.getElementById('dia').value;
-        var mes = document.getElementById('mes').value;
-        var anho = document.getElementById('anho').value;        
-        var modulo=document.getElementById('moduloRep').value;
-        
-        //alertify.success("Los valores son:  dia: "+dia+" mes: "+mes+" año: "+anho+" modulo: "+modulo);
-        
-        if(dia!='' && mes!='' && anho!=''){
-            $("#resultadoReporte").load("Controlador/ctrlReportes.php",{modulo:modulo,dia:dia,mes:mes,anho:anho,accion:"dia"},function(){
-                alertify.success("Reporte diario cargado con éxito");
-            });
-            
-        }
-        
-        if(dia=='' && mes!='' && anho!=''){
-            $("#resultadoReporte").load("Controlador/ctrlReportes.php",{modulo:modulo,mes:mes,anho:anho,accion:"mes"},function(){
-                alertify.success("Reporte Mensual cargado con éxito");
-            });
-            
-        }
-        
-        if(dia=='' && mes=='' && anho!=''){
-            $("#resultadoReporte").load("Controlador/ctrlReportes.php",{modulo:modulo,anho:anho,accion:"anho"},function(){
-                alertify.success("Reporte Anual cargado con éxito"); 
-            });
-           
-        }
-        
-}
-
-function cargarResumen(){
-    var mes = document.getElementById('mes').value;
-    var anho = document.getElementById('anho').value;       
-    var modulo=document.getElementById('moduloRep').value;
-            
-    if(anho!=''){
-        $("#resultadoResumen").load("Controlador/ctrlReportes.php",{modulo:modulo,mes:mes,anho:anho,accion:"resumen"},function(){
-            alertify.success("Resumen Anual cargado con éxito"); 
-        });           
-    }else{
-        alertify.error("Por favor digite un año para poder realizar la consulta"); 
-    }
-    
+    }       
 }
 
 function ventanaGastosNuevo(){

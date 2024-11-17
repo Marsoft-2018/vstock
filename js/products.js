@@ -26,7 +26,7 @@ function newProduct(bussines_id) {
   var seccion_modulo = document.querySelector("#modalBody");
   const seccion_titulo = (document.querySelector(
     "#exampleModalCenterTitle"
-  ).innerHTML = "Nuevo Product");
+  ).innerHTML = "Nuevo Articulo o Producto");
   const data = {
     accion: "new",
     bussines_id: bussines_id,
@@ -53,7 +53,7 @@ function loadProduct(id, bussines_id) {
   var seccion_modulo = document.querySelector("#modalBody");
   const seccion_titulo = (document.querySelector(
     "#exampleModalCenterTitle"
-  ).innerHTML = "Editar Product");
+  ).innerHTML = "Editar Articulo o Producto");
   var data = {
     accion: "load",
     bussines_id: bussines_id,
