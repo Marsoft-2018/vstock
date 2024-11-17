@@ -95,8 +95,8 @@ echo "<input type='hidden' value='$modulo' id='moduloRep'/>";
     </div>
     <div class="panel-footer" style="background-color:rgb(29,32,41);">
         <div style='color:#000000;padding: 10px; text-align:left;font-size: 11px; float:center;background-color:rgba(255,255,255,1);' id='contenidoImprimir'>
-            <div id="resultadoResumen"></div>
-            <div id="resultadoReporte"></div>	
+            <div class="container" id="resultadoResumen" style='margin-bottom:50px;'></div>
+            <div class="container" id="resultadoReporte"></div>	
         </div>
     </div>
 <script>

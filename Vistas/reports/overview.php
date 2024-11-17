@@ -17,55 +17,32 @@
 </header>
 <h2>Reporte Consolidado</h2>
 <br>
-<table class='table table-striped' width='99%' style='border:1px solid; padding:0px;'>
+<table class='table table-striped'>
     <thead>
         <tr >
             <?php
             if($data['month'] !=""){ 
             ?>
-                <th class='columna3'>Mes</th>
-                <th class='columna1'>Día</th>
+                <th>Mes</th>
+                <th>Día</th>
             <?php 
             }else{
             ?>
-                <th class='columna1'>Año</th>
-                <th class='columna3'>Mes</th>
+                <th>Año</th>
+                <th>Mes</th>
             <?php
             }
             ?>
 
-            <th class='columna3' style='text-align:right;padding-right:30px;'>Total</th>
+            <th  style='text-align:right; padding-right:30px;'>Total</th>
             <th>Porcentaje logrado</th>
         </tr>
     </thead> 
     <tbody>                 
         <?php
-            foreach ($registerData[1] as $value) { ?>
-            <tr style='padding:0px;height:20px;'>
-                <?php
-                    if($data['month'] != ""){
-                ?>
-                        <td style='padding:1px;height:20px;'><?php echo $meses[($data['month']-1)] ?></td>
-                        <td style='padding:1px;height:20px;'><?php echo $value['day'] ?></td>
-                        <td style='padding:1px;height:20px;text-align:right;padding-right:30px;'>$ <?php echo number_format($value['amount'], 0, ',', '.') ?></td>
-                <?php
-                    }else{
-                ?>
-                        <td style='padding:1px;height:20px;'><?php echo $data['year'] ?></td>
-                        <td style='padding:1px;height:20px;'><?php echo $meses[($data['month']-1)] ?></td>
-                        <td style='padding:1px;height:20px;text-align:right;padding-right:30px;'>$ <?php echo number_format($value['amount'], 0, ',', '.') ?></td>
-                <?php
-                    }
-                ?>
-            </tr>
-        <?php
-            }
-        ?>
-    while ($m=mysql_fetch_array($sqlMes)){
-        
-        <td style='padding:1px;height:20px;width:600px;'>
-                $porcentaje=($m[1]*100)/$total;
-                $color=0;
+            foreach ($registerData[1] as $value) { 
+                $porcentaje = ($value['amount']*100)/$registerData[0];
+                $color = 0;
 
                 switch($porcentaje){
                     case ($porcentaje <= 20):
@@ -80,28 +57,47 @@
                     case ($porcentaje<=100):
                         $color=3;
                         break;                            
-                }                    
-                //barra de progreso
-                <div class='progress' style='margin:2px;'>
-                <div class='progress-bar progress-bar-$semaforo[$color]' role='progressbar' aria-valuenow='60' aria-valuemin='0' aria-valuemax='100' style='width: ".$porcentaje."%'><span>".round($porcentaje,1)."% </span>
-                </div>
-                </div>
-        </td>
-        </tr>
-    }
-        
+                }  
+            ?>
+            <tr>
+                <?php
+                    if($data['month'] != ""){
+                ?>
+                        <td style='padding:10px; '><?php echo $meses[($data['month']-1)] ?></td>
+                        <td style='padding:10px; '><?php echo $value['day'] ?></td>
+                        <td style='padding:10px; text-align:right;padding-right:30px;'>$ <?php echo number_format($value['amount'], 0, ',', '.') ?></td>
+                <?php
+                    }else{
+                ?>
+                        <td style='padding:10px; '><?php echo $data['year'] ?></td>
+                        <td style='padding:10px; '><?php echo $meses[($value['month']-1)] ?></td>
+                        <td style='padding:10px; text-align:right;padding-right:30px;'>$ <?php echo number_format($value['amount'], 0, ',', '.') ?></td>
+                <?php
+                    }
+                ?>
+                <td style='padding:10px; width:50%;'>
+                    <div class='progress' style='margin:2px;'>
+                        <div class='progress-bar progress-bar-striped bg-<?php echo $semaforo[$color] ?>' role='progressbar' aria-valuenow='60' aria-valuemin='0' aria-valuemax='100' style='width: <?php echo $porcentaje ?>%'>
+                            <span><?php echo round($porcentaje,1) ?>% </span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        <?php
+            }
+        ?>
     </tbody>
     <tfoot>
     <tr>
-        <td colspan='2' style='padding:1px;height:20px;'>
-            <h5>TOTAL $modulo</h5>
+        <td colspan='2' style='padding:10px; '>
+            <h5>TOTAL</h5>
         </td>
-        <td>
-            $ ".number_format($total, 0, ',', '.')
+        <td style='padding:10px; text-align:right;padding-right:30px;'>
+           <h5>$ <?php echo number_format($registerData[0], 0, ',', '.') ?></h5> 
         </td>
-        <td style='padding:1px;height:20px;'>
+        <td style='padding:10px; '>
             <div class='progress' style='margin:2px;'>
-                <div class='progress-bar progress-bar-$semaforo[3]' role='progressbar' aria-valuenow='60' aria-valuemin='0' aria-valuemax='100' style='width: 100%'>
+                <div class='progress-bar progress-bar-striped bg-<?php echo $semaforo[3] ?>' role='progressbar' aria-valuenow='60' aria-valuemin='0' aria-valuemax='100' style='width: 100%'>
                     <span>100% </span>
                 </div>
             </div>

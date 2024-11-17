@@ -99,11 +99,53 @@
         }
          
         public function overview(){
-            $data = [];
+            $data = [0,''];
             $sqlTotal;
             $sqlMes;
-            $total;
+            $total = 0;
             try {
+                if($this->modulo=='COMPRA'){
+                    if($this->month != ""){
+                        
+                        $sqlTotal = "SELECT SUM(fc.amount) AS 'amount' FROM purchase_invoices fc 
+                                    WHERE  MONTH(fc.`date_at`)= ? AND YEAR(fc.`date_at`)= ? GROUP BY MONTH(fc.`date_at`)";
+                        
+                        $sqlMes = "SELECT DAY(fc.`date_at`) AS 'day',SUM(fc.`amount`) AS 'amount' FROM purchase_invoices fc 
+                                    WHERE MONTH(fc.`date_at`)= ? AND YEAR(fc.`date_at`)= ? 
+                                    GROUP BY DAY(fc.`date_at`) ORDER BY DAY(fc.`date_at`) ASC";                        
+                        
+                        $stm = $this->Conexion->prepare($sqlTotal);
+                        $stm->execute([ $this->month, $this->year]);
+                        $result = $stm->fetchAll(PDO::FETCH_ASSOC);
+
+                        foreach ($result as $register) {
+                            $data[0]=$register['amount'];
+                        }
+                        
+                        $stm = $this->Conexion->prepare($sqlMes);
+                        $stm->execute([ $this->month, $this->year]);
+                        $data[1] = $stm->fetchAll(PDO::FETCH_ASSOC);
+                    }else{
+                    
+                        $sqlTotal = "SELECT SUM(fc.`amount`) AS 'amount' FROM purchase_invoices fc  WHERE  YEAR(fc.`date_at`)= ? GROUP BY YEAR(fc.`date_at`)";
+
+                        $sqlMes = "SELECT MONTH(fc.`date_at`) AS 'month',SUM(fc.`amount`) AS 'amount' FROM purchase_invoices fc 
+                        WHERE YEAR(fc.`date_at`)= ? GROUP BY MONTH(fc.`date_at`) ORDER BY MONTH(fc.`date_at`) ASC";
+                        
+                        $stm = $this->Conexion->prepare($sqlTotal);
+                        $stm->execute([$this->year]);
+                        $result = $stm->fetchAll(PDO::FETCH_ASSOC);
+
+                        foreach ($result as $register) {
+                            $data[0]=$register['amount'];
+                        }
+                        
+                        $stm = $this->Conexion->prepare($sqlMes);
+                        $stm->execute([$this->year]);
+                        $data[1] = $stm->fetchAll(PDO::FETCH_ASSOC);
+                    }
+                    return $data;
+                }    
                 if($this->month != ""){
                     $sqlTotal = "SELECT SUM(fv.amount) AS 'amount' FROM sales_invoices fv 
                     WHERE  MONTH(fv.`date_at`)= ? AND YEAR(fv.`date_at`)= ? GROUP BY MONTH(fv.`date_at`)"; 
@@ -123,7 +165,6 @@
                     $stm = $this->Conexion->prepare($sqlMes);
                     $stm->execute([ $this->month, $this->year]);
                     $data[1] = $stm->fetchAll(PDO::FETCH_ASSOC);
-                    return $data;
                 }else{
                     $sqlTotal = "SELECT SUM(fv.amount) AS 'amount' FROM sales_invoices fv 
                                 WHERE  YEAR(fv.`date_at`) = ? GROUP BY YEAR(fv.`date_at`)";
@@ -142,51 +183,9 @@
                     $stm = $this->Conexion->prepare($sqlMes);
                     $stm->execute([$this->year]);
                     $data[1] = $stm->fetchAll(PDO::FETCH_ASSOC);
-                    return $data;
                 }  
-                
-                if($this->modulo=='COMPRA'){
-                    if($this->month != ""){
-                        $sqlTotal = "SELECT SUM(fc.amount) AS 'amount' FROM purchase_invoices fc 
-                                    WHERE  MONTH(fc.`date_at`)= ? AND YEAR(fc.`date_at`)= ? GROUP BY MONTH(fc.`date_at`)";
-                        
-                        $sqlMes = "SELECT DAY(fc.`date_at`) AS 'day',SUM(fc.`amount`) AS 'amount' FROM purchase_invoices fc 
-                                    WHERE MONTH(fc.`date_at`)= ? AND YEAR(fc.`date_at`)= ? 
-                                    GROUP BY DAY(fc.`date_at`) ORDER BY DAY(fc.`date_at`) ASC";                        
-                        
-                        $stm = $this->Conexion->prepare($sqlTotal);
-                        $stm->execute([ $this->month, $this->year]);
-                        $result = $stm->fetchAll(PDO::FETCH_ASSOC);
-
-                        foreach ($result as $register) {
-                            $data[0]=$register['amount'];
-                        }
-                        
-                        $stm = $this->Conexion->prepare($sqlMes);
-                        $stm->execute([ $this->month, $this->year]);
-                        $data[1] = $stm->fetchAll(PDO::FETCH_ASSOC);
-                        return $data;
-                    }else{
-                    
-                        $sqlTotal = "SELECT SUM(fc.`amount`) AS 'amount' FROM purchase_invoices fc  WHERE  YEAR(fc.`date_at`)='$anho' GROUP BY YEAR(fc.`date_at`)";
-
-                        $sqlMes = "SELECT MONTH(fc.`date_at`) AS 'month',SUM(fc.`amount`) AS 'amount' FROM purchase_invoices fc 
-                        WHERE YEAR(fc.`date_at`)= ? GROUP BY MONTH(fc.`date_at`) ORDER BY MONTH(fc.`date_at`) ASC";
-                        
-                        $stm = $this->Conexion->prepare($sqlTotal);
-                        $stm->execute([$this->year]);
-                        $result = $stm->fetchAll(PDO::FETCH_ASSOC);
-
-                        foreach ($result as $register) {
-                            $data[0]=$register['amount'];
-                        }
-                        
-                        $stm = $this->Conexion->prepare($sqlMes);
-                        $stm->execute([$this->year]);
-                        $data[1] = $stm->fetchAll(PDO::FETCH_ASSOC);
-                        return $data;
-                    }
-                }           
+                return $data;
+                       
             } catch (Exception $e) {
                 echo "Ocurrió un Error al cargar los products. ".$e;
             }
