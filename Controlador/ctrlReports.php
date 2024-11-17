@@ -26,7 +26,6 @@
             $objReport->month = $data['month'];
             $objReport->year = $data['year'];
             $registerData = $objReport->journal();   
-            echo $objReport->modulo;
             loadRegister($registerData,$modulo);                     
         break;
         case 'month':
@@ -35,16 +34,22 @@
             $objReport->month = $data['month'];
             $objReport->year = $data['year'];
             $registerData = $objReport->monthly();   
-            echo $objReport->modulo;
             loadRegister($registerData,$modulo);                     
         break;
         case 'year':
             $objReport = new Report();
             $objReport->modulo = $data['modulo'];
             $objReport->year = $data['year'];
-            $registerData = $objReport->yearly();   
-            echo $objReport->modulo;
+            $registerData = $objReport->yearly(); 
             loadRegister($registerData,$modulo);                     
+        break;
+        case 'overview':
+            $objReport = new Report();
+            $objReport->modulo = $data['modulo'];
+            $objReport->month = $data['month'];
+            $objReport->year = $data['year'];
+            $registerData = $objReport->overview(); 
+            include("../Vistas/reports/overview.php");                  
         break;
 
     }

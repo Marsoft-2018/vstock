@@ -2,16 +2,11 @@
 	//require_once ("Conect.php");
 	class Report extends ConectarPDO{
 		public $id;      
-		public $bussines_id;      
-        public $customer_id;
-        public $date_at;
-        public $amount;
+		public $day;      
+        public $month;
+        public $year;
+        public $modulo;
         public $type;
-        public $form_pay;
-        public $status;
-        public $reg_date;
-		public $dataInvoice;
-		public $cart; //datos del carrito
 		private $sql;
         
         public function journal(){
@@ -103,18 +98,99 @@
 
         }
          
-        public function totales(){
-            $this->sql="SELECT SUM(initial_quantity) as initial_quantity, SUM(purchases) as purchases, SUM(sales) as sales, SUM(stock_returns) as stock_returns, SUM(stock) as stock  FROM sales_invoices WHERE bussines_id = ?"; 
+        public function overview(){
+            $data = [];
+            $sqlTotal;
+            $sqlMes;
+            $total;
             try {
-				$stm = $this->Conexion->prepare($this->sql);
-				$stm->bindParam(1, $this->bussines_id);
-				$stm->execute();
-				$data = $stm->fetchAll(PDO::FETCH_ASSOC);
-				
-				return $data;
-			} catch (Exception $e) {
-				echo "Ocurrió un Error al cargar los products. ".$e;
-			}
+                if($this->month != ""){
+                    $sqlTotal = "SELECT SUM(fv.amount) AS 'amount' FROM sales_invoices fv 
+                    WHERE  MONTH(fv.`date_at`)= ? AND YEAR(fv.`date_at`)= ? GROUP BY MONTH(fv.`date_at`)"; 
+                    
+                    $sqlMes="SELECT DAY(fv.`date_at`) AS 'day',SUM(fv.`amount`) AS 'amount' FROM sales_invoices fv 
+                    WHERE MONTH(fv.`date_at`)= ? AND YEAR(fv.`date_at`)= ?
+                    GROUP BY DAY(fv.`date_at`) ORDER BY DAY(fv.`date_at`) ASC";
+
+                    $stm = $this->Conexion->prepare($sqlTotal);
+                    $stm->execute([ $this->month, $this->year]);
+                    $result = $stm->fetchAll(PDO::FETCH_ASSOC);
+
+                    foreach ($result as $register) {
+                        $data[0]=$register['amount'];
+                    }
+                    
+                    $stm = $this->Conexion->prepare($sqlMes);
+                    $stm->execute([ $this->month, $this->year]);
+                    $data[1] = $stm->fetchAll(PDO::FETCH_ASSOC);
+                    return $data;
+                }else{
+                    $sqlTotal = "SELECT SUM(fv.amount) AS 'amount' FROM sales_invoices fv 
+                                WHERE  YEAR(fv.`date_at`) = ? GROUP BY YEAR(fv.`date_at`)";
+
+                    $sqlMes = "SELECT MONTH(fv.`date_at`) AS 'month',SUM(fv.amount) AS 'amount' FROM sales_invoices fv 
+                    WHERE  YEAR(fv.`date_at`)= ? GROUP BY MONTH(fv.`date_at`) ORDER BY MONTH(fv.`date_at`) ASC";
+
+                    $stm = $this->Conexion->prepare($sqlTotal);
+                    $stm->execute([$this->year]);
+                    $result = $stm->fetchAll(PDO::FETCH_ASSOC);
+
+                    foreach ($result as $register) {
+                        $data[0]=$register['amount'];
+                    }
+
+                    $stm = $this->Conexion->prepare($sqlMes);
+                    $stm->execute([$this->year]);
+                    $data[1] = $stm->fetchAll(PDO::FETCH_ASSOC);
+                    return $data;
+                }  
+                
+                if($this->modulo=='COMPRA'){
+                    if($this->month != ""){
+                        $sqlTotal = "SELECT SUM(fc.amount) AS 'amount' FROM purchase_invoices fc 
+                                    WHERE  MONTH(fc.`date_at`)= ? AND YEAR(fc.`date_at`)= ? GROUP BY MONTH(fc.`date_at`)";
+                        
+                        $sqlMes = "SELECT DAY(fc.`date_at`) AS 'day',SUM(fc.`amount`) AS 'amount' FROM purchase_invoices fc 
+                                    WHERE MONTH(fc.`date_at`)= ? AND YEAR(fc.`date_at`)= ? 
+                                    GROUP BY DAY(fc.`date_at`) ORDER BY DAY(fc.`date_at`) ASC";                        
+                        
+                        $stm = $this->Conexion->prepare($sqlTotal);
+                        $stm->execute([ $this->month, $this->year]);
+                        $result = $stm->fetchAll(PDO::FETCH_ASSOC);
+
+                        foreach ($result as $register) {
+                            $data[0]=$register['amount'];
+                        }
+                        
+                        $stm = $this->Conexion->prepare($sqlMes);
+                        $stm->execute([ $this->month, $this->year]);
+                        $data[1] = $stm->fetchAll(PDO::FETCH_ASSOC);
+                        return $data;
+                    }else{
+                    
+                        $sqlTotal = "SELECT SUM(fc.`amount`) AS 'amount' FROM purchase_invoices fc  WHERE  YEAR(fc.`date_at`)='$anho' GROUP BY YEAR(fc.`date_at`)";
+
+                        $sqlMes = "SELECT MONTH(fc.`date_at`) AS 'month',SUM(fc.`amount`) AS 'amount' FROM purchase_invoices fc 
+                        WHERE YEAR(fc.`date_at`)= ? GROUP BY MONTH(fc.`date_at`) ORDER BY MONTH(fc.`date_at`) ASC";
+                        
+                        $stm = $this->Conexion->prepare($sqlTotal);
+                        $stm->execute([$this->year]);
+                        $result = $stm->fetchAll(PDO::FETCH_ASSOC);
+
+                        foreach ($result as $register) {
+                            $data[0]=$register['amount'];
+                        }
+                        
+                        $stm = $this->Conexion->prepare($sqlMes);
+                        $stm->execute([$this->year]);
+                        $data[1] = $stm->fetchAll(PDO::FETCH_ASSOC);
+                        return $data;
+                    }
+                }           
+            } catch (Exception $e) {
+                echo "Ocurrió un Error al cargar los products. ".$e;
+            }
+
         }
            
                

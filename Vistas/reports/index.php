@@ -82,7 +82,7 @@ echo "<input type='hidden' value='$modulo' id='moduloRep'/>";
                     </div>
                     <div class="col-md-2">
                        <br>
-                        <button class="btn btn-warning fa fa-eyes" onclick="cargarResumen()" value="Ver Resultado">
+                        <button class="btn btn-warning fa fa-eyes" onclick="loadOverview('<?php echo $modulo; ?>')" value="Ver Resultado">
                             <i class="fa fa-bar-chart-o"></i>Ver Resumen
                         </button>
                     </div>
