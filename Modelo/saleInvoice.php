@@ -64,22 +64,6 @@
 
         }  
 
-		public function addDetail(){ 
-            $this->sql = "INSERT INTO sales_invoice_details(`invoice_id`,product_id,`description`,`quantity`,unit_value,`subtotal_amount`) VALUES(?,?,?,?,?,?)";
-            try {
-				$stm = $this->Conexion->prepare($this->sql);
-				$stm->bindParam(1, $this->objProduct->invoice_id);
-				$stm->bindParam(2, $this->objProduct->product_id);
-				$stm->bindParam(3, $this->objProduct->description);
-				$stm->bindParam(4, $this->objProduct->quantity);
-				$stm->bindParam(5, $this->objProduct->unit_value);
-				$stm->bindParam(6, $this->objProduct->subtotal_amount);
-				$stm->execute();
-			} catch (Exception $e) {
-				echo "Ocurrió un Error al guardar el product. ".$e;
-			}   
-        }  
-
         public function list(){
             $this->sql="SELECT inv.id, inv.name, inv.reference, inv.purchase_price, inv.selling_price, inv.initial_quantity, inv.purchases, inv.sales, inv.stock_returns, inv.stock, inv.min_quantity, inv.bussines_id, inv.category_id, med.short_name as measure, cat.`name` as Categorias
             FROM sales_invoices inv
@@ -100,11 +84,10 @@
         }
         
         public function load(){
-            $this->sql="SELECT * FROM sales_invoices WHERE `id`=? AND bussines_id  = ?";  
+            $this->sql="SELECT * FROM sales_invoices WHERE `id`=?";  
             try {
 				$stm = $this->Conexion->prepare($this->sql);
 				$stm->bindParam(1, $this->id);
-				$stm->bindParam(2, $this->bussines_id);
 				$stm->execute();
 				$data = $stm->fetchAll(PDO::FETCH_ASSOC);
 				
@@ -113,6 +96,20 @@
 				echo "Ocurrió un Error al cargar los products. ".$e;
 			}
         }
+
+		public function loadDetails(){ 
+            $this->sql = "SELECT product_id,`description`,`quantity`,unit_value,`subtotal_amount` FROM sale_invoice_details WHERE invoice_id = ?";
+            try {
+				$stm = $this->Conexion->prepare($this->sql);
+				$stm->bindParam(1, $this->id);
+				$stm->execute();
+				$data = $stm->fetchAll(PDO::FETCH_ASSOC);
+				
+				return $data;
+			} catch (Exception $e) {
+				echo "Ocurrió un Error al guardar el product. ".$e;
+			}   
+        }  
 
 		public function maxId(){
 			$max = 0;
@@ -150,11 +147,11 @@
         }
            
                
-        public function modificar(){
+        public function update(){
             
         }
         
-        public function eliminar(){        
+        public function delete(){        
             $this->sql="DELETE FROM sales_invoices WHERE id=? AND bussines_id=?"; 
             try {
 				$stm = $this->Conexion->prepare($this->sql);

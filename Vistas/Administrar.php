@@ -5,8 +5,8 @@
                         
     $cont_agotados = 0;
     $objProduct = new Product();
-    $objProduct->IdNegocio = $_SESSION['idNegocio'];
-    foreach($objProduct->agotados() as $product){
+    $objProduct->bussines_id = $_SESSION['idNegocio'];
+    foreach($objProduct->soldOuts() as $product){
         $cont_agotados++;
     }
 ?>
@@ -368,18 +368,21 @@
 
               <ul class="navbar-nav flex-row align-items-center ms-auto">
                 <!-- Place this tag where you want the button to render. -->
-                <li class="nav-item lh-1 me-3">
-                  <a
-                    class="fa fa-bell"
-                    href=""
-                    data-icon="fa fa-bell"
-                    data-size="large"
-                    data-show-count="true"
-                    aria-label="Agotados"
-                    >Agotados</a
-                  >
-                </li>
-
+                <?php
+                  if($cont_agotados>0){
+                ?> 
+                    <li class="nav-item lh-1 me-3">
+                    <button type="button" class="btn btn-primary position-relative"  onclick="loadSoldOutRegister('<?php echo $_SESSION['idNegocio'] ?>')">
+                      <i class="fa fa-bell"> &nbsp;</i>Articulos Agotados
+                      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        <?php echo $cont_agotados ?>
+                        <span class="visually-hidden">unread messages</span>
+                      </span>
+                    </button>
+                    </li>
+                  <?php
+                  }
+                  ?>
                 <!-- User -->
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">

@@ -7,6 +7,8 @@
         public $year;
         public $modulo;
         public $type;
+        public $bussines_id;
+        public $invoice_id;
 		private $sql;
         
         public function journal(){
@@ -100,8 +102,8 @@
          
         public function overview(){
             $data = [0,''];
-            $sqlTotal;
-            $sqlMes;
+            $sqlTotal ="";
+            $sqlMes = "";
             $total = 0;
             try {
                 if($this->modulo=='COMPRA'){
@@ -190,28 +192,7 @@
                 echo "Ocurrió un Error al cargar los products. ".$e;
             }
 
-        }
-           
-               
-        public function modificar(){
-            
-        }
-        
-        public function eliminar(){        
-            $this->sql="DELETE FROM sales_invoices WHERE id=? AND bussines_id=?"; 
-            try {
-				$stm = $this->Conexion->prepare($this->sql);
-				$stm->bindParam(1, $this->id);
-				$stm->bindParam(2, $this->bussines_id);
-				if($stm->execute()){
-					echo "Registro eliminado con éxito";
-				}else{
-					echo "No se pudo eliminar el registro";
-				}
-			} catch (Exception $e) {
-				echo "Ocurrió un Error al eliminar el registro. ".$e;
-			}
-        }
+        }                   
 	}
 // 	include ("../Controladores/encript.php");	
 // 	 $objUsu = new Usuario();

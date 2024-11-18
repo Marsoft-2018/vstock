@@ -1,19 +1,26 @@
 <?php
     include("header.php");
-    require('../Modelo/report.php');
-
-    $modulo=$data['modulo'];
-    switch ($modulo) {
-        case 'sales':
-            $modulo ="VENTA";
-        break;
-        case 'purchases':
-            $modulo ="COMPRA";
-        break;
-        case 'soldOuts':
-            $modulo ="AGOTADO";
-        break;
+    require('../Modelo/bussines.php');    
+    require('../Modelo/product.php');
+    require('../Modelo/report.php');;
+    require('../Modelo/customer.php');
+    require('../Modelo/saleInvoice.php');
+    $modulo;
+    if (isset($data['modulo'])) {
+        $modulo=$data['modulo'];
+        switch ($modulo) {
+            case 'sales':
+                $modulo ="VENTA";
+            break;
+            case 'purchases':
+                $modulo ="COMPRA";
+            break;
+            case 'soldOuts':
+                $modulo ="AGOTADO";
+            break;
+        }
     }
+   
 
     switch ($accion) {
         case 'index':
@@ -51,7 +58,22 @@
             $registerData = $objReport->overview(); 
             include("../Vistas/reports/overview.php");                  
         break;
+        case 'soldOuts':
+            $objProduct = new Product();
+            $objProduct->bussines_id = $data['bussines_id'];
+            include("../Vistas/reports/sold_outs.php");                  
+        break;
+        case 'loadInvoice':
+            $file = "../Vistas/reports/sale_invoice.php";
+            $objInvoice = new SaleInvoice();
+            $objInvoice->id = $data['invoice_id'];
+            //$objInvoice->bussines_id = $data['bussines_id'];
 
+            if($data['modulo'] == "COMPRA"){                
+                $file = "../Vistas/reports/purchase_invoice.php";
+            }
+            include($file);                  
+        break;
     }
 
     function loadRegister($registerData,$modulo){

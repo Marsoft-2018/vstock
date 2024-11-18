@@ -131,8 +131,14 @@
         }
   
         
-        public function agotados(){
-            $this->sql="SELECT prod.id FROM products prod WHERE prod.`stock`<=prod.`min_quantity` AND bussines_id = ?"; 
+        public function soldOuts(){
+            $this->sql="SELECT inv.id,inv.`name`,inv.`reference`,cat.`name` as category,inv.`purchase_price`,inv.`selling_price`,inv.initial_quantity,
+            inv.purchases,inv.sales,inv.stock_returns,inv.min_quantity,inv.stock
+            FROM products inv
+            INNER JOIN categories cat
+            ON inv.`category_id`=cat.`id`
+            WHERE inv.`stock`<=inv.`min_quantity` and inv.bussines_id = ?
+            ORDER BY inv.`name` ASC"; 
             try {
 				$stm = $this->Conexion->prepare($this->sql);
 				$stm->bindParam(1, $this->bussines_id);
