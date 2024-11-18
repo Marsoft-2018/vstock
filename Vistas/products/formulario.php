@@ -1,5 +1,11 @@
 <?php 
-  session_start(); 
+  //session_start(); 
+  
+  $objCategory = new Category();
+  $objCategory->bussines_id = $data['bussines_id'];
+  $objMedida = new Medida();
+  $objMedida->bussines_id = $data['bussines_id'];
+  
   $id = "";
   $name = "";
   $reference = "";

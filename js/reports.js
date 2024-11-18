@@ -144,8 +144,8 @@ async function loadOverview(modulo){
 }
 
 
-function loadInvoice(modulo = "VENTA",invoice_id = "495",bussines_id = 1){
-    var seccion_modulo = document.querySelector("#parte1");
+function loadInvoice(modulo,invoice_id,bussines_id,parte){
+    var seccion_modulo = document.querySelector("#"+parte);
     const data = {
         accion: "loadInvoice",
         modulo:modulo,

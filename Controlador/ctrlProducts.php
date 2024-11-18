@@ -35,10 +35,6 @@
             $objProduct->delete();         
             break;
         case 'new':
-            $objCategory = new Category();
-            $objCategory->bussines_id = $data['bussines_id'];
-            $objMedida = new Medida();
-            $objMedida->bussines_id = $data['bussines_id'];
             include("../Vistas/products/formulario.php");     
             break;
         case 'index':

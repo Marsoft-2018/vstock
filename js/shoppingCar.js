@@ -107,12 +107,12 @@ function prepareInvoice(bussines_id, accion) {
 }
 
 // Finaliza la compra y envía los datos del carrito a la base de datos
-async function addSale(bussines_id) {    
+async function addSale(bussines_id){    
     // Obtener el formulario y capturar sus datos
     const form = document.getElementById("formInvoice");
     const formData = new FormData(form); // Captura el contenido del formulario
     const formObject = Object.fromEntries(formData.entries()); // Convierte a un objeto
-
+    const invoiceId = document.getElementById("id").value;
   // Combina los datos del carrito y el formulario en un solo objeto
     const payload = {
         accion: "add",
@@ -137,6 +137,10 @@ async function addSale(bussines_id) {
         });
 
         if(response.data.success) {
+            cart = []; // Vaciar carrito
+            displayCart();
+            form.reset(); // Opcional: Resetear el formulario tras la compra
+            loadInvoice("VENTA",invoiceId,bussines_id,'modalBody');
             Swal.fire({
                 position: "bottom-end",
                 icon: "success",
@@ -144,9 +148,6 @@ async function addSale(bussines_id) {
                 showConfirmButton: false,
                 timer: 1500,
             });
-            cart = []; // Vaciar carrito
-            displayCart();
-            form.reset(); // Opcional: Resetear el formulario tras la compra
             loadMaxId();
            
         } else {

@@ -1,26 +1,4 @@
 <?php 
-    session_start(); 
-    // $id = "";
-    // $name = "";
-    // $address = "";
-    // $phone = "";
-    // $city = "";
-    // $email = "";
-    // $readonly =  "";
-    // if($accion == "edit"){
-    //     $readonly = "readonly";
-    // }
-
-    // if(isset($objsupplier)){
-    //     foreach ($objsupplier->load() as $supplier) {
-    //         $id = $supplier['id'];
-    //         $name = $supplier['name'];
-    //         $address = $supplier['address'];
-    //         $phone = $supplier['phone'];
-    //         $city = $supplier['city'];
-    //         $email = $supplier['email'];
-    //     }
-    // }
 ?>
 <h2>MODULO DE COMPRAS</h2>
 <hr>
@@ -89,65 +67,76 @@
                     </div>
                 </div>
             <div class="panel panel-">
-            <div class="panel-heading "><h4>Datos relacionados con el movimiento</h4></div>
+                <div class="panel-heading ">
+                    <h4>Datos relacionados con el movimiento</h4>
+                </div>
                 <div class="panel-body">
                     <div class='row'>   
-                    <div class='col-md-2'>
-                        <label>Tipo de ventas: </label>
-                            <select name='type' id='tipoVenta' class='col-md-2 form-control' onchange="loadPayForm(this.value)">
-                                <option value='contado'>Contado</option>
-                                <option value='credito'>Cr&eacute;dito</option>
-                            </select> 
-                    </div>
-                    <div class='col-md-2'>
-                        <label>Forma de pago: </label>
-                            <select name="form_pay" id='tipoPago' class='col-md-2 form-control'>
-                                <option value='Efectivo'>Efectivo</option>
-                                <option value='Cheque'>Cheque</option>
-                                <option value='Tarjeta'>Tarjeta</option>
-                                <option value='otra'>Otra...</option>
-                            </select>				
-                    </div>
-                    <div class="col-md-2">	
-                        <div class="row">
-                            <label for="cbo_product">Buscar product</label>
-                            <input type='text' value='' name='productSelect' id='productSelect' class='col-md-2 form-control' list='listadeProducts' onchange='quantityStock(<?php echo $bussines_id; ?>)' ondblclick='limpiar(this.id)' onkeypress='pasarAcantidad(event)'>
-                            <datalist id='listadeProducts'>
-                                <?php
-                                    foreach ($objProduct->list() as $product) {
-                                ?>
-                                    <option value="<?php echo $product['id'] ?>"> <?php echo $product['name'] ?>
-                                <?php
-                                    }
-                                ?>
-                            </datalist>
-                        </div>    
-                    </div>
-                    <div class="col-md-1" style="margin: 0px;">
-                        <label for="">Editar</label>
-                        <span id='btnEditar'>
-                            <button class='btn btn-primary' type='button' onclick='editarArticuloEnMovimiento()'><i class='fa fa-edit'></i></button>
-                        </span>
-                    </div>
-                    <div class="col-md-2">
-                        <div><label>Cantidad:</label>
-                        <input id="productQuantity" name="productQuantity" type="number" value="1" class="col-md-2 form-control" placeholder="Ingrese cantidad" autocomplete="off" ondblclick='limpiar(this.id)'/>
+                        <div class='col-md-2'>
+                            <label>Tipo de ventas: </label>
+                                <select name='type' id='tipoVenta' class='col-md-2 form-control' onchange="loadPayForm(this.value)">
+                                    <option value='contado'>Contado</option>
+                                    <option value='credito'>Cr&eacute;dito</option>
+                                </select> 
+                        </div>
+                        <div class='col-md-2'>
+                            <label>Forma de pago: </label>
+                                <select name="form_pay" id='tipoPago' class='col-md-2 form-control'>
+                                    <option value='Efectivo'>Efectivo</option>
+                                    <option value='Cheque'>Cheque</option>
+                                    <option value='Tarjeta'>Tarjeta</option>
+                                    <option value='otra'>Otra...</option>
+                                </select>				
+                        </div>
+                        <div class="col-md-2">	
+                            <div class="row">
+                                <label for="cbo_product">Buscar product</label>
+                                <input type='text' value='' name='productSelect' id='productSelect' class='col-md-2 form-control' list='listadeProducts' onchange='quantityStock(<?php echo $bussines_id; ?>)' ondblclick='limpiar(this.id)' onkeypress='pasarAcantidad(event)'>
+                                <datalist id='listadeProducts'>
+                                    <?php
+                                        foreach ($objProduct->list() as $product) {
+                                    ?>
+                                        <option value="<?php echo $product['id'] ?>"> <?php echo $product['name'] ?>
+                                    <?php
+                                        }
+                                    ?>
+                                </datalist>
+                            </div>    
+                        </div>
+                        <div class="col-md-1" style="margin: 0px;">
+                            <label for="">Editar</label>
+                            <span id='btnEditar'>
+                                <button class='btn btn-primary' type='button' onclick='editarArticuloEnMovimiento()'><i class='fa fa-edit'></i></button>
+                            </span>
+                        </div>
+                        <div class="col-md-2">
+                            <div><label>Cantidad:</label>
+                            <input id="productQuantity" name="productQuantity" type="number" value="1" class="col-md-2 form-control" placeholder="Ingrese cantidad" autocomplete="off" ondblclick='limpiar(this.id)'/>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div style="margin-top: 19px;">
+                                <span id='resultadoVerificacion'>
+                                    <input type="hidden" class="for-control" id="registrado" value='' >
+                                </span>
+                                <button type='button' class='btn btn-success btn-agregar-product' id='btnSelectedProduct' onclick="addSelectedProduct()">
+                                    <i class='fa fa-list-ul'></i> Agregar a la lista
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <div class="col">
-                        <div style="margin-top: 19px;">
-                        <span id='resultadoVerificacion'>
-                            <input type="hidden" class="for-control" id="registrado" value='' >
-                        </span>
-                        <button type='button' class='btn btn-success btn-agregar-product' id='btnSelectedProduct' onclick="addSelectedProduct()"><i class='fa fa-list-ul'></i> Agregar a la lista</button>
+                    <div class="row">
+                        <div class="col">
+                            <?php
+                                include("../Vistas/products/formulario.php");
+                            ?>
                         </div>
                     </div>
-                </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <span id='verificacionArticulo' style='text-align:center;'></span>
-                </div>
-            </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span id='verificacionArticulo' style='text-align:center;'></span>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="container">
