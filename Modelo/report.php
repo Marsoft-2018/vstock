@@ -12,19 +12,17 @@
 		private $sql;
         
         public function journal(){
-            $this->sql="SELECT fvd.product_id,inv.name,inv.reference,SUM(fvd.quantity) AS 'quantity',fvd.`unit_value`,sum(fvd.`subtotal_amount`) as 'subtotal_amount',fv.date_at
-                 from sale_invoice_details fvd 
-                 inner join products inv on inv.`id`=fvd.`product_id`
-                 inner join sales_invoices fv on fv.`id` = fvd.`invoice_id`
-                 WHERE DAY(fv.`date_at`)= ? AND MONTH(fv.`date_at`)= ? AND YEAR(fv.`date_at`)= ?
-                GROUP BY fv.`date_at`,fvd.`product_id` ORDER BY fv.`date_at` DESC";
+            $this->sql="SELECT fv.id,SUM(fvd.quantity) AS 'quantity',fvd.`unit_value`,SUM(fvd.`subtotal_amount`) AS 'subtotal_amount',fv.date_at
+                        FROM sale_invoice_details fvd 
+                        INNER JOIN sales_invoices fv ON fv.`id` = fvd.`invoice_id`
+                        WHERE DAY(fv.`date_at`)= ? AND MONTH(fv.`date_at`)= ? AND YEAR(fv.`date_at`)= ?
+                        GROUP BY fv.`date_at`,fv.`id` ORDER BY fv.`date_at` DESC";
             if($this->modulo=='COMPRA'){
-                $this->sql="SELECT fcd.product_id,inv.name,inv.reference,SUM(fcd.quantity) AS 'quantity',fcd.`unit_value`,sum(fcd.`subtotal_amount`) as 'subtotal_amount',fc.date_at
-                 from purchase_invoice_details fcd 
-                 inner join products inv on inv.`id`=fcd.`product_id`
-                 inner join purchase_invoices fc on fc.`id` = fcd.`invoice_id`
+                $this->sql="SELECT fc.id,SUM(fcd.quantity) AS 'quantity',fcd.`unit_value`,SUM(fc.`amount`) AS 'subtotal_amount',fc.date_at
+                FROM purchase_invoices fc 
+                INNER JOIN purchase_invoice_details fcd ON fc.`id` = fcd.`invoice_id`
                  WHERE DAY(fc.`date_at`)=? AND MONTH(fc.`date_at`)=? AND YEAR(fc.`date_at`)= ?
-                GROUP BY fc.`date_at`,fcd.`product_id` ORDER BY fc.`date_at` DESC";
+                GROUP BY fc.`date_at`,fc.`id` ORDER BY fc.`date_at` DESC";
             }
 
 			try {
@@ -43,19 +41,17 @@
         }
         
         public function monthly(){
-            $this->sql="SELECT fvd.product_id,inv.name,inv.reference,SUM(fvd.quantity) AS 'quantity',fvd.`unit_value`,sum(fvd.`subtotal_amount`) as 'subtotal_amount',fv.date_at
-                 from sale_invoice_details fvd 
-                 inner join products inv on inv.`id`=fvd.`product_id`
-                 inner join sales_invoices fv on fv.`id` = fvd.`invoice_id`
-                 WHERE MONTH(fv.`date_at`)= ? AND YEAR(fv.`date_at`)= ?
-                GROUP BY fv.`date_at`,fvd.`product_id` ORDER BY fv.`date_at` DESC";
+            $this->sql="SELECT fv.id,SUM(fvd.quantity) AS 'quantity',fvd.`unit_value`,SUM(fvd.`subtotal_amount`) AS 'subtotal_amount',fv.date_at
+                        FROM sale_invoice_details fvd 
+                        INNER JOIN sales_invoices fv ON fv.`id` = fvd.`invoice_id`
+                        WHERE MONTH(fv.`date_at`)= ? AND YEAR(fv.`date_at`)= ?
+                        GROUP BY fv.`date_at`,fv.`id` ORDER BY fv.`date_at` DESC";
             if($this->modulo=='COMPRA'){
-                $this->sql="SELECT fcd.product_id,inv.name,inv.reference,SUM(fcd.quantity) AS 'quantity',fcd.`unit_value`,sum(fcd.`subtotal_amount`) as 'subtotal_amount',fc.date_at
-                 from purchase_invoice_details fcd 
-                 inner join products inv on inv.`id`=fcd.`product_id`
-                 inner join purchase_invoices fc on fc.`id` = fcd.`invoice_id`
+                $this->sql="SELECT fc.id,SUM(fcd.quantity) AS 'quantity',fcd.`unit_value`,SUM(fc.`amount`) AS 'subtotal_amount',fc.date_at
+                FROM purchase_invoices fc 
+                INNER JOIN purchase_invoice_details fcd ON fc.`id` = fcd.`invoice_id`
                  WHERE MONTH(fc.`date_at`)=? AND YEAR(fc.`date_at`)= ?
-                GROUP BY fc.`date_at`,fcd.`product_id` ORDER BY fc.`date_at` DESC";
+                GROUP BY fc.`date_at`,fc.`id` ORDER BY fc.`date_at` DESC";
             }
 
 			try {
@@ -72,19 +68,17 @@
         }
 
 		public function yearly(){
-            $this->sql="SELECT fvd.product_id,inv.name,inv.reference,SUM(fvd.quantity) AS 'quantity',fvd.`unit_value`,sum(fvd.`subtotal_amount`) as 'subtotal_amount',fv.date_at
-                    from sale_invoice_details fvd 
-                    inner join products inv on inv.`id`=fvd.`product_id`
-                    inner join sales_invoices fv on fv.`id` = fvd.`invoice_id`
-                    WHERE YEAR(fv.`date_at`)= ?
-                GROUP BY fv.`date_at`,fvd.`product_id` ORDER BY fv.`date_at` DESC";
+            $this->sql="SELECT fv.id,SUM(fvd.quantity) AS 'quantity',fvd.`unit_value`,SUM(fvd.`subtotal_amount`) AS 'subtotal_amount',fv.date_at
+                        FROM sale_invoice_details fvd 
+                        INNER JOIN sales_invoices fv ON fv.`id` = fvd.`invoice_id`
+                        WHERE YEAR(fv.`date_at`)= ?
+                        GROUP BY fv.`date_at`,fv.`id` ORDER BY fv.`date_at` DESC";
             if($this->modulo=='COMPRA'){
-                $this->sql="SELECT fcd.product_id,inv.name,inv.reference,SUM(fcd.quantity) AS 'quantity',fcd.`unit_value`,sum(fcd.`subtotal_amount`) as 'subtotal_amount',fc.date_at
-                    from purchase_invoice_details fcd 
-                    inner join products inv on inv.`id`=fcd.`product_id`
-                    inner join purchase_invoices fc on fc.`id` = fcd.`invoice_id`
-                    WHERE YEAR(fc.`date_at`)= ?
-                GROUP BY fc.`date_at`,fcd.`product_id` ORDER BY fc.`date_at` DESC";
+                $this->sql="SELECT fc.id,SUM(fcd.quantity) AS 'quantity',fcd.`unit_value`,SUM(fc.`amount`) AS 'subtotal_amount',fc.date_at
+                FROM purchase_invoices fc 
+                INNER JOIN purchase_invoice_details fcd ON fc.`id` = fcd.`invoice_id`
+                 WHERE YEAR(fc.`date_at`)= ?
+                GROUP BY fc.`date_at`,fc.`id` ORDER BY fc.`date_at` DESC";
             }
 
             try {

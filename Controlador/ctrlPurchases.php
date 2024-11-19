@@ -13,7 +13,7 @@
             $cart = $data['cart'];// datos relacionados con los productos agregados a la factura.
 
             $objSupplier = new Supplier();
-            $objSupplier->id = $dataInvoice['Supplier_id'];
+            $objSupplier->id = $dataInvoice['supplier_id'];
             if(count($objSupplier->load()) == 0){
                 $objSupplier->name = $dataInvoice['name'];
                 $objSupplier->address = $dataInvoice['address'];
@@ -57,8 +57,6 @@
             $bussines_id = $data['bussines_id'];
             $objSupplier = new Supplier();
             $objSupplier->bussines_id = $bussines_id;
-            $objProduct = new Product();
-            $objProduct->bussines_id = $bussines_id;
             $objInvoice = new PurchaseInvoice();
             include("../Vistas/movimientos/purchases/formulario.php");     
         break;

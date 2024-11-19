@@ -78,7 +78,7 @@ function limpiarAreaDeTrabajo() {
   //document.getElementById("tablaObservaciones").innerHTML='';
 }
 
-function actualizarPerfil() {
+function loadPerfil() {
   $.ajax({
     type: "POST",
     url: "Controlador/ctrlPerfil.php?accion=Actualizar",

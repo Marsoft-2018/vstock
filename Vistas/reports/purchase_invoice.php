@@ -48,19 +48,19 @@
         <strong>FACTURA No.</strong><?php echo $invoice['id'] ?>
     </div>
     <div style='width:100%;text-align:left;margin-top:5px;'>
-        Fecha Venta:<?php echo $invoice['date_at'] ?>
+        Fecha compra:<?php echo $invoice['date_at'] ?>
     </div>
         <?php
             //Datos del cliente
-            $objCustomer = new Customer();
-            $objCustomer->id = $invoice['customer_id'];
-            foreach ($objCustomer->load() as $customer) {
+            $objSupplier = new Supplier();
+            $objSupplier->id = $invoice['supplier_id'];
+            foreach ($objSupplier->load() as $supplier) {
             ?>
                 <div style='width:100%;text-align:left;margin-top:5px;'>
-                    <strong>Cliente: </strong> <?php echo $customer['name'] ?>
+                    <strong>Proveedor: </strong> <?php echo $supplier['name'] ?>
                 </div>
                 <div style='width:100%;text-align:left;margin-top:5px;'>
-                    <strong>CC/NIT: </strong> <?php echo $customer['id'] ?>
+                    <strong>CC/NIT: </strong> <?php echo $supplier['id'] ?>
                 </div>
             <?php  
             }
@@ -72,8 +72,8 @@
                             <th>Cod.</th>
                             <th style='text-align:center'>Descripción</th>
                             <th style='text-align:center'>Cant</th>
-                            <th style='text-align:right'>V. Unit</th>
-                            <th style='text-align:right'>Valor</th>
+                            <th style='text-align:center'>V. Unit</th>
+                            <th style='text-align:center'>Valor</th>
                         </tr>
                     </thead>
                     <tbody>

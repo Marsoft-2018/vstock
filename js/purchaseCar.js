@@ -23,15 +23,16 @@ function indexPurchases(bussines_id) {
     });
 }
 
-function preparePurchaseInvoice(bussines_id, accion) {
-  switch (accion) {
-    case "new":
-      addPurchase(bussines_id);
-      break;
-    case "edit":
-      //updatePurchase(bussines_id);
-      break;
-  }
+function preparePurchaseInvoice(event,bussines_id, accion) {
+    event.preventDefault(); // Prevenir el envío predeterminado
+    switch (accion) {
+        case "new":
+        addPurchase(bussines_id);
+        break;
+        case "edit":
+        //updatePurchase(bussines_id);
+        break;
+    }
   return false;
 }
 
@@ -66,7 +67,8 @@ async function addPurchase(bussines_id) {
             });
             cart = []; // Vaciar carrito
             displayCart();
-            form.reset(); // Opcional: Resetear el formulario tras la compra           
+            form.reset(); // Opcional: Resetear el formulario tras la compra 
+            loadMaxId('purchase');          
         } else {
             alert("Error al procesar la compra");
         }

@@ -135,7 +135,7 @@
                             </tr>
                         </tfoot>-->
                     </table>
-                    <a class="nav-link btn btn-primary btn-lg" aria-current="page" href="#" data-bs-toggle="modal" data-bs-target=".exampleModalCenter"  onclick="newProduct('<?php echo $_SESSION['idNegocio']; ?>')">
+                    <a class="nav-link btn btn-primary btn-lg" aria-current="page" href="#" data-bs-toggle="modal" data-bs-target=".exampleModalCenter"  onclick="newProduct('<?php echo $_SESSION['idNegocio']; ?>','stock')">
                         <i class="fa fa-plus-circle"></i> Agregar un nuevo articulo
                     </a>
                 </div>

@@ -141,12 +141,12 @@
                     <i class="fa fa-shopping-basket">&nbsp;</i> Compras
                   </a>
                 </li>
-                <li class="menu-item">
+                <!-- <li class="menu-item">
                     <a href="#" title='Ingresar al modulo de devoluciones' class="menu-link"  onclick="cargarDevoluciones('<?php echo $_SESSION['idNegocio'] ?>')">
                         <i class="fa fa-retweet">&nbsp;</i>
                         Devoluciones
                     </a>
-                </li>
+                </li> -->
                 <li class="menu-item">
                     <a href="#" title='Ingresar al modulo de abonos a clientes' class="menu-link"  onclick="indexPersonCredits('Customer')">
                         <i  class="fa fa-fw fa-edit">&nbsp;</i> Créditos a Clientes
@@ -297,11 +297,11 @@
                       <i class="fa fa-box-open" aria-hidden="true">&nbsp;</i> Productos Agotados
                   </a>
                 </li>
-                <li class="menu-item">
+                <!-- <li class="menu-item">
                   <a href="#" title='Mostrar datos del negocio' class="menu-link"  onclick="indexSuppliers('<?php echo $_SESSION['idNegocio'] ?>')">
                   <i class="fa fa-chart-line" aria-hidden="true"></i>&nbsp;</i> Resultados
                   </a>
-                </li>
+                </li> -->
               </ul>
             </li>
             <!-- <li class="menu-item">

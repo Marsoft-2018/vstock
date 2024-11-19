@@ -169,3 +169,30 @@ function loadInvoice(modulo,invoice_id,bussines_id,parte){
         });
     });				                   
 }
+
+function findInvoice(modulo,bussines_id,parte){
+    var seccion_modulo = document.querySelector("#"+parte);
+    const invoice_id = document.querySelector("#id").value;
+    const data = {
+        accion: "findInvoice",
+        modulo:modulo,
+        invoice_id:invoice_id,
+        bussines_id: bussines_id
+    };
+    axios
+        .post("Controlador/ctrlReports.php", data)
+        .then(function (res) {
+        //console.log(res.data);
+        if (res.status == 200) {
+            seccion_modulo.innerHTML = res.data;
+        }
+        })
+        .catch(function (err) {
+        Swal.fire({
+            position: "left-end",
+            icon: "error",
+            title: "Error",
+            text: err,
+        });
+    });				                   
+}

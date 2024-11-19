@@ -15,6 +15,7 @@
         public $bussines_id;
         public $category_id;
         public $measure_id;
+        public $text;
 		private $sql;
         
         public function list(){
@@ -43,6 +44,21 @@
 				$stm = $this->Conexion->prepare($this->sql);
 				$stm->bindParam(1, $this->id);
 				$stm->bindParam(2, $this->bussines_id);
+				$stm->execute();
+				$data = $stm->fetchAll(PDO::FETCH_ASSOC);
+				
+				return $data;
+			} catch (Exception $e) {
+				echo "Ocurrió un Error al cargar los products. ".$e;
+			}
+        }
+
+		
+        public function find(){
+            $this->sql="SELECT id,`name` FROM products WHERE id LIKE('".$this->text."%') AND bussines_id  =  ? LIMIT 10";  
+            try {
+				$stm = $this->Conexion->prepare($this->sql);
+				$stm->bindParam(1, $this->bussines_id);
 				$stm->execute();
 				$data = $stm->fetchAll(PDO::FETCH_ASSOC);
 				

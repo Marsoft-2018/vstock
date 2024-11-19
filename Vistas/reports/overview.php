@@ -2,10 +2,10 @@
     $meses=array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
     $semaforo=array("danger","warning","info","success");
 ?>
-<header id='encabezado' style='width:90%;visibility:hidden;'>
+<!-- <header id='encabezado' style='width:90%;visibility:hidden;'>
     <div style='width:99%;height:80px;'>
         <div style='width:40%;'>
-            <!-- <img src='img/$logo' style='width:225px;margin:0px;float:left;'> -->
+            <img src='img/$logo' style='width:225px;margin:0px;float:left;'>
         </div>
         <div style='margin-left:10px;width:55%;font-size:12px;float:left;'>
             <span><h4 style='margin:0px;padding:0px;'>$nombreNegocio</h4></span>
@@ -14,7 +14,7 @@
             <span>Ciudad: $ciudad</span>
         </div>
     </div>
-</header>
+</header> -->
 <h2>Reporte Consolidado</h2>
 <br>
 <table class='table table-striped'>

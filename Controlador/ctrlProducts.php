@@ -10,7 +10,16 @@
             $objProduct->bussines_id = $_REQUEST['bussines_id'];
             $objProduct->id = $_REQUEST['id'];
             echo json_encode($objProduct->load());        
-            break;
+        break;
+
+        
+        case 'find':
+            $objProduct = new Product();
+            $objProduct->bussines_id = $data['bussines_id'];
+            $objProduct->text = $data['text'];
+            echo json_encode($objProduct->find());        
+        break;
+
         case 'add':
             add_or_set_product($accion);           
             break;
@@ -35,6 +44,7 @@
             $objProduct->delete();         
             break;
         case 'new':
+            $bussines_id = $data['bussines_id'];
             include("../Vistas/products/formulario.php");     
             break;
         case 'index':

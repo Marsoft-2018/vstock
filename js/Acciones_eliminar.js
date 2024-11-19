@@ -104,22 +104,6 @@ function limpiar(id){
     document.getElementById(""+id).value='';
 }
 
-function pasarAcantidad(e){
-    tecla = (document.all) ? e.keyCode : e.which;
-    if (tecla==13) {
-        //alert ('Has pulsado enter');
-        document.getElementById('txt_cantidad').focus();
-    }
-    
-}
-
-
-$('#tipoVenta').change(function(){
-    var tipo=document.getElementById('tipoVenta').value;
-    $('#tipoPago').load('formasdePago.php',{tipo:tipo});
-});
-
-
 function cambiarPrecio(id,precio){
     var accion='CambiarPrecio';
     var factura=document.getElementById('txtFact').value;
@@ -137,23 +121,7 @@ function cambiarPrecio(id,precio){
     
 }
 
-    
-function editarPerfil(usuario){
-    //alert("Funcion editar perfil: "+usuario);
-    $("#parte1").load('EditarPerfil.php',{usuario:usuario});
-}
-
-function agregarCategoriaDirecta(){
-    var negNum =document.getElementById("negNum").value;
-    var nombreCategoria = document.getElementById('categoriaNuevoArticulo').value;
-    if(nombreCategoria==''){
-        alertify.error("Por favor ingrese un nombre válido para la categoria");
-    }else{
-        $("#registrarCategorias").load('Controlador/ctrlCategorias.php',{accion:'AgregarCategoriaArticuloNuevo',idneg:negNum,nombreCategoria:nombreCategoria},function(){
-            //alertify.success("Se encuentra el la funcion agregar categoria, variables: Negocio"+negNum+" categoria: "+nombreCategoria);
-        });
-    }       
-}
+  
 
 function ventanaGastosNuevo(){
     swal({
@@ -257,36 +225,6 @@ function ventanaPagos(idGasto){
     }, function (dismiss) {
 
     });
-}
-
-function agregarPago(){
-    var recibo= document.getElementById("reciboG").value;
-    var valor= document.getElementById("valorG").value;
-    var fecha= document.getElementById("fechaPago").value;
-    var idNegocio= document.getElementById("negNum").value;
-    var idGasto = document.getElementById("idGasto").value;
-    $("#listaGastos").load("Controlador/ctrlGastos.php",{accion:'Pagar',idNegocio:idNegocio,idGasto:idGasto,recibo:recibo,valor:valor,fecha:fecha},
-      function(){
-        cargarGastos();    
-      }
-    ); 
-}
-
-function mensaje(){
-    swal({ 
-    title: "MENSAJE",
-    text: "Modulo no disponible",
-    html: "<div class='alert alert-dimissable alert-warning'>"+
-            "Señor usuario disculpe la molestia el módulo no se encuentra disponible en este momento, contacte a soporte técnico."+
-            "</div>",
-    type: "info",
-    showCancelButton: false,
-    confirmButtonColor: "#216F21",
-    cancelButtonColor: "#FF0a55",
-    confirmButtonText: "Aceptar",
-    closeOnConfirm: false,
-    closeOnCancel: true }
-    );
 }
 
 

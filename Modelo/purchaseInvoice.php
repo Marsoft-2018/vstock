@@ -85,11 +85,10 @@
         }
         
         public function load(){
-            $this->sql="SELECT * FROM purchase_invoices WHERE `id`=? AND bussines_id  = ?";  
+            $this->sql="SELECT * FROM purchase_invoices WHERE `id`=?";  
             try {
 				$stm = $this->Conexion->prepare($this->sql);
 				$stm->bindParam(1, $this->id);
-				$stm->bindParam(2, $this->bussines_id);
 				$stm->execute();
 				$data = $stm->fetchAll(PDO::FETCH_ASSOC);
 				
@@ -98,6 +97,20 @@
 				echo "Ocurrió un Error al cargar los products. ".$e;
 			}
         }
+
+		public function loadDetails(){ 
+            $this->sql = "SELECT product_id,`description`,`quantity`,unit_value,`subtotal_amount` FROM purchase_invoice_details WHERE invoice_id = ?";
+            try {
+				$stm = $this->Conexion->prepare($this->sql);
+				$stm->bindParam(1, $this->id);
+				$stm->execute();
+				$data = $stm->fetchAll(PDO::FETCH_ASSOC);
+				
+				return $data;
+			} catch (Exception $e) {
+				echo "Ocurrió un Error al guardar el product. ".$e;
+			}   
+        }  
 
 		public function maxId(){
 			$max = 0;

@@ -148,7 +148,7 @@ async function addSale(bussines_id){
                 showConfirmButton: false,
                 timer: 1500,
             });
-            loadMaxId();
+            loadMaxId('sale');
            
         } else {
             Swal.fire({
@@ -172,13 +172,19 @@ async function addSale(bussines_id){
     return false;
 }
 
-async function loadMaxId(){
+async function loadMaxId(section){
+    console.log(section);
+    
+    let url = 'Controlador/ctrlSales.php';
+    if (section == "purchase") {
+        url = 'Controlador/ctrlPurchases.php';
+    }
     const data = {
         accion: "loadMaxId"
     };
 
     try {
-        const response = await axios.post('Controlador/ctrlSales.php', data, {
+        const response = await axios.post(url, data, {
             headers: { 'Content-Type': 'application/json' }
         });
         if (response.status == 200) {

@@ -31,8 +31,11 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-4">
-                            <label>Factura No.</label>
-                            <input type="text" class='form-control' name="id" id="id" value="<?php echo $objInvoice->maxId(); ?>" readonly>
+                            <label>Factura No.</label>                            
+                            <div class="input-group mb-3">
+                                <input type="text" class='form-control' name="id" id="id" value="<?php echo $objInvoice->maxId(); ?>">
+                                <button class="btn btn-outline-secondary" type="button" id="button-addon2"  data-bs-toggle="modal" data-bs-target=".exampleModalCenter" onclick="findInvoice('sale','<?php echo $bussines_id; ?>','modalBody')"><i class="fa fa-search"></i></button>
+                            </div>
                         </div>
                         <div class="col-md-3">
                         <label>Fecha:</label>
@@ -111,8 +114,8 @@
                     <div class="col-md-3">	
                         <div class="row">
                             <label for="cbo_product">Buscar producto</label>
-                            <input type='text' value='' name='productSelect' id='productSelect' class='col-md-2 form-control' list='listadeProducts' onchange='quantityStock(<?php echo $bussines_id; ?>)' ondblclick='limpiar(this.id)' onkeypress='pasarAcantidad(event)'>
-                            <datalist id='listadeProducts'>
+                            <input type='text' value='' name='productSelect' id='productSelect' class='col-md-2 form-control' list='listProduct' oninput="findProduct(this.value,<?php echo $bussines_id; ?>,'listProduct')"  onchange='quantityStock(<?php echo $bussines_id; ?>)' ondblclick='limpiar(this.id)' onkeypress='pasarAcantidad(event)'>
+                            <datalist id='listProduct'>
                                 <?php
                                     foreach ($objProduct->list() as $product) {
                                 ?>

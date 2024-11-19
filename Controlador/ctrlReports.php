@@ -2,9 +2,11 @@
     include("header.php");
     require('../Modelo/bussines.php');    
     require('../Modelo/product.php');
-    require('../Modelo/report.php');;
+    require('../Modelo/report.php');
     require('../Modelo/customer.php');
+    require('../Modelo/supplier.php');
     require('../Modelo/saleInvoice.php');
+    require('../Modelo/purchaseInvoice.php');
     $modulo;
     if (isset($data['modulo'])) {
         $modulo=$data['modulo'];
@@ -69,7 +71,21 @@
             $objInvoice->id = $data['invoice_id'];
             //$objInvoice->bussines_id = $data['bussines_id'];
 
-            if($data['modulo'] == "COMPRA"){                
+            if($data['modulo'] == "COMPRA"){
+                $objInvoice = new PurchaseInvoice();
+                $objInvoice->id = $data['invoice_id'];               
+                $file = "../Vistas/reports/purchase_invoice.php";
+            }
+            include($file);                  
+        break;
+        
+        case 'findInvoice':
+            $file = "../Vistas/reports/sale_invoice.php";
+            $objInvoice = new SaleInvoice();
+            $objInvoice->id = $data['invoice_id'];
+            if($data['modulo'] == "purchase"){
+                $objInvoice = new PurchaseInvoice();
+                $objInvoice->id = $data['invoice_id'];
                 $file = "../Vistas/reports/purchase_invoice.php";
             }
             include($file);                  
