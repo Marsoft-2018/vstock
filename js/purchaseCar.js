@@ -66,7 +66,7 @@ async function addPurchase(bussines_id) {
                 timer: 1500,
             });
             cart = []; // Vaciar carrito
-            displayCart();
+            displayCart('purchase');
             form.reset(); // Opcional: Resetear el formulario tras la compra 
             loadMaxId('purchase');          
         } else {

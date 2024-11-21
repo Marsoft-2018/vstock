@@ -142,7 +142,7 @@
                   </a>
                 </li>
                 <!-- <li class="menu-item">
-                    <a href="#" title='Ingresar al modulo de devoluciones' class="menu-link"  onclick="cargarDevoluciones('<?php echo $_SESSION['idNegocio'] ?>')">
+                    <a href="#" title='Ingresar al modulo de devoluciones' class="menu-link"  onclick="indexStockReturn('<?php echo $_SESSION['idNegocio'] ?>')">
                         <i class="fa fa-retweet">&nbsp;</i>
                         Devoluciones
                     </a>
@@ -621,7 +621,6 @@
     <script src="js/purchaseCar.js"></script>
     <script src="js/payForms.js"></script>
     <script src="js/reports.js"></script>
-    <script type="text/jscript" src="js/Acciones.js"></script>
     
     <script src="DataTables/datatables.js"></script>
     <script src="complementos/js/select2.min.js"></script>

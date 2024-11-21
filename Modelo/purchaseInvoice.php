@@ -12,6 +12,7 @@
         public $reg_date;
 		public $dataInvoice;
 		public $cart; //datos del carrito
+		public $text;
 		private $sql;
         
         public function add(){  
@@ -80,7 +81,17 @@
 			}   
         }  
 
-        public function list(){
+        public function find(){
+			$this->sql="SELECT id,`date_at`,amount FROM purchase_invoices WHERE id LIKE('".$this->text."%') LIMIT 10";  
+            try {
+				$stm = $this->Conexion->prepare($this->sql);
+				$stm->execute();
+				$data = $stm->fetchAll(PDO::FETCH_ASSOC);
+				
+				return $data;
+			} catch (Exception $e) {
+				echo "Ocurrió un Error al cargar los products. ".$e;
+			}
            
         }
         

@@ -85,7 +85,6 @@ async function findProduct(text, bussines_id,section) {
     bussines_id: bussines_id,
     text: text,
   };
-  console.log(text.length);
   
   if (text.length >=3) {
     try {
@@ -303,3 +302,27 @@ function pasarAcantidad(e) {
   }
 }
 
+function indexStockReturn(bussines_id){
+  var seccion_modulo = document.querySelector("#parte1");
+  var data = {
+    accion: "indexStockReturn",
+    bussines_id: bussines_id
+  };
+
+  axios
+    .post("Controlador/ctrlProducts.php", data)
+    .then(function (res) {
+      //console.log(res.data);
+      if (res.status == 200) {
+        seccion_modulo.innerHTML = res.data;
+      }
+    })
+    .catch(function (err) {
+      Swal.fire({
+        position: "left-end",
+        icon: "error",
+        title: "Error",
+        text: err,
+      });
+    });
+}

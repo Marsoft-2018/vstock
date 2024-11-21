@@ -24,10 +24,13 @@
 ?>
 <h2>MODULO DE VENTAS</h2>
 <hr>
-<form id="formInvoice" method="post" onsubmit="return prepareInvoice('<?php echo $_SESSION['idNegocio']; ?>','<?php echo $accion; ?>')">
-    <div id='Contenedor' class='container'>       
+<div>
+    <form id="formInvoice" method="post" onsubmit="return prepareInvoice('<?php echo $_SESSION['idNegocio']; ?>','<?php echo $accion; ?>')">
+        <div id='Contenedor' class='container'>       
             <div class="panel panel-">
-                <div class="panel-heading "><h4>Datos Iniciales de la Factura</h4></div>
+                <div class="panel-heading ">
+                    <h4>Datos Iniciales de la Factura</h4>
+                </div>
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-4">
@@ -38,14 +41,16 @@
                             </div>
                         </div>
                         <div class="col-md-3">
-                        <label>Fecha:</label>
-                        <input type='date' class='form-control' value='<?php echo date("Y-m-d") ?>' name='date_at' id='date_at'/>
+                            <label>Fecha:</label>
+                            <input type='date' class='form-control' value='<?php echo date("Y-m-d") ?>' name='date_at' id='date_at'/>
                         </div>
                         <div class="col-md-5">
                             <label>Elija el cliente</label>
                             <div class="input-group mb-3">
                                 <input type='text' value='' name='customerSelect' id='customerSelect' class='col-md-2 form-control' list='customersList' ondblclick='limpiar(this.id)' onchange="loadCustomerData()">
-                                <button class="btn btn-outline-secondary" type="button" id="button-addon2"  data-bs-toggle="modal" data-bs-target=".exampleModalCenter" onclick="loadCustomerData()"><i class="fa fa-search"></i></button>
+                                <button class="btn btn-outline-secondary" type="button" id="button-addon2"  data-bs-toggle="modal" data-bs-target=".exampleModalCenter" onclick="loadCustomerData()">
+                                    <i class="fa fa-search"></i>
+                                </button>
                             
                                 <datalist id='customersList' style="width: 100%">
                                     <?php
@@ -91,28 +96,30 @@
                         <input type="text" value="EL CARMEN DE BOLIVAR" name="city" class="form-control" id="city" onFocus='limpiar(this.id)'>
                     </div>
                 </div>
+            </div>
             <div class="panel panel-">
-            <div class="panel-heading "><h4>Datos relacionados con el movimiento</h4></div>
+                <div class="panel-heading ">
+                    <h4>Datos relacionados con el movimiento</h4>
+                </div>
                 <div class="panel-body">
                     <div class='row'>   
-                    <div class='col-md-2'>
-                        <label>Tipo de ventas: </label>
+                        <div class='col-md-2'>
+                            <label>Tipo de ventas: </label>
                             <select name='type' id='tipoVenta' class='col-md-2 form-control' onchange="loadPayForm(this.value)">
                                 <option value='contado'>Contado</option>
                                 <option value='credito'>Cr&eacute;dito</option>
                             </select> 
-                    </div>
-                    <div class='col-md-2'>
-                        <label>Forma de pago: </label>
+                        </div>
+                        <div class='col-md-2'>
+                            <label>Forma de pago: </label>
                             <select name="form_pay" id='tipoPago' class='col-md-2 form-control'>
                                 <option value='Efectivo'>Efectivo</option>
                                 <option value='Cheque'>Cheque</option>
                                 <option value='Tarjeta'>Tarjeta</option>
                                 <option value='otra'>Otra...</option>
                             </select>				
-                    </div>
-                    <div class="col-md-3">	
-                        <div class="row">
+                        </div>
+                        <div class="col-md-3">	
                             <label for="cbo_product">Buscar producto</label>
                             <input type='text' value='' name='productSelect' id='productSelect' class='col-md-2 form-control' list='listProduct' oninput="findProduct(this.value,<?php echo $bussines_id; ?>,'listProduct')"  onchange='quantityStock(<?php echo $bussines_id; ?>)' ondblclick='limpiar(this.id)' onkeypress='pasarAcantidad(event)'>
                             <datalist id='listProduct'>
@@ -124,33 +131,20 @@
                                     }
                                 ?>
                             </datalist>
-                        </div>    
-                    </div>
-                    <!-- <div class="col-md-1" style="margin: 0px;">
-                        <label for="">Editar</label>
-                        <span id='btnEditar'>
-                            <button class='btn btn-primary' type='button' onclick='editarArticuloEnMovimiento()'><i class='fa fa-edit'></i></button>
-                        </span>
-                    </div> -->
-                    <div class="col-md-2">
-                        <div><label>Cantidad:</label>
-                        <input id="productQuantity" name="productQuantity" type="number" value="1" class="col-md-2 form-control" placeholder="Ingrese cantidad" autocomplete="off" ondblclick='limpiar(this.id)'/>
+                        </div> 
+                        <div class="col-md-2">
+                            <label>Cantidad:</label>
+                            <input id="productQuantity" name="productQuantity" type="number" value="1" class="col-md-2 form-control" placeholder="Ingrese cantidad" autocomplete="off" ondblclick='limpiar(this.id)'/>                            
                         </div>
-                    </div>
-                    <div class="col">
-                        <div style="margin-top: 19px;">
-                        <span id='resultadoVerificacion'>
-                            <input type="hidden" class="for-control" id="registrado" value='' >
-                        </span>
-                        <button type='button' class='btn btn-success btn-agregar-product' id='btnSelectedProduct' onclick="addSelectedProduct()"><i class='fa fa-list-ul'></i> Agregar a la lista</button>
+                        <div class="col mt-3">
+                            <button type='button' class='btn btn-success btn-agregar-product' id='btnSelectedProduct' onclick="addSelectedProduct('sale')"><i class='fa fa-list-ul'></i> Agregar a la lista</button>
                         </div>
                     </div>
                 </div>
+            </div>
             <div class="row">
                 <div class="col-md-12">
                     <span id='verificacionArticulo' style='text-align:center;'></span>
-                </div>
-            </div>
                 </div>
             </div>
             <div class="container">
@@ -187,26 +181,14 @@
                 <div class="card-footer">
                     <button class='btn btn-info'  id='Bingresar' type="submit"  data-bs-toggle="modal" data-bs-target=".exampleModalCenter">INGRESAR VENTAS</button>
                 </div>
-            </div>
-            <div class='jumbotron' style="padding: 5px;text-align: center;margin: 2px;"> 
-            <div class="panel panel-" style="width:99%;">
-                <div class="panel-heading"> </div>
-                <div class="panel-body detalle-product" >
-                    </div>
-                    
-                    
-                    </div>      
-                    
-            <footer id='apoyo'>
-            
-            </footer>
-        </div> 
-        <div id="contenidoImprimir">
-            
-        </div>               
-    </div>
-</form>
-                         
+            </div>            
+        </div>  
+    </form>             
+</div>
+<?php 
+    $modulo = 'sale';
+    include("../Vistas/movimientos/editPrice.php");
+?>                       
 <div class="modal fade exampleModalCenter" id="exampleModalCenter2" tabindex="-1" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered  modal-lg">
     <div class="modal-content">

@@ -49,7 +49,7 @@
                     </div>
                     <div class="col-sm-3">
                         <label for="name" class="col-form-label">Nombre</label>
-                        <input type="text" value="Consumidor final" name="name" class="form-control" id="name" onFocus='limpiar(this.id)'>
+                        <input type="text" value="Proveedor default" name="name" class="form-control" id="name" onFocus='limpiar(this.id)'>
                     </div>
                     <div class="col-sm-3">
                         <label for="phone" class="col-form-label">Teléfono</label>
@@ -113,8 +113,8 @@
                         </div>
                         <div class="col-md-1" style="margin: 0px;" id="divNewProduct">
                             <label for="">Nuevo</label>
-                            <span id='btnEditar'>
-                                <button class='btn btn-primary' type='button' aria-current="page" href="#" data-bs-toggle="modal" data-bs-target=".exampleModalCenter" onclick="newProduct('<?php echo $_SESSION['idNegocio']; ?>','purchase')">
+                            <span>
+                                <button  style="margin: 0px;"  class='btn btn-primary' type='button' aria-current="page" href="#" data-bs-toggle="modal" data-bs-target=".exampleModalCenter" onclick="newProduct('<?php echo $data['bussines_id']; ?>','purchase')">
                                     <i class='fa fa-plus'></i>
                                 </button>
                             </span>
@@ -125,15 +125,10 @@
                                 <input id="productQuantity" name="productQuantity" type="number" value="1" class="col-md-2 form-control" placeholder="Ingrese cantidad" autocomplete="off" ondblclick='limpiar(this.id)'/>
                             </div>
                         </div>
-                        <div class="col">
-                            <div style="margin-top: 19px;">
-                                <span id='resultadoVerificacion'>
-                                    <input type="hidden" class="for-control" id="registrado" value='' >
-                                </span>
-                                <button type='button' class='btn btn-success btn-agregar-product' id='btnSelectedProduct' onclick="addSelectedProduct()">
-                                    <i class='fa fa-list-ul'></i> Agregar a la lista
-                                </button>
-                            </div>
+                        <div class="col mt-4">
+                            <button style="margin: 0px;" type='button' class='btn btn-success btn-agregar-product' id='btnSelectedProduct' onclick="addSelectedProduct('purchase')">
+                                <i class='fa fa-list-ul'></i> Agregar a la lista
+                            </button>
                         </div>
                     </div>
                     <div class="row">
@@ -181,10 +176,12 @@
         </div>
     </div>      
     </form> 
-</div> 
-    <div id="contenidoImprimir">
-        
-    </div>        
+</div>      
+
+<?php 
+    $modulo = 'purchase';
+    include("../Vistas/movimientos/editPrice.php");
+?>   
 <div class="modal fade exampleModalCenter" id="exampleModalCenter2" tabindex="-1" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered  modal-lg">
     <div class="modal-content">

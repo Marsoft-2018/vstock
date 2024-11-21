@@ -1,15 +1,15 @@
 
-<style type="text/css">
-    @media print
-    {
+<style>       
+    @media print {
         body * { visibility: hidden; }
-        #exampleModalCenter2 * { visibility: hidden; }
-        #capaPagina{ visibility: hidden}
-        #facturaImp * { visibility: visible; }
-        #facturaImp { position: absolute; top: 10px; left: 0px;height: auto; width: 100%;}    
+    #exampleModalCenter2{position: absolute; top: -50%; width: 100%; padding:0px; }
+    /* #exampleModalCenter2 * { visibility: hidden; } */
+    #capaPagina{ visibility: hidden}
+    #facturaImp * { visibility: visible; }
+    #facturaImp { position: absolute; top: 10px; left: 0px;height: auto; width: 100%;} 
     }
 </style>
-<div class='facturaImp' style='width:98%;border:1px solid #cecece;padding:5px;' id="facturaImp">
+<div class='facturaImp' style='width:100%; border:1px solid #cecece; padding:5px;' id="facturaImp">
     <?php
         $objBussines = new Bussines();
         $objBussines->id = $data['bussines_id'];

@@ -90,6 +90,19 @@
             }
             include($file);                  
         break;
+        
+        case 'loadListInvoiceBySelect':
+            if($data['modulo'] == "purchase"){
+                $objInvoice = new PurchaseInvoice();            
+                $objInvoice->text = $data['text'];
+                echo json_encode($objInvoice->find());  
+                return;
+            }
+            $objInvoice = new SaleInvoice();               
+            $objInvoice->text = $data['text'];
+            echo json_encode($objInvoice->find());  
+        break;
+        
     }
 
     function loadRegister($registerData,$modulo){

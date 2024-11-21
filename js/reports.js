@@ -196,3 +196,30 @@ function findInvoice(modulo,bussines_id,parte){
         });
     });				                   
 }
+
+async function loadListInvoiceBySelect(text,parte){
+    const modulo = document.querySelector("#type_return").value;
+    const data = {
+        accion: "loadListInvoiceBySelect",
+        modulo:modulo,
+        text: text
+    };
+   
+  if (text.length >=1) {
+    try {
+        const response = await axios.post("Controlador/ctrlReports.php", data); // Petición con Axios
+        const invoices = response.data; // La respuesta ya está en formato JSON con Axios
+        const listInvoices = document.getElementById(""+parte);
+        listInvoices.innerHTML = "";
+        // Agregar opciones al select
+        invoices.forEach(invoice => {
+            const option = document.createElement("option");
+            option.value = invoice.id;
+            option.textContent = `${invoice.date_at} - $${invoice.amount}`;
+            listInvoices.appendChild(option);
+        });
+    } catch (error) {
+        console.error("Error al cargar productos:", error);
+    }    
+  }		                   
+}

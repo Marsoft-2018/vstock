@@ -54,7 +54,18 @@
             // $objMedida->bussines_id = $data['bussines_id'];
             $bussines_id = $data['bussines_id'];
             include("../Vistas/products/index.php");     
-            break;
+        break;
+        
+        case 'indexStockReturn':
+            // $objCategory = new Category();
+            // $objCategory->bussines_id = $data['bussines_id'];
+            // $objMedida = new Medida();
+            // $objMedida->bussines_id = $data['bussines_id'];
+            $bussines_id = $data['bussines_id'];
+            include("../Vistas/products/stock_returns.php");     
+        break;
+
+
         case 'quantity_stock':
             $objProduct = new Product();
             $objProduct->id = $data['product_id'];

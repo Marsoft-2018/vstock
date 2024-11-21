@@ -12,6 +12,7 @@
         public $reg_date;
 		public $dataInvoice;
 		public $cart; //datos del carrito
+		public $text;
 		private $sql;
         
         public function add(){  
@@ -64,14 +65,9 @@
 
         }  
 
-        public function list(){
-            $this->sql="SELECT inv.id, inv.name, inv.reference, inv.purchase_price, inv.selling_price, inv.initial_quantity, inv.purchases, inv.sales, inv.stock_returns, inv.stock, inv.min_quantity, inv.bussines_id, inv.category_id, med.short_name as measure, cat.`name` as Categorias
-            FROM sales_invoices inv
-            INNER JOIN categorias cat ON inv.category_id = cat.`id`
-			INNER JOIN medidas med ON inv.measure_id = med.`id`
-            WHERE inv.bussines_id = ?
-            ORDER BY inv.`name` ASC";
-			try {
+        public function find(){
+			$this->sql="SELECT id,`date_at`,amount FROM sales_invoices WHERE id LIKE('".$this->text."%') LIMIT 10";  
+            try {
 				$stm = $this->Conexion->prepare($this->sql);
 				$stm->execute();
 				$data = $stm->fetchAll(PDO::FETCH_ASSOC);
@@ -80,7 +76,7 @@
 			} catch (Exception $e) {
 				echo "Ocurrió un Error al cargar los products. ".$e;
 			}
-
+           
         }
         
         public function load(){

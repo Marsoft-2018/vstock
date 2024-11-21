@@ -45,7 +45,7 @@ async function loadProducts() {
 }
 
 // Llama a esta función cuando se haga clic en "Agregar al Carrito"
-async function addSelectedProduct() {
+async function addSelectedProduct(process) {
     const productId = document.getElementById("productSelect").value;
     const quantity = parseInt(document.getElementById("productQuantity").value) || 1; // Capturar la cantidad especificada
     try {
@@ -58,34 +58,41 @@ async function addSelectedProduct() {
         } else {
             cart.push({ ...product, quantity }); // Agregar como un nuevo item
         }
-        displayCart();
+        displayCart(process);
     } catch (error) {
         console.error("Error al agregar producto al carrito:", error);
     }
 }
 
 // Muestra los productos en el carrito en el tbody y calcula el total
-function displayCart() {
+function displayCart(process) {
     
     const cartBody = document.getElementById("cartBody");
     cartBody.innerHTML = ""; // Limpiar contenido previo
-    totalPrice = 0;
+    let total = 0;
     cart.forEach((item, index) => {
-        const subtotal = item[0].selling_price * item.quantity;
-        totalPrice += subtotal;
+        let price = item[0].selling_price;
+        let subtotal = item[0].selling_price * item.quantity;
+        if(process == "purchase"){
+            subtotal = item[0].purchase_price * item.quantity;
+            price = item[0].purchase_price;
+        }
+        total += subtotal;
 
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>${item[0].id} </td>
             <td>${item[0].name}</td>
             <td style="text-align: center;"> ${item.quantity} </td>
-            <td style="text-align: right;"> $ ${item[0].selling_price}</td>
+            <td style="text-align: right;"> $ ${price}</td>
             <td style="text-align: right;">$ ${subtotal}</td>
+            <td><button type='button' class="btn btn-outline-warning btn-sm" onclick="openEditPriceModal('${item[0].id}','${process}')"><i class="fa fa-edit"></i></button></td>
             <td><button class="btn btn-outline-danger btn-sm" onclick="removeFromCart(${index})"><i class="fa fa-trash" ></i></button></td>
+            
         `;
         cartBody.appendChild(row);
     });
-    document.getElementById("total-price").innerText = `$ ${totalPrice}`;
+    document.getElementById("total-price").innerText = `$ ${total}`;
 }
 
 // Función para eliminar un producto del carrito por su índice
@@ -138,7 +145,7 @@ async function addSale(bussines_id){
 
         if(response.data.success) {
             cart = []; // Vaciar carrito
-            displayCart();
+            displayCart('sale');
             form.reset(); // Opcional: Resetear el formulario tras la compra
             loadInvoice("VENTA",invoiceId,bussines_id,'modalBody');
             Swal.fire({
@@ -195,21 +202,82 @@ async function loadMaxId(section){
     }
 }
 
-function cambiarPrecio(id, precio) {
-    var accion = "CambiarPrecio";
-    var factura = document.getElementById("txtFact").value;
-    if (id == "") {
-      alertify.alert("No se tiene Id del product");
-    } else {
-      $("#subTotal" + id).load(
-        "listaProd.php",
-        { accion: accion, idProd: id, Nfact: factura, precio: precio },
-        function () {
-          $("#totalFactura").load("listaProd.php", {
-            accion: "TotalFactura",
-            Nfact: factura,
-          });
-        }
-      );
+// Función para guardar los cambios del precio
+function saveEditedPrice(process) {
+    // Obtén los valores del formulario
+    const productId = document.getElementById('editProductId').value;
+    const newPrice = parseFloat(document.getElementById('editProductPrice').value);
+
+    if (isNaN(newPrice) || newPrice <= 0) {
+        Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            text: 'Por favor, ingrese un precio válido.',
+            showConfirmButton: false,
+            timer: 1500,
+        });
+        return;
     }
-  }
+
+    // Encuentra el producto en el carrito y actualiza su precio
+    const product = cart.find(item => item[0].id === productId);
+    if (product) {
+        if(process == 'purchase'){
+            product[0].purchase_price = newPrice;
+        }else{
+            product[0].selling_price = newPrice;
+        }
+        Swal.fire({
+            position: "bottom-end",
+            icon: "success",
+            title:'Precio actualizado',
+            text: `El precio del producto ${product[0].name} en esta factura se actualizó a ${newPrice}.`,
+            showConfirmButton: false,
+            timer: 3000,
+        });
+    } else {
+        Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            text: 'Producto no encontrado.',
+            showConfirmButton: false,
+            timer: 1500,
+        });
+    }
+
+    // Oculta el modal y actualiza la tabla del carrito
+    closeModal();
+    displayCart(process); // Esta función actualiza la tabla del carrito
+}
+
+// Función para abrir el modal y cargar los datos del producto
+function openEditPriceModal(productId,process) {
+    // Busca el producto en el carrito
+    const product = cart.find(item => item[0].id === productId);
+    if (!product) {
+        Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: 'Producto no encontrado.',
+            showConfirmButton: false,
+            timer: 1500,
+        });
+        return;
+    }
+    price = product[0].selling_price;
+    if(process == 'purchase'){
+        price = product[0].purchase_price;
+    }
+    // Rellena el modal con los datos del producto
+    document.getElementById('editProductId').value = productId;
+    document.getElementById('editProductName').value = product[0].name;
+    document.getElementById('editProductPrice').value = price;
+
+    // Muestra el modal
+    document.getElementById('editPriceModal').style.display = 'block';
+}
+
+// Función para cerrar el modal
+function closeModal() {
+    document.getElementById('editPriceModal').style.display = 'none';
+}
