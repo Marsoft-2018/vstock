@@ -60,7 +60,7 @@ if(isset($objBussines)){
             <hr>
         </div>
         <div class="panel-body ">
-            <form id="formBussines" method="post" onsubmit="return updateBussines('<?php echo $_SESSION['idNegocio']; ?>','<?php echo $accion; ?>')">
+            <form id="formBussines" method="post" onsubmit="return updateBussines('<?php echo $data['bussines_id']; ?>','<?php echo $accion; ?>')">
 
                 <div class="row mt-3">                
                     <div class="col-md-8">                   

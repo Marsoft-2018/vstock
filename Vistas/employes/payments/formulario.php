@@ -16,7 +16,7 @@
     }
   }
 ?>
-<form id="formEmployePayment" method="post" onsubmit="return prepareEmployePayment('<?php echo $_SESSION['idNegocio']; ?>','<?php echo $employe_id ?>','<?php echo $accion; ?>')">
+<form id="formEmployePayment" method="post" onsubmit="return prepareEmployePayment('<?php echo $data['bussines_id']; ?>','<?php echo $employe_id ?>','<?php echo $accion; ?>')">
   <div class="mb-3">
     <label for="id" class="form-label"><span style="color:#F00;">*</span> Id</label>
     <input type="text" class="form-control" id="id" name="id" value="<?php echo $id;?>" required <?php echo $readonly;?>>    

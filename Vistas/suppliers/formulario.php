@@ -1,5 +1,4 @@
 <?php 
-  session_start(); 
   $id = "";
   $name = "";
   $address = "";
@@ -21,7 +20,7 @@ if(isset($objSupplier)){
   }
 }
 ?>
-<form id="formSupplier" method="post" onsubmit="return prepareSupplier('<?php echo $_SESSION['idNegocio']; ?>','<?php echo $accion; ?>')">
+<form id="formSupplier" method="post" onsubmit="return prepareSupplier('<?php echo $data['bussines_id']; ?>','<?php echo $accion; ?>')">
   <div class="mb-3">
     <label for="id" class="form-label">Nit/Documento</label>
     <input type="text" class="form-control" id="id" name="id" value="<?php echo $id;?>" required>    

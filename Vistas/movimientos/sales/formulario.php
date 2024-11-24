@@ -1,5 +1,4 @@
 <?php 
-    session_start(); 
     // $id = "";
     // $name = "";
     // $address = "";
@@ -25,7 +24,7 @@
 <h2>MODULO DE VENTAS</h2>
 <hr>
 <div>
-    <form id="formInvoice" method="post" onsubmit="return prepareInvoice('<?php echo $_SESSION['idNegocio']; ?>','<?php echo $accion; ?>')">
+    <form id="formInvoice" method="post" onsubmit="return prepareInvoice('<?php echo $data['bussines_id']; ?>','<?php echo $accion; ?>')">
         <div id='Contenedor' class='container'>       
             <div class="panel panel-">
                 <div class="panel-heading ">

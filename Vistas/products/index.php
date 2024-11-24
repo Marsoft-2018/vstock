@@ -1,7 +1,4 @@
 <!DOCTYPE html>
-<?php
-    session_start();
-?>
 <html>
 
 <head>
@@ -102,12 +99,12 @@
                                                 }
                                             ?>
                                             <td style='text-align: center;padding: 1px;'>
-                                                <button class="btn btn-outline-warning btn-sm" id='<?php echo $product['id']; ?>' title='Editar articulo <?php echo $product['id']; ?>'  data-bs-toggle="modal" data-bs-target=".exampleModalCenter"  onclick="editProduct(this.id,'<?php echo $_SESSION['idNegocio']; ?>')">
+                                                <button class="btn btn-outline-warning btn-sm" id='<?php echo $product['id']; ?>' title='Editar articulo <?php echo $product['id']; ?>'  data-bs-toggle="modal" data-bs-target=".exampleModalCenter"  onclick="editProduct(this.id,'<?php echo $data['bussines_id']; ?>')">
                                                     <i class="fa fa-pencil-alt" ></i>
                                                 </button>
                                             </td>
                                             <td style='text-align: center;padding: 1px;'>
-                                                <button class="btn btn-outline-danger btn-sm" id='<?php echo $product['id']; ?>' title='Eliminar articulo <?php echo $product['id']; ?>' onclick="deleteProduct(this.id,'<?php echo $_SESSION['idNegocio']; ?>')">
+                                                <button class="btn btn-outline-danger btn-sm" id='<?php echo $product['id']; ?>' title='Eliminar articulo <?php echo $product['id']; ?>' onclick="deleteProduct(this.id,'<?php echo $data['bussines_id']; ?>')">
                                                     <i class="fa fa-trash" ></i>
                                                 </button>
                                             </td>   
@@ -135,7 +132,7 @@
                             </tr>
                         </tfoot>-->
                     </table>
-                    <a class="nav-link btn btn-primary btn-lg" aria-current="page" href="#" data-bs-toggle="modal" data-bs-target=".exampleModalCenter"  onclick="newProduct('<?php echo $_SESSION['idNegocio']; ?>','stock')">
+                    <a class="nav-link btn btn-primary btn-lg" aria-current="page" href="#" data-bs-toggle="modal" data-bs-target=".exampleModalCenter"  onclick="newProduct('<?php echo $data['bussines_id']; ?>','stock')">
                         <i class="fa fa-plus-circle"></i> Agregar un nuevo articulo
                     </a>
                 </div>

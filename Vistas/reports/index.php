@@ -1,28 +1,3 @@
-<!-- <style type="text/css">
-     #encabezado {            
-            display: none;
-    }
-    @media print
-    {
-        body * { visibility: hidden; }
-        #capaPagina{ visibility: hidden;}
-        #contenidoImprimir * { visibility: visible; }
-        #contenidoImprimir { position: absolute; top: 10px; left: 0px;height: auto; width: 95%;}
-        
-        .clearfix:after {
-          content: "";
-          
-        }
-
-        #encabezado {            
-            display: block;
-            visibility: visible;
-            height: 80px;
-            width: 100%;
-          clear: both;
-        }       
-    }
-</style> -->
 <style type="text/css">
     @media print
     {
@@ -30,7 +5,7 @@
         #capaPagina{ visibility: hidden}
         #contenidoImprimir * { visibility: visible; }
         #contenidoImprimir { position: absolute; top: 10px; left: 0px;height: auto; width: 90%;}   
-        
+        .btn-hidden * { visibility: hidden; }
         
     }
 </style>

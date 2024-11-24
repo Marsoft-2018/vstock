@@ -21,7 +21,7 @@
                 <td><?php echo $register['id'] ?></td>
                 <td style="text-align: center"> <?php echo $register['quantity'] ?></td>
                 <td style="text-align: right">$ <?php echo number_format($register['subtotal_amount'], 0, ',', '.') ?></td>
-                <td><button class="btn btn-info"  aria-current="page" href="#" data-bs-toggle="modal" data-bs-target=".exampleModalCenter" onclick="loadInvoice('<?php echo $modulo ?>','<?php echo $register['id'] ?>','1','modalBody')"><i class="fa fa-eye"></i></button></td>
+                <td class="btn-hidden"><button class="btn btn-info"  aria-current="page" href="#" data-bs-toggle="modal" data-bs-target=".exampleModalCenter" onclick="loadInvoice('<?php echo $modulo ?>','<?php echo $register['id'] ?>','1','modalBody')"><i class="fa fa-eye"></i></button></td>
             </tr>
         <?php
             $sumaTotal=$sumaTotal+$register['subtotal_amount'];

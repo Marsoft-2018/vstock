@@ -1,5 +1,4 @@
 <?php 
-  session_start(); 
   $id = "";
   $amount = "";
   $date_at = "";

@@ -1,7 +1,4 @@
 <!DOCTYPE html>
-<?php
-    session_start();
-?>
 <html>
 
 <head>
@@ -42,7 +39,7 @@
 <body oncontextmenu="return false">
     <h3>Módulo control de categorias</h3>
     <hr>
-    <a class="nav-link btn btn-primary btn-lg" aria-current="page" href="#" data-bs-toggle="modal" data-bs-target=".exampleModalCenter"  onclick="newCategory('<?php echo $_SESSION['idNegocio']; ?>')">
+    <a class="nav-link btn btn-primary btn-lg" aria-current="page" href="#" data-bs-toggle="modal" data-bs-target=".exampleModalCenter"  onclick="newCategory('<?php echo $data['bussines_id']; ?>')">
         <i class="fa fa-plus-circle"></i> Agregar
     </a>
     <div class="col-lg-12 mt-3" style="border:  width: 100%;">
@@ -78,10 +75,10 @@
                                         </td>                                        
                                         <td style='text-align: center; padding:1px;'>                                                                
                                             <div class="btn-acciones">
-                                                <button class="btn btn-outline-warning btn-sm" id='<?php echo $category['id']; ?>' title='Editar articulo <?php echo $category['id']; ?>'  data-bs-toggle="modal" data-bs-target=".exampleModalCenter"  onclick="editCategory(this.id,'<?php echo $_SESSION['idNegocio']; ?>')">
+                                                <button class="btn btn-outline-warning btn-sm" id='<?php echo $category['id']; ?>' title='Editar articulo <?php echo $category['id']; ?>'  data-bs-toggle="modal" data-bs-target=".exampleModalCenter"  onclick="editCategory(this.id,'<?php echo $data['bussines_id']; ?>')">
                                                     <i class="fa fa-pencil-alt" ></i>
                                                 </button>
-                                                <button class="btn btn-outline-danger btn-sm" id='<?php echo $category['id']; ?>' title='Eliminar articulo <?php echo $category['id']; ?>' onclick="deleteCategory(this.id,'<?php echo $_SESSION['idNegocio']; ?>')">
+                                                <button class="btn btn-outline-danger btn-sm" id='<?php echo $category['id']; ?>' title='Eliminar articulo <?php echo $category['id']; ?>' onclick="deleteCategory(this.id,'<?php echo $data['bussines_id']; ?>')">
                                                     <i class="fa fa-trash" ></i>
                                                 </button>
                                             </div>

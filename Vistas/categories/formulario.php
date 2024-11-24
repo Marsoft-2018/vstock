@@ -1,5 +1,4 @@
 <?php 
-  session_start(); 
   $id = "";
   $name = "";
   $description = "";
@@ -17,7 +16,7 @@ if(isset($objCategory)){
   }
 }
 ?>
-<form id="formCategory" method="post" onsubmit="return prepareCategory('<?php echo $_SESSION['idNegocio']; ?>','<?php echo $accion; ?>')">
+<form id="formCategory" method="post" onsubmit="return prepareCategory('<?php echo $data['bussines_id']; ?>','<?php echo $accion; ?>')">
   <div class="row mb-3">
     <label for="id" class="col-sm-2 col-form-label">Código</label>
     <div class="col-sm-10">
