@@ -67,20 +67,6 @@
 				echo "Ocurrió un Error al cargar los products. ".$e;
 			}
         }
-
-        public function totales(){
-            $this->sql="SELECT SUM(initial_quantity) as initial_quantity, SUM(purchases) as purchases, SUM(sales) as sales, SUM(stock_returns) as stock_returns, SUM(stock) as stock  FROM products WHERE bussines_id = ?"; 
-            try {
-				$stm = $this->Conexion->prepare($this->sql);
-				$stm->bindParam(1, $this->bussines_id);
-				$stm->execute();
-				$data = $stm->fetchAll(PDO::FETCH_ASSOC);
-				
-				return $data;
-			} catch (Exception $e) {
-				echo "Ocurrió un Error al cargar los products. ".$e;
-			}
-        }
       
         public function add(){ 
             $this->sql = "INSERT INTO products(id,`name`,reference,purchase_price,selling_price,initial_quantity,stock,min_quantity,bussines_id,category_id,measure_id) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
@@ -146,7 +132,7 @@
 			}
         }
   
-        
+        //productos agotados
         public function soldOuts(){
             $this->sql="SELECT inv.id,inv.`name`,inv.`reference`,cat.`name` as category,inv.`purchase_price`,inv.`selling_price`,inv.initial_quantity,
             inv.purchases,inv.sales,inv.stock_returns,inv.min_quantity,inv.stock
