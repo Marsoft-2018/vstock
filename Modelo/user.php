@@ -1,8 +1,8 @@
 <?php
 	//require_once ("Conect.php");
 	class User extends ConectarPDO{
-		private $Usuario;
-        private $Password;
+		private $usuario;
+        private $password;
         public $Rol;
         public $IdNegocio;
         public $primerNombre;
@@ -63,8 +63,8 @@
 			$this->sql ="INSERT INTO users(`Usuario`,`Password`,`Rol`,`IdNegocio`,`primerNombre`,`segundoNombre`,`primerApellido`,`segundoApellido`,`email`,`estado`) VALUES(?,?,?,?,?,?,?,?,?,?)";
 			try {
 				$stm = $this->Conexion->prepare($this->sql);
-				$stm->bindParam(1,$this->Usuario);
-                $stm->bindParam(2,$this->Password);
+				$stm->bindParam(1,$this->usuario);
+                $stm->bindParam(2,$this->password);
                 $stm->bindParam(3,$this->Rol);
                 $stm->bindParam(4,$this->IdNegocio);
                 $stm->bindParam(5,$this->primerNombre);
@@ -87,7 +87,7 @@
 			$this->sql ="UPDATE users SET estado = 2 WHERE Usuario = ? ";
 			try {
 				$stm = $this->Conexion->prepare($this->sql);
-				$stm->bindParam(1,$this->Usuario);
+				$stm->bindParam(1,$this->usuario);
 				$stm->execute();
 			} catch (Exception $e) {
 				echo "error al guardar los datos: ".$e;
@@ -98,7 +98,7 @@
 			$this->sql ="DELETE FROM users WHERE idUsuario= ?";
 			try {
 				$stm = $this->Conexion->prepare($this->sql);
-				$stm->bindParam(1,$this->idUsuario);
+				$stm->bindParam(1,$this->usuario);
 				$stm->execute();
 			} catch (Exception $e) {
 				echo "error al guardar los datos: ".$e;
@@ -114,7 +114,7 @@
 		public function validarActivacion(){
 			require ("negocio.php");
 			$obj = new Negocio();
-			return $obj->validarActivacion($_SESSION['rol']);
+			//return $obj->validarActivacion($_SESSION['rol']);
 		}
 
 	}

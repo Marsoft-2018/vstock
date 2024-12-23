@@ -1,7 +1,7 @@
 <div>
     <h2>MODULO DE COMPRAS</h2>
     <hr>
-    <form id="formPurchaseInvoice" method="post" onsubmit="return preparePurchaseInvoice(event,'<?php echo $bussines_id; ?>','<?php echo $accion; ?>')">
+    <form id="formPurchaseInvoice" method="post" onsubmit="return preparePurchaseInvoice(event,'<?php echo $data['bussines_id']; ?>','<?php echo $accion; ?>')">
         <div id='Contenedor' class='container'>       
             <div class="panel panel-">
                 <div class="panel-heading ">
@@ -122,7 +122,7 @@
                         <div class="col-md-2">
                             <div>
                                 <label>Cantidad:</label>
-                                <input id="productQuantity" name="productQuantity" type="number" value="1" class="col-md-2 form-control" placeholder="Ingrese cantidad" autocomplete="off" ondblclick='limpiar(this.id)'/>
+                                <input id="productQuantity" name="productQuantity" type="number" step="any" value="1" class="col-md-2 form-control" placeholder="Ingrese cantidad" autocomplete="off" ondblclick='limpiar(this.id)'/>
                             </div>
                         </div>
                         <div class="col mt-4">

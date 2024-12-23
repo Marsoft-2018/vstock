@@ -133,7 +133,7 @@
                         </div> 
                         <div class="col-md-2">
                             <label>Cantidad:</label>
-                            <input id="productQuantity" name="productQuantity" type="number" value="1" class="col-md-2 form-control" placeholder="Ingrese cantidad" autocomplete="off" ondblclick='limpiar(this.id)'/>                            
+                            <input id="productQuantity" name="productQuantity" type="number" step='any' value="1" class="col-md-2 form-control" placeholder="Ingrese cantidad" autocomplete="off" ondblclick='limpiar(this.id)'/>                            
                         </div>
                         <div class="col mt-3">
                             <button type='button' class='btn btn-success btn-agregar-product' id='btnSelectedProduct' onclick="addSelectedProduct('sale')"><i class='fa fa-list-ul'></i> Agregar a la lista</button>
