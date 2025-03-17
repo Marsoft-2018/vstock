@@ -9,7 +9,7 @@
         case 'edit':
             $objSupplier = new Supplier();
             //$objSupplier->bussines_id = $data->bussines_id;
-            $objSupplier->id = $data->id;
+            $objSupplier->id = $data['id'];
             include("../Vistas/suppliers/formulario.php");              
         break;
         
