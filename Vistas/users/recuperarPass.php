@@ -84,7 +84,7 @@
                             <input type="text" class="form-control" placeholder="Por favor ingrese aquí su Nombre de usuario" id="usuario" aria-describedby="btnGroupAddon" required="required">
                             
                             <p><br>
-                                Sus datos de recuperción llegarán siempre y cuando tenga usted registrados el correo electrónico en la plataforma
+                                Sus datos de recuperción llegarán siempre y cuando tenga usted registrado el correo electrónico en la plataforma
                             </p>
                         </div>                                 
                   </div>

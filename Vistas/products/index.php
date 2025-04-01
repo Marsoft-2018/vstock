@@ -43,8 +43,14 @@
     <div class="col-lg-12" style="border:  width: 100%;">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h5>Reporte de articulos en el inventario</h5>
+                <div style="display: flex; justify-content: space-between;">
+                    <h5>Reporte de articulos en el inventario</h5>
+                    <a class="nav-link btn btn-primary btn-md" aria-current="page" href="#" data-bs-toggle="modal" data-bs-target=".exampleModalCenter"  onclick="newProduct('<?php echo $data['bussines_id']; ?>','stock')">
+                        <i class="fa fa-plus-circle"></i> Agregar un nuevo articulo
+                    </a>
+                </div>
             </div>
+            <hr>
             <!-- /.panel-heading -->
             <div class="panel-body">
                 <div class="dataTable_wrapper" style="overflow: auto;">
@@ -113,29 +119,13 @@
                                 }
                             ?>
                         </tbody>
-                        <!--<tfoot>
-                            <tr style="background-color: #cedece; color:#000;">
-                                <?php foreach($objInventario->totales() as $total){ ?>
-                                    <td style='text-align: left;'>CANTIDADES TOTALES DE PRODUCTOS</td>
-                                    <td style='text-align: right;'><?php echo $total['initial_quantity']; ?></td>
-                                    <td style='text-align: right;'><?php echo $total['purchases']; ?></td>
-                                    <td style='text-align: right;'><?php echo $total['sales']; ?></td>
-                                    <td style='text-align: right;'>--</td>
-                                    <td style='text-align: right;'><?php echo $total['stock_returns']; ?></td>
-                                    <td style='text-align: right;'><?php echo $total['stock']; ?></td>
-                                    <td class='celda1' style='text-align: center;'>
-                                        
-                                    </td>
-                                <?php
-                                    }
-                                ?>
-                            </tr>
-                        </tfoot>-->
                     </table>
-                    <a class="nav-link btn btn-primary btn-lg" aria-current="page" href="#" data-bs-toggle="modal" data-bs-target=".exampleModalCenter"  onclick="newProduct('<?php echo $data['bussines_id']; ?>','stock')">
-                        <i class="fa fa-plus-circle"></i> Agregar un nuevo articulo
-                    </a>
                 </div>
+            </div>
+            <div class="panel-footer">
+                <a class="nav-link btn btn-primary btn-md mt-2" aria-current="page" href="#" data-bs-toggle="modal" data-bs-target=".exampleModalCenter"  onclick="newProduct('<?php echo $data['bussines_id']; ?>','stock')">
+                    <i class="fa fa-plus-circle"></i> Agregar un nuevo articulo
+                </a>
             </div>
             <!-- /.panel-body -->
         </div>

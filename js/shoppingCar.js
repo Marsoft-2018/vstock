@@ -5,6 +5,7 @@ function indexSales(bussines_id) {
     cart = [];
     totalPrice = 0;
     var seccion_modulo = document.querySelector("#parte1");
+    loading("parte1");
     var data = {
         accion: "new",
         bussines_id: bussines_id,

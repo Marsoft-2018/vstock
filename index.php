@@ -49,7 +49,7 @@
                     <button type="submit" name='boton' id='enviar' class="btn btn-success btn-ingresar">Ingresar</button>
                 </div>
                 <h5 style="text-align: right;">
-                    <a href="Vistas/usuarios/recuperarPass.php" class="olvide">Olvidé mi Contraseña</a>
+                    <a href="Vistas/users/recuperarPass.php" class="olvide">Olvidé mi Contraseña</a>
                 </h5>
             </form>
             </div>
@@ -88,7 +88,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <!-- CDN sweetalert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
     <!-- Acciones -->
      
   <!-- Complementos para desarrollo-->

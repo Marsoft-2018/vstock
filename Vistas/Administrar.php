@@ -410,7 +410,7 @@
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#">
+                      <a class="dropdown-item" href="#" onclick="loadProfile('<?php echo $_SESSION['Usuario'] ?>')">
                         <i class="bx bx-user me-2"></i>
                         <span class="align-middle">Mi perfil</span>
                       </a>
@@ -575,10 +575,15 @@
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
     <!-- <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script> -->
-    <script src="assets/vendor/libs/jquery/jquery.js"></script>
+    <!-- <script src="assets/vendor/libs/jquery/jquery.js"></script> -->
+    <script src="assets/js/plugins/jquery.js"></script>
     <script src="assets/vendor/libs/popper/popper.js"></script>
     <script src="assets/vendor/js/bootstrap.js"></script>
     <script src="assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    
+    <script src="assets/js/plugins/jquery.dataTables.min.js"></script>
+    <script src="assets/js/plugins/dataTables.bootstrap5.min.js"></script>
+    <script src="assets/js/plugins/dataTables.responsive.min.js"></script>
 
     <script src="assets/vendor/js/menu.js"></script>
     <!-- endbuild -->
@@ -600,7 +605,8 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <!-- CDN sweetalert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+    <script src="assets/js/plugins/sweetalert2.all.min.js"></script>
 
   <!-- Complementos para desarrollo-->
    <script src="complementos/js/axios.min.js"></script>
@@ -609,6 +615,7 @@
    
     <!-- CUSTOM CODE -->
     <script src="js/bussines.js"></script>
+    <script src="js/users.js"></script>
     <script src="js/products.js"></script>
     <script src="js/Categories.js"></script>
     <script src="js/personCredits.js"></script>

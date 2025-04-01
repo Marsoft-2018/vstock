@@ -1,5 +1,6 @@
 function cargarInventario(bussines_id) {
   var seccion_modulo = document.querySelector("#parte1");
+  loading("parte1");
   const data = {
     accion: "index",
     bussines_id: bussines_id,
@@ -10,6 +11,15 @@ function cargarInventario(bussines_id) {
       //console.log(res.data);
       if (res.status == 200) {
         seccion_modulo.innerHTML = res.data;
+            
+        $('.dataTable').DataTable({
+            responsive: {
+            details: {
+                //display: $.fn.dataTable.Responsive.display.childRowImmediate,
+                type: ''
+            }
+            }
+        });
       }
     })
     .catch(function (err) {
@@ -325,4 +335,12 @@ function indexStockReturn(bussines_id){
         text: err,
       });
     });
+}
+
+function loading(section){
+  
+  document.getElementById(section).innerHTML = `<div class="d-flex justify-content-center">
+  <div class="spinner-border text-primary m-5" role="status">
+      <span class="visually-hidden">Loading...</span>
+  </div>`;
 }

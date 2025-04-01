@@ -78,6 +78,29 @@ function limpiarAreaDeTrabajo() {
   //document.getElementById("tablaObservaciones").innerHTML='';
 }
 
+function loadProfile(userId){
+  var seccion_modulo = document.querySelector("#parte1");
+  const data = {
+    accion: "index"
+  };
+  axios
+    .post("Controlador/ctrlSuppliers.php", data)
+    .then(function (res) {
+      //console.log(res.data);
+      if (res.status == 200) {
+        seccion_modulo.innerHTML = res.data;
+      }
+    })
+    .catch(function (err) {
+      Swal.fire({
+        position: "left-end",
+        icon: "error",
+        title: "Error",
+        text: err,
+      });
+    });
+}
+
 function loadPerfil() {
   $.ajax({
     type: "POST",
