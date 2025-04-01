@@ -3,6 +3,7 @@
 	class User extends ConectarPDO{
 		private $usuario;
         private $password;
+		public $id;
         public $Rol;
         public $IdNegocio;
         public $primerNombre;
@@ -35,6 +36,7 @@
 					$_SESSION['rol'] = $reg['Rol'];
 					$_SESSION['userFullName'] = $reg['userFullName'];
 					$_SESSION['email'] = $reg['email'];
+					$_SESSION['photo'] = $reg['photo'];
 					$_SESSION['estado'] = $reg['estado'];
 					$con = 1;
 				}
@@ -50,6 +52,28 @@
 					$con = $datos;
 				}
 				return $con;
+			} catch (Exception $e) {
+				echo "Error en la validacion. ".$e;
+			}
+
+			if($con == 0){
+				return false;
+			}
+		}
+
+		public function load(){
+			$con = 0;
+			$datos = array();
+			$this->sql = "SELECT us.*,CONCAT(us.`primerNombre`,' ',us.`segundoNombre`,' ',us.`primerApellido`,' ',us.`segundoApellido`) AS userFullName,ng.`name` AS nombreNegocio,ng.`logo` AS logoNegocio 
+			FROM users us
+			INNER JOIN bussines ng ON ng.`id` = us.`IdNegocio` Where us.Usuario= ? AND us.estado='Activo'";
+			try {
+				$stm = $this->Conexion->prepare($this->sql);
+				$stm->bindParam(1, $this->id);
+				$stm->execute();
+				$data = $stm->fetchAll(PDO::FETCH_ASSOC);
+				
+				return $data;
 			} catch (Exception $e) {
 				echo "Error en la validacion. ".$e;
 			}

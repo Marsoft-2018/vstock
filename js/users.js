@@ -79,12 +79,15 @@ function limpiarAreaDeTrabajo() {
 }
 
 function loadProfile(userId){
+  console.log("Usuario: "+userId);
+  
   var seccion_modulo = document.querySelector("#parte1");
   const data = {
-    accion: "index"
+    accion: "profile",
+    id: userId
   };
   axios
-    .post("Controlador/ctrlSuppliers.php", data)
+    .post("Controlador/ctrlUsers.php", data)
     .then(function (res) {
       //console.log(res.data);
       if (res.status == 200) {

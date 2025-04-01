@@ -10,7 +10,7 @@
             $objSupplier = new Supplier();
             //$objSupplier->bussines_id = $data->bussines_id;
             $objSupplier->id = $data['id'];
-            include("../Vistas/suppliers/formulario.php");              
+            include("../vistas/suppliers/formulario.php");              
         break;
         
         case 'load':
@@ -31,11 +31,11 @@
         break;
 
         case 'new':
-            include("../Vistas/suppliers/formulario.php");     
+            include("../vistas/suppliers/formulario.php");     
         break;
 
         case 'index':                     
-            include("../Vistas/suppliers/index.php");     
+            include("../vistas/suppliers/index.php");     
         break;
     }
 
