@@ -415,7 +415,7 @@
                         <span class="align-middle">Mi perfil</span>
                       </a>
                     </li>
-                    <li>
+                    <!-- <li>
                       <a class="dropdown-item" href="#">
                         <i class="bx bx-cog me-2"></i>
                         <span class="align-middle">Settings</span>
@@ -429,12 +429,12 @@
                           <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
                         </span>
                       </a>
-                    </li>
+                    </li> -->
                     <li>
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="index.php">
+                      <a class="dropdown-item" href="Controlador/ctrlLogout.php">
                         <i class="bx bx-power-off me-2"></i>
                         <span class="align-middle">Salir</span>
                       </a>

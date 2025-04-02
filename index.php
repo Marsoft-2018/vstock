@@ -37,11 +37,11 @@
 
                 <div class="form-group">
                     <label for="usuarios">Usuario:</label>
-                    <input name="usuario" type="text" value="superdmin" required id="usu" placeholder="Nombre de Usuario">
+                    <input name="usuario" type="text" value="" required id="usu" placeholder="Nombre de Usuario">
                 </div>
                 <div class="form-group">
                     <label for="contrasena">Contraseña:</label>
-                    <input name="contrasena" type="password" value="123456" required id="contrasena"
+                    <input name="contrasena" type="password" value="" required id="contrasena"
                         placeholder="Contraseña">
                 </div>
                 <div class="form-group">

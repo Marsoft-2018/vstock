@@ -53,7 +53,7 @@
         $objUser->primerApellido = $_POST['primerApellido'];
         $objUser->segundoApellido = $_POST['segundoApellido'];
         $objUser->email = $_POST['email'];
-        $objUser->rol = $_POST['rol'];
+        $objUser->Rol = $_POST['rol'];
         switch ($tipo) {
             case 'add':
                 $objUser->add();

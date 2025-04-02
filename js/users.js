@@ -193,7 +193,7 @@ function newUser() {
     accion: "new"
   };
   axios
-    .post("../Controlador/ctrlUsers.php", data)
+    .post("Controlador/ctrlUsers.php", data)
     .then(function (res) {
       var seccion_modulo = document.querySelector("#staticBackdropBody");
       //console.log(res.data);
@@ -229,7 +229,7 @@ function addUser() {
   data.append("accion", "add"); 
 
   axios
-    .post("../Controlador/ctrlUsers.php", data)
+    .post("Controlador/ctrlUsers.php", data)
     .then(function (res) {
       console.log(res.data);
       if (res.status == 200) {
@@ -240,7 +240,6 @@ function addUser() {
           showConfirmButton: false,
           timer: 1500,
         });
-        indexUsers();
       }
     })
     .catch(function (err) {
@@ -264,7 +263,7 @@ function editUser(id) {
   };
 
   axios
-    .post("../Controlador/ctrlUsers.php", data)
+    .post("Controlador/ctrlUsers.php", data)
     .then(function (res) {        
       var seccion_modulo = document.querySelector("#staticBackdropBody");
       if (res.status == 200) {
@@ -287,7 +286,7 @@ function updateUser() {
   data.append("accion", "update");
 
   axios
-    .post("../Controlador/ctrlUsers.php", data)
+    .post("Controlador/ctrlUsers.php", data)
     .then(function (res) {
       console.log(res.data);
       if (res.status == 200) {
@@ -298,7 +297,6 @@ function updateUser() {
           showConfirmButton: false,
           timer: 1500,
         });
-        indexUsers();
       }
     })
     .catch(function (err) {
@@ -326,7 +324,7 @@ function deleteUser(id) {
         id: id
       };
       axios
-        .post("../Controlador/ctrlUsers.php", data)
+        .post("Controlador/ctrlUsers.php", data)
         .then(function (res) {
           //res = JSON.parse(res);
           console.log(res.data);
@@ -365,7 +363,7 @@ function loadUserData(){
     id: id
   };
   axios
-    .post("../Controlador/ctrlUsers.php", data)
+    .post("Controlador/ctrlUsers.php", data)
     .then(function (res) {
       //console.log(res.data);
       if (res.status == 200) {

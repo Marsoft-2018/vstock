@@ -1,9 +1,14 @@
 <?php
   session_start();
 
-  session_unset();
+// Obtener la URL actual
+$current_url = $_SERVER['REQUEST_URI']; 
 
-  session_destroy();
+// Destruir sesión
+session_unset();  // Elimina las variables de sesión
+session_destroy(); // Destruye la sesión
 
-  header('Location: /vstock');
+// Redirigir al index (puedes pasar la URL actual como referencia)
+header("Location: ../index.php");
+exit();
 ?>

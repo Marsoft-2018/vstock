@@ -83,7 +83,7 @@
 			}
 		}
 
-		public function agregar(){
+		public function add(){
 			$this->sql ="INSERT INTO users(`Usuario`,`Password`,`Rol`,`IdNegocio`,`primerNombre`,`segundoNombre`,`primerApellido`,`segundoApellido`,`email`,`estado`) VALUES(?,?,?,?,?,?,?,?,?,?)";
 			try {
 				$stm = $this->Conexion->prepare($this->sql);
@@ -97,14 +97,32 @@
                 $stm->bindParam(8,$this->segundoApellido);
                 $stm->bindParam(9,$this->email);
                 $stm->bindParam(10,$this->estado);
-				$stm->execute();
+				if($stm->execute()){
+					echo "Registro guardado con éxito";
+				}
 			} catch (Exception $e) {
 				echo "error al guardar los datos: ".$e;
 			}
 		}
 
-		public function actualizar(){
-			
+		public function update(){
+			$this->sql ="UPDATE users SET `Rol` = :Rol, `primerNombre` = :primerNombre,`segundoNombre` = :segundoNombre,`primerApellido` = :primerApellido,`segundoApellido` = :segundoApellido,`email` = :email WHERE `Usuario` = :id";
+			try {
+				$stm = $this->Conexion->prepare($this->sql);
+                $stm->bindParam(":Rol",$this->Rol);
+                $stm->bindParam(":primerNombre",$this->primerNombre);
+                $stm->bindParam(":segundoNombre",$this->segundoNombre);
+                $stm->bindParam(":primerApellido",$this->primerApellido);
+                $stm->bindParam(":segundoApellido",$this->segundoApellido);
+                $stm->bindParam(":email",$this->email);
+                $stm->bindParam(":id",$this->id);
+				if($stm->execute()){
+					echo "Registro guardado con éxito";
+				}
+				
+			} catch (Exception $e) {
+				echo "error al guardar los datos: ".$e;
+			}
 		}
 
 		public function desactivar(){
