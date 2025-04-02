@@ -48,17 +48,18 @@
 
     function add_or_set_User($tipo){
         $objUser = new User();
-        $objUser->id = $_POST['id'];
-        $objUser->name = $_POST['name'];
-        $objUser->address = $_POST['address'];
-        $objUser->phone = $_POST['phone'];
-        $objUser->city = $_POST['city'];
+        $objUser->primerNombre = $_POST['primerNombre'];
+        $objUser->segundoNombre = $_POST['segundoNombre'];
+        $objUser->primerApellido = $_POST['primerApellido'];
+        $objUser->segundoApellido = $_POST['segundoApellido'];
         $objUser->email = $_POST['email'];
+        $objUser->rol = $_POST['rol'];
         switch ($tipo) {
             case 'add':
                 $objUser->add();
                 break;
             case 'update':
+                $objUser->id = $_POST['id'];
                 $objUser->update();          
                 break;
         }

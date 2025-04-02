@@ -78,9 +78,7 @@ function limpiarAreaDeTrabajo() {
   //document.getElementById("tablaObservaciones").innerHTML='';
 }
 
-function loadProfile(userId){
-  console.log("Usuario: "+userId);
-  
+function loadProfile(userId){  
   var seccion_modulo = document.querySelector("#parte1");
   const data = {
     accion: "profile",
@@ -104,27 +102,6 @@ function loadProfile(userId){
     });
 }
 
-function loadPerfil() {
-  $.ajax({
-    type: "POST",
-    url: "Controlador/ctrlPerfil.php?accion=Actualizar",
-    res: $("#formPerfil").serialize(),
-    beforeSend: function () {
-      bloquear();
-    },
-    success: function (res) {
-      //$("#resultado").html(res);
-      desBloquear();
-      alertify.success(res);
-    },
-    error: function (res) {
-      alertify.error(res);
-      console.log("test: " + res);
-      desBloquear();
-    },
-  });
-  return false;
-}
 
 function contrasena(usuario, rol) {
   alertify.defaults.transition = "flipy";
@@ -206,3 +183,220 @@ function cambiarContrasenha(usuario, rol) {
     );
   }
 }
+
+
+function newUser() {
+  const seccion_titulo = (document.querySelector(
+    "#staticBackdropLabel"
+  ).innerHTML = "Nuevo usuario");
+  const data = {
+    accion: "new"
+  };
+  axios
+    .post("../Controlador/ctrlUsers.php", data)
+    .then(function (res) {
+      var seccion_modulo = document.querySelector("#staticBackdropBody");
+      //console.log(res.data);
+      if (res.status == 200) {
+        seccion_modulo.innerHTML = res.data;
+      }
+    })
+    .catch(function (err) {
+      Swal.fire({
+        position: "left-end",
+        icon: "error",
+        title: "Error",
+        text: err,
+      });
+  });
+}
+
+function prepareUser(accion) {
+  switch (accion) {
+    case "add":
+      addUser();
+      break;
+    case "update":
+      updateUser();
+      break;
+  }
+  return false;
+}
+
+function addUser() {
+  var formulario = document.querySelector("#formUser");
+  var data = new FormData(formulario);
+  data.append("accion", "add"); 
+
+  axios
+    .post("../Controlador/ctrlUsers.php", data)
+    .then(function (res) {
+      console.log(res.data);
+      if (res.status == 200) {
+        Swal.fire({
+          position: "bottom-end",
+          icon: "success",
+          title: res.data,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        indexUsers();
+      }
+    })
+    .catch(function (err) {
+      Swal.fire({
+        position: "left-end",
+        icon: "error",
+        title: "Error",
+        text: err,
+      });
+    });
+  return false;
+}
+
+function editUser(id) {
+  const seccion_titulo = (document.querySelector(
+    "#staticBackdropLabel"
+  ).innerHTML = "Editar usuario");
+  var data = {
+    accion: "edit",
+    id: id
+  };
+
+  axios
+    .post("../Controlador/ctrlUsers.php", data)
+    .then(function (res) {        
+      var seccion_modulo = document.querySelector("#staticBackdropBody");
+      if (res.status == 200) {
+        seccion_modulo.innerHTML = res.data;
+      }
+    })
+    .catch(function (err) {
+      Swal.fire({
+        position: "left-end",
+        icon: "error",
+        title: "Error",
+        text: err,
+      });
+  });
+}
+
+function updateUser() {
+  var formulario = document.querySelector("#formUser");
+  var data = new FormData(formulario);
+  data.append("accion", "update");
+
+  axios
+    .post("../Controlador/ctrlUsers.php", data)
+    .then(function (res) {
+      console.log(res.data);
+      if (res.status == 200) {
+        Swal.fire({
+          position: "bottom-end",
+          icon: "success",
+          title: res.data,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        indexUsers();
+      }
+    })
+    .catch(function (err) {
+      Swal.fire({
+        position: "left-end",
+        icon: "error",
+        title: "Error",
+        text: err,
+      });
+  });
+  return false;
+}
+
+function deleteUser(id) {
+  Swal.fire({
+    title: "¿Está seguro de eliminar este usuario?",
+    showDenyButton: true,
+    confirmButtonText: "Si",
+    denyButtonText: `No`,
+  }).then((result) => {
+    /* Read more about isConfirmed, isDenied below */
+    if (result.isConfirmed) {
+      const data = {
+        accion: "delete",
+        id: id
+      };
+      axios
+        .post("../Controlador/ctrlUsers.php", data)
+        .then(function (res) {
+          //res = JSON.parse(res);
+          console.log(res.data);
+          //console.log('Mensaje: '+res.data["mensaje"]);
+          // respuesta = respuesta.trim();
+          // console.log(respuesta);
+          if (res.status == 200) {
+            Swal.fire({
+              position: "bottom-end",
+              icon: "success",
+              title: res.data,
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            indexUsers();
+          }
+        })
+        .catch(function (err) {
+          Swal.fire({
+            position: "left-end",
+            icon: "error",
+            title: "Error",
+            text: err,
+          });
+      });
+    } else if (result.isDenied) {
+      //Swal.fire("Changes are not saved", "", "info");
+    }
+  });
+}
+
+function loadUserData(){
+  var id = document.querySelector("#UserSelect").value;
+  const data = {
+    accion: "load",
+    id: id
+  };
+  axios
+    .post("../Controlador/ctrlUsers.php", data)
+    .then(function (res) {
+      //console.log(res.data);
+      if (res.status == 200) {
+        console.log(res.data);
+        Users = res.data
+        if (Users.length > 0) {
+          Users.forEach(User => {
+            document.querySelector("#User_id").value = User.id;
+            document.querySelector("#name").value = User.name;
+            document.querySelector("#phone").value = User.phone;
+            document.querySelector("#email").value = User.email;          
+            document.querySelector("#address").value = User.address;
+            document.querySelector("#city").value = User.city;
+          });          
+        }else{
+          document.querySelector("#User_id").value = id;
+          document.querySelector("#name").value = "";
+          document.querySelector("#phone").value = "";
+          document.querySelector("#email").value = "";          
+          document.querySelector("#address").value = "";
+          document.querySelector("#city").value = "";
+        }
+      }
+  })
+    .catch(function (err) {
+      Swal.fire({
+        position: "left-end",
+        icon: "error",
+        title: "Error",
+        text: err,
+      });
+  });
+}
+
