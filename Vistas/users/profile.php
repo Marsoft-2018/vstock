@@ -33,7 +33,7 @@
 			<hr>
 			<div class="x_content">
 			<form class="form-label-left input_mask" method="post" id="formUser" onsubmit="return prepareUser('<?php echo $accion; ?>')">
-			  <input type="hidden" class="form-control has-feedback-left" id="id" name="id" value="<?php echo $id; ?>" placeholder="Nombre Completo">
+			  <input type="hidden" class="form-control has-feedback-left" id="id" name="id" value="<?php echo $id; ?>" placeholder="código">
 			  <div class="col-md-12 col-sm-12  form-group has-feedback">
 				<label for="primerNombre" class="mt-2">Primer nombre</label>
 			    <input type="text" class="form-control has-feedback-left" id="primerNombre" name="primerNombre" value="<?php echo $primerNombre; ?>" placeholder="Primer nombre">
@@ -65,12 +65,31 @@
 			  </div>
 			  <div class="ln_solid"></div>
 			  <div class="form-group row">
-			    <div class="col-md-12 col-sm-12 ">
+			    <div class="col-md-6 col-sm-12 ">
 			      <button type="submit" class="btn btn-success btn-lg mt-4">Guardar</button>
+			    </div>
+			    <div class="col-md-6 col-sm-12 ">
+					<a class="nav-link btn btn-primary btn-md" aria-current="page" href="#" data-bs-toggle="modal" data-bs-target=".exampleModalCenter"  onclick="passwordForm('<?php echo $id; ?>')">
+                        <i class="fa fa-plus-circle"></i> Cambiar contraseña
+                    </a>
 			    </div>
 			  </div>
 			</form>
 			</div>
 		</div>
+	</div>
+</div>
+                         
+<div class="modal fade exampleModalCenter" id="modalPassword" tabindex="-1" aria-labelledby="modalPasswordTitle" style="display: none;" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered  modal-lg">
+	<div class="modal-content">
+		<div class="modal-header">
+			<h2 class="modal-title" id="modalPasswordTitle"></h2>
+			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		</div>
+		<div class="modal-body" id="modalPasswordBody">
+		
+		</div>
+	</div>
 	</div>
 </div>

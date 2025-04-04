@@ -398,3 +398,69 @@ function loadUserData(){
   });
 }
 
+function passwordForm(id){  
+  var data = {
+    accion: "passwordForm",
+    id: id
+  };
+
+  axios
+    .post("Controlador/ctrlUsers.php", data)
+    .then(function (res) {        
+      var seccion_modulo = document.querySelector("#modalPasswordBody");
+      if (res.status == 200) {
+        seccion_modulo.innerHTML = res.data;
+      }
+    })
+    .catch(function (err) {
+      Swal.fire({
+        position: "left-end",
+        icon: "error",
+        title: "Error",
+        text: err,
+      });
+  });
+}
+
+
+function passswordChange(usuario) {
+  var accion = "passwordChange";
+  let contrasena = $("#paswwordNew1").val();
+  let contrasena2 = $("#paswwordNew2").val();
+  if (contrasena == contrasena2) {
+    var formulario = document.querySelector("#passwordForm");
+    var data = new FormData(formulario);
+    data.append("accion", "update");
+
+    axios
+      .post("Controlador/ctrlUsers.php", data)
+      .then(function (res) {
+        console.log(res.data);
+        if (res.status == 200) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "success",
+            title: res.data,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      })
+      .catch(function (err) {
+        Swal.fire({
+          position: "left-end",
+          icon: "error",
+          title: "Error",
+          text: err,
+        });
+    });
+    return false;
+  } else {
+    Swal.fire({
+      position: "left-end",
+      icon: "error",
+      title: "Por favor verifique:<br>Las contraseñas deben ser iguales",
+      text: err,
+    });
+  }
+}

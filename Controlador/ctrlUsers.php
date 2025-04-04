@@ -41,6 +41,12 @@
             include("../vistas/Users/profile.php");     
         break;
 
+        case 'passwordForm':        
+            $objUser = new User();    
+            $objUser->id = $data['id'];         
+            include("../vistas/Users/passwordChange.php");     
+        break;
+
         case 'index':                     
             include("../vistas/Users/index.php");     
         break;
